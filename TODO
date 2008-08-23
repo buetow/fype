@@ -1,11 +1,10 @@
 Todo's (not in any specific order)
 
-Segfault: fype -e '1'
+Scanner: separate between token (e.g. allow 1+2)
 Arrays
 Closures
 Function arguments and return values
 Interactive shell
 Labels
-Scanner: separate between token (e.g. allow 1+2)
 String operators/functions
 loop, next, break, do

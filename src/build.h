@@ -5,7 +5,7 @@
  *: WWW		: http://fype.buetow.org
  *: E-Mail	: fype@dev.buetow.org
  *: 
- *: Copyright (c) 2005 2006 2007 2008, Paul Buetow (http://www.pb-labs.com)
+ *: Copyright (c) 2005 2006 2007 2008, Paul C. Buetow (http://www.pb-labs.com)
  *: All rights reserved.
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
@@ -35,7 +35,7 @@
 #ifndef BUILD_H
 #define BUILD_H
 
-#define BUILDNR 8870
+#define BUILDNR 8992
 #define OS_FREEBSD
 
 #endif

@@ -5,7 +5,7 @@
  *: WWW		: http://fype.buetow.org
  *: E-Mail	: fype@dev.buetow.org
  *: 
- *: Copyright (c) 2005 2006 2007 2008, Paul Buetow (http://www.pb-labs.com)
+ *: Copyright (c) 2005 2006 2007 2008, Paul C. Buetow (http://www.pb-labs.com)
  *: All rights reserved.
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
@@ -74,13 +74,11 @@
 	exit(1); }
 #define DPRINTF(...) printf("DEBUG("); printf(__VA_ARGS__); printf(")\n");
 
-/*
-#define DEBUG_TOKEN_REFCOUNT
-#define DEBUG_FUNCTION_PROCESS
-#define DEBUG_TRACK
-#define DEBUG_BLOCK_GET
-#define DEBUG_EXPRESSION_GET
-*/
+//#define DEBUG_TOKEN_REFCOUNT
+//#define DEBUG_FUNCTION_PROCESS
+//#define DEBUG_TRACK
+//#define DEBUG_BLOCK_GET
+//#define DEBUG_EXPRESSION_GET
 
 #ifdef DEBUG_TRACK
 #define TRACK \

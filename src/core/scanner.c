@@ -5,7 +5,7 @@
  *: WWW		: http://fype.buetow.org
  *: E-Mail	: fype@dev.buetow.org
  *: 
- *: Copyright (c) 2005 2006 2007 2008, Paul Buetow (http://www.pb-labs.com)
+ *: Copyright (c) 2005 2006 2007 2008, Paul C. Buetow (http://www.pb-labs.com)
  *: All rights reserved.
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
@@ -37,45 +37,10 @@
 #include <ctype.h>
 #include <string.h>
 
-const char const *KEYWORDS[] = {
-   "if",
-   "else",
-   "elsif",
-   "while",
-   "ret",
-   "const",
-};
-
-const char const *OPERATORS[] = {
-   "!",
-   "!=",
-   "(",
-   ")",
-   "*",
-   "+",
-   "++",
-   ",",
-   "-",
-   "--",
-   ".",
-   "/",
-   "\\",
-   ":",
-   "==",
-   ";",
-   "<<",
-   "<",
-   "<=",
-   "=",
-   ">=",
-   ">>",
-   ">",
-   "{",
-   "}",
-};
-
-const char TOKENENDS[] = "{}();:,.";
-int CODESTRING_INDEX = 0;
+const char const *_TOKENENDS2[] = { "==", "!=", "<=", ">=", };
+const char _TOKENENDS[] = "})+-*/={(<>;:,.!";
+#define _ADD_SEMICOLON_INDEX 2
+int _CODESTR_INDEX = 0;
 
 Scanner*
 scanner_new(List *p_list_token, Tupel *p_tupel_argv) {
@@ -105,9 +70,8 @@ scanner_new(List *p_list_token, Tupel *p_tupel_argv) {
    p_scanner->i_current_line_nr = 1;
    p_scanner->i_current_pos_nr = 0;
 
-   p_scanner->i_num_keywords = sizeof(KEYWORDS) / sizeof(char const *);
-   p_scanner->i_num_operators = sizeof(OPERATORS) / sizeof(char const *);
-   p_scanner->i_num_tokenends = strlen(TOKENENDS);
+   p_scanner->i_num_tokenends2 = sizeof(_TOKENENDS2) / sizeof(char const *);
+   p_scanner->i_num_tokenends = strlen(_TOKENENDS);
 
    return p_scanner;
 }
@@ -117,6 +81,15 @@ scanner_delete(Scanner *p_scanner) {
    if (p_scanner->fp)
       fclose(p_scanner->fp);
    free(p_scanner);
+}
+
+void
+_add_semicolon_to_list(Scanner *p_scanner) {
+	int i_token_len = 1;
+	char *c_token = calloc(2, sizeof(char*));
+	c_token[0] = ';';
+	c_token[1] = '\0';
+	scanner_add_token(p_scanner, &c_token, &i_token_len, TT_SEMICOLON);
 }
 
 void
@@ -157,7 +130,7 @@ scanner_post_task(Scanner *p_scanner) {
 
             pt_last[0] = pt_last[1] = NULL;
             tt_last[0] = tt_last[1] = TT_NONE;
-         }
+		 }
       }
 
       tt_last[0] = tt_last[1];
@@ -175,7 +148,7 @@ _scanner_has_next_char(Scanner *p_scanner) {
    if (p_scanner->fp)
       return !feof(p_scanner->fp);
 
-   return p_scanner->c_codestring[CODESTRING_INDEX] != 0;
+   return p_scanner->c_codestring[_CODESTR_INDEX] != 0;
 }
 
 char
@@ -183,7 +156,7 @@ _scanner_get_next_char(Scanner *p_scanner) {
    if (p_scanner->fp)
       return fgetc(p_scanner->fp);
 
-   return (p_scanner->c_codestring[CODESTRING_INDEX++]);
+   return (p_scanner->c_codestring[_CODESTR_INDEX++]);
 }
 
 void
@@ -196,7 +169,6 @@ scanner_run(Fype *p_fype) {
    c_token[0] = 0;
 
    while ( _scanner_has_next_char(p_scanner) ) {
-      //char c = fgetc(fp);
       char c = _scanner_get_next_char(p_scanner);
       ++p_scanner->i_current_pos_nr;
 
@@ -238,8 +210,8 @@ scanner_run(Fype *p_fype) {
          }
          {
             int i_num_nl = 0;
+			_Bool flag = false;
             do {
-               //     c = fgetc(fp);
                c = _scanner_get_next_char(p_scanner);
                if ( c == '\n' ) {
                   ++i_num_nl;
@@ -252,11 +224,13 @@ scanner_run(Fype *p_fype) {
                   c_token[i_token_len] = 0;
 
                } else if (c == '"') {
-                  if (i_token_len && c_token[i_token_len-1] == '\\')
+                  if (i_token_len && c_token[i_token_len-1] == '\\') {
                      c_token[i_token_len-1] = '"';
 
-                  else
+				  } else {
+					 flag = true;
                      break;
+				  }
 
                } else {
                   ++i_token_len;
@@ -265,13 +239,15 @@ scanner_run(Fype *p_fype) {
                   c_token[i_token_len] = 0;
                }
 
-               //} while ( !feof(fp) );
             } while ( _scanner_has_next_char(p_scanner) );
 
             scanner_add_token(p_scanner, &c_token, &i_token_len, TT_STRING);
 
             if (i_num_nl)
                p_scanner->i_current_line_nr += i_num_nl;
+
+			if (flag)
+			  _add_semicolon_to_list(p_scanner);
          }
 
          break;
@@ -301,10 +277,23 @@ scanner_run(Fype *p_fype) {
                scanner_add_token(p_scanner, &c_token, &i_token_len, tt_cur);
 
             } else {
-               for (int i = 0; i < p_scanner->i_num_tokenends; ++i) {
-                  if (TOKENENDS[i] == c) {
+               for (int i = 0; i < p_scanner->i_num_tokenends2; ++i) {
+                  if (_TOKENENDS2[i][0] == c) {
+					  /*
                      TokenType tt_cur = scanner_get_tt_cur(c_token);
-                     scanner_add_token(p_scanner, &c_token, &i_token_len, tt_cur);
+					 scanner_add_token(p_scanner, &c_token, &i_token_len, tt_cur);
+					 if (i < _ADD_SEMICOLON_INDEX) 
+					 	_add_semicolon_to_list(p_scanner);
+                     break;
+					 */
+                  }
+               }
+               for (int i = 0; i < p_scanner->i_num_tokenends; ++i) {
+                  if (_TOKENENDS[i] == c) {
+                     TokenType tt_cur = scanner_get_tt_cur(c_token);
+					 scanner_add_token(p_scanner, &c_token, &i_token_len, tt_cur);
+					 if (i < _ADD_SEMICOLON_INDEX) 
+					 	_add_semicolon_to_list(p_scanner);
                      break;
                   }
                }
@@ -322,6 +311,12 @@ scanner_run(Fype *p_fype) {
       TokenType tt_cur = scanner_get_tt_cur(c_token);
       scanner_add_token(p_scanner, &c_token, &i_token_len, tt_cur);
    }
+
+   /* Check if there is a ; missing */
+   List *p_list_token = scanner_get_list_token(p_scanner);
+   Token *p_last_token = list_last(p_list_token);
+   if (token_get_tt(p_last_token) != TT_SEMICOLON) 
+	   _add_semicolon_to_list(p_scanner);
 
    scanner_post_task(p_scanner);
 
@@ -344,15 +339,6 @@ scanner_run(Fype *p_fype) {
    }
 
    p_fype->c_basename = c_basename;
-
-   /*
-   c_token = calloc(2, sizeof(char*));
-   c_token[0] = ';';
-   c_token[1] = '\0';
-   i_token_len = 1;
-	
-   scanner_add_token(p_scanner, &c_token, &i_token_len, TT_STRING);
-   */
 }
 
 void

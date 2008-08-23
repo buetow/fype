@@ -1,2 +1,4 @@
 Undocumented new features:
 	undef keyword
+	No more segfault: fype -e '1'
+	Spaces are not needed any more

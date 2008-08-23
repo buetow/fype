@@ -5,7 +5,7 @@
  *: WWW		: http://fype.buetow.org
  *: E-Mail	: fype@dev.buetow.org
  *: 
- *: Copyright (c) 2005 2006 2007 2008, Paul Buetow (http://www.pb-labs.com)
+ *: Copyright (c) 2005 2006 2007 2008, Paul C. Buetow (http://www.pb-labs.com)
  *: All rights reserved.
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
@@ -50,8 +50,7 @@
 typedef struct {
    int i_current_line_nr;
    int i_current_pos_nr;
-   int i_num_keywords;
-   int i_num_operators;
+   int i_num_tokenends2;
    int i_num_tokenends;
    char *c_filename;
    char *c_codestring;
