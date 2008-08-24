@@ -20,3 +20,6 @@ Token (id=00015, line=00005, pos=0016, type=TT_INTEGER, val=1, ival=1, dval=0.00
 Token (id=00016, line=00005, pos=0018, type=TT_ADD, val=+, ival=0, dval=0.000000, refs=1)
 Token (id=00017, line=00005, pos=0021, type=TT_IDENT, val=gc, ival=0, dval=0.000000, refs=1)
 Token (id=00018, line=00005, pos=0022, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+0
+ICOUNT 4
+9

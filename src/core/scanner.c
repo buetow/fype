@@ -37,7 +37,12 @@
 #include <ctype.h>
 #include <string.h>
 
-const char const *_TOKENENDS2[] = { "==", "!=", "<=", ">=", };
+const TokenType _TOKENENDS2[] = { 
+	TT_ASSIGN, TT_ASSIGN, TT_EQ,
+	TT_NOT, TT_ASSIGN, TT_NEQ,
+	TT_LT, TT_ASSIGN, TT_LE,
+	TT_GT, TT_ASSIGN, TT_GE,
+};
 const char _TOKENENDS[] = "})+-*/={(<>;:,.!";
 #define _ADD_SEMICOLON_INDEX 2
 int _CODESTR_INDEX = 0;
@@ -70,8 +75,8 @@ scanner_new(List *p_list_token, Tupel *p_tupel_argv) {
    p_scanner->i_current_line_nr = 1;
    p_scanner->i_current_pos_nr = 0;
 
-   p_scanner->i_num_tokenends2 = sizeof(_TOKENENDS2) / sizeof(char const *);
    p_scanner->i_num_tokenends = strlen(_TOKENENDS);
+   p_scanner->i_num_tokenends2 = sizeof(_TOKENENDS2) / sizeof(TokenType);
 
    return p_scanner;
 }
@@ -130,6 +135,24 @@ scanner_post_task(Scanner *p_scanner) {
 
             pt_last[0] = pt_last[1] = NULL;
             tt_last[0] = tt_last[1] = TT_NONE;
+		 } else {
+			 for (int i = 0; i < p_scanner->i_num_tokenends2; i += 3) {
+				 if (tt_cur == _TOKENENDS2[i+1] 
+						 && tt_last[1] == _TOKENENDS2[i]) {
+					 /*
+            token_ref_down(pt_last[1]);
+            list_remove_elem(p_list_token, p_le->p_prev);
+
+            pt_last[0] = pt_last[1] = NULL;
+            tt_last[0] = tt_last[1] = TT_NONE;
+
+            token_set_val(p_token, c_new);
+            token_set_tt(p_token, TT_DOUBLE);
+            token_set_dval(p_token, atof(c_new));
+			*/
+					break;
+				 }
+			 }
 		 }
       }
 
@@ -277,17 +300,6 @@ scanner_run(Fype *p_fype) {
                scanner_add_token(p_scanner, &c_token, &i_token_len, tt_cur);
 
             } else {
-               for (int i = 0; i < p_scanner->i_num_tokenends2; ++i) {
-                  if (_TOKENENDS2[i][0] == c) {
-					  /*
-                     TokenType tt_cur = scanner_get_tt_cur(c_token);
-					 scanner_add_token(p_scanner, &c_token, &i_token_len, tt_cur);
-					 if (i < _ADD_SEMICOLON_INDEX) 
-					 	_add_semicolon_to_list(p_scanner);
-                     break;
-					 */
-                  }
-               }
                for (int i = 0; i < p_scanner->i_num_tokenends; ++i) {
                   if (_TOKENENDS[i] == c) {
                      TokenType tt_cur = scanner_get_tt_cur(c_token);
