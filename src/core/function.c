@@ -74,22 +74,16 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
 #endif /* DEBUG_FUNCTION_PROCESS */
 
    if (p_token_op2 != NULL) {
-#ifdef DEBUG_FUNCTION_PROCESS
-      printf("===> %s %s %s %s\n",
-             tt_get_name(tt_highest),
-             tt_get_name(tt_op),
-             tt_get_name(tt_op2),
-             tt_get_name(tt_highest));
-#endif /* DEBUG_FUNCTION_PROCESS */
-
       switch (tt_op) {
       case TT_NOT:
          switch (tt_op2) {
          case TT_ASSIGN:
             tt_op = TT_NEQ;
+            break;
          default:
             break;
          }
+         break;
       case TT_ASSIGN:
          switch (tt_op2) {
          case TT_ASSIGN:
@@ -98,6 +92,7 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
          default:
             break;
          }
+         break;
       case TT_LT:
          switch (tt_op2) {
          case TT_ASSIGN:
@@ -106,6 +101,7 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
          default:
             break;
          }
+         break;
       case TT_GT:
          switch (tt_op2) {
          case TT_ASSIGN:
@@ -114,6 +110,7 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
          default:
             break;
          }
+         break;
       default:
          break;
       }
@@ -287,7 +284,6 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
       }
       break;
    case TT_LE:
-      printf("DFDF\n");
       switch (tt_highest) {
       case TT_INTEGER:
          token_set_ival(p_token_store,
