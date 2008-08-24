@@ -1,13 +1,13 @@
 /*:*
  *: File: ./src/core/function.c
  *: A simple interpreter
- *: 
+ *:
  *: WWW		: http://fype.buetow.org
  *: E-Mail	: fype@dev.buetow.org
- *: 
- *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow 
+ *:
+ *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow
  *: All rights reserved.
- *: 
+ *:
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
  *:  * Redistributions of source code must retain the above copyright
@@ -15,20 +15,20 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of P. B. Labs nor the names of its contributors may 
- *:    be used to endorse or promote products derived from this software 
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may
+ *:    be used to endorse or promote products derived from this software
  *:    without specific prior written permission.
- *: 
- *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR 
- *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+ *:
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
+ *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT, 
- *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
- *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
- *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
+ *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  *: HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- *: STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
- *: IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ *: STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ *: IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
@@ -53,12 +53,19 @@
 
 void
 _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
-         Token *p_token_next) {
+         Token *p_token_op2, Token *p_token_next) {
 
    TokenType tt_op = token_get_tt(p_token_op);
+   TokenType tt_op2 = p_token_op2 == NULL
+                      ? TT_NONE
+                      : token_get_tt(p_token_op2);
 
 #ifdef DEBUG_FUNCTION_PROCESS
-   printf("PROCESS OPERATOR %s\n", tt_get_name(tt_op));
+   if (p_token_op2 == NULL)
+      printf("PROCESS OPERATOR %s\n", tt_get_name(tt_op));
+   else
+      printf("PROCESS OPERATOR %s %s\n", tt_get_name(tt_op),
+             tt_get_name(tt_op2));
 
    token_print(p_token_next);
    printf("\n");
@@ -66,34 +73,79 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
    printf("\n");
 #endif /* DEBUG_FUNCTION_PROCESS */
 
+   if (p_token_op2 != NULL) {
+#ifdef DEBUG_FUNCTION_PROCESS
+      printf("===> %s %s %s %s\n",
+             tt_get_name(tt_highest),
+             tt_get_name(tt_op),
+             tt_get_name(tt_op2),
+             tt_get_name(tt_highest));
+#endif /* DEBUG_FUNCTION_PROCESS */
 
-   switch (tt_op) {
-   case TT_ASSIGN:
-   {
-      Token *p_token_assign = p_interpret->p_token_temp;
-      TokenType tt_assign = token_get_tt(p_token_assign);
+      switch (tt_op) {
+      case TT_NOT:
+         switch (tt_op2) {
+         case TT_ASSIGN:
+            tt_op = TT_NEQ;
+         default:
+            break;
+         }
+      case TT_ASSIGN:
+         switch (tt_op2) {
+         case TT_ASSIGN:
+            tt_op = TT_EQ;
+            break;
+         default:
+            break;
+         }
+      case TT_LT:
+         switch (tt_op2) {
+         case TT_ASSIGN:
+            tt_op = TT_LE;
+            break;
+         default:
+            break;
+         }
+      case TT_GT:
+         switch (tt_op2) {
+         case TT_ASSIGN:
+            tt_op = TT_GE;
+            break;
+         default:
+            break;
+         }
+      default:
+         break;
+      }
+   } else {
+      switch (tt_op) {
+      case TT_ASSIGN:
+      {
+         Token *p_token_assign = p_interpret->p_token_temp;
+         TokenType tt_assign = token_get_tt(p_token_assign);
 
-      if (tt_assign != TT_IDENT) {
-         _FUNCTION_ERROR("Can only assign to symbols",
-                         p_token_store);
+         if (tt_assign != TT_IDENT) {
+            _FUNCTION_ERROR("Can only assign to symbols",
+                            p_token_store);
+         }
+
+         Symbol *p_symbol = scope_get(p_interpret->p_scope,
+                                      token_get_val(p_token_assign));
+
+         if (p_symbol == NULL) {
+            _FUNCTION_ERROR("No such symbol",
+                            p_token_assign);
+         }
+
+         symbol_set_val(p_symbol, p_token_store);
+         symbol_set_sym(p_symbol, SYM_VARIABLE);
+
+         return;
       }
 
-      Symbol *p_symbol = scope_get(p_interpret->p_scope,
-                                   token_get_val(p_token_assign));
-
-      if (p_symbol == NULL) {
-         _FUNCTION_ERROR("No such symbol",
-                         p_token_assign);
+      break;
+      NO_DEFAULT;
       }
-
-      symbol_set_val(p_symbol, p_token_store);
-      symbol_set_sym(p_symbol, SYM_VARIABLE);
-
-      return;
-   }
-
-   break;
-   NO_DEFAULT;
    }
 
    p_token_next = token_new_copy(p_token_next);
@@ -234,6 +286,51 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
          NO_DEFAULT;
       }
       break;
+   case TT_LE:
+      printf("DFDF\n");
+      switch (tt_highest) {
+      case TT_INTEGER:
+         token_set_ival(p_token_store,
+                        (int) token_get_ival(p_token_next) <=
+                        token_get_ival(p_token_store));
+         break;
+      case TT_DOUBLE:
+         token_set_ival(p_token_store,
+                        token_get_dval(p_token_next) <=
+                        token_get_dval(p_token_store));
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+      case TT_STRING:
+         token_set_ival(p_token_store,
+                        strcmp(token_get_val(p_token_next),
+                               token_get_val(p_token_store)) <= 0);
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+         NO_DEFAULT;
+      }
+      break;
+   case TT_GE:
+      switch (tt_highest) {
+      case TT_INTEGER:
+         token_set_ival(p_token_store,
+                        (int) token_get_ival(p_token_next) >=
+                        token_get_ival(p_token_store));
+         break;
+      case TT_DOUBLE:
+         token_set_ival(p_token_store,
+                        token_get_dval(p_token_next) >=
+                        token_get_dval(p_token_store));
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+      case TT_STRING:
+         token_set_ival(p_token_store,
+                        strcmp(token_get_val(p_token_next),
+                               token_get_val(p_token_store)) >= 0);
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+         NO_DEFAULT;
+      }
+      break;
    case TT_LT:
       switch (tt_highest) {
       case TT_INTEGER:
@@ -278,50 +375,6 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
          NO_DEFAULT;
       }
       break;
-   case TT_LE:
-      switch (tt_highest) {
-      case TT_INTEGER:
-         token_set_ival(p_token_store,
-                        (int) token_get_ival(p_token_next) <=
-                        token_get_ival(p_token_store));
-         break;
-      case TT_DOUBLE:
-         token_set_ival(p_token_store,
-                        token_get_dval(p_token_next) <=
-                        token_get_dval(p_token_store));
-         token_set_tt(p_token_store, TT_INTEGER);
-         break;
-      case TT_STRING:
-         token_set_ival(p_token_store,
-                        strcmp(token_get_val(p_token_next),
-                               token_get_val(p_token_store)) <= 0);
-         token_set_tt(p_token_store, TT_INTEGER);
-         break;
-         NO_DEFAULT;
-      }
-      break;
-   case TT_GE:
-      switch (tt_highest) {
-      case TT_INTEGER:
-         token_set_ival(p_token_store,
-                        (int) token_get_ival(p_token_next) >=
-                        token_get_ival(p_token_store));
-         break;
-      case TT_DOUBLE:
-         token_set_ival(p_token_store,
-                        token_get_dval(p_token_next) >=
-                        token_get_dval(p_token_store));
-         token_set_tt(p_token_store, TT_INTEGER);
-         break;
-      case TT_STRING:
-         token_set_ival(p_token_store,
-                        strcmp(token_get_val(p_token_next),
-                               token_get_val(p_token_store)) >= 0);
-         token_set_tt(p_token_store, TT_INTEGER);
-         break;
-         NO_DEFAULT;
-      }
-      break;
    default:
       _FUNCTION_ERROR("No such function/operator", p_token_op);
    }
@@ -336,14 +389,15 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
 
 void
 function_process(Interpret *p_interpret, Token *p_token_op,
-                 Stack *p_stack_args, int i_args) {
+                 Token *p_token_op2, Stack *p_stack_args, int i_args) {
 
    Token *p_token_store = token_new_copy(stack_pop(p_stack_args));
 
    for (int i = 0; i < i_args -1 && !stack_empty(p_stack_args); ++i) {
       Token *p_token_next = stack_pop(p_stack_args);
 
-      _process(p_interpret, p_token_store, p_token_op, p_token_next);
+      _process(p_interpret, p_token_store, p_token_op,
+               p_token_op2, p_token_next);
    }
 
    stack_push(p_stack_args, p_token_store);

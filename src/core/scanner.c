@@ -1,13 +1,13 @@
 /*:*
  *: File: ./src/core/scanner.c
  *: A simple interpreter
- *: 
+ *:
  *: WWW		: http://fype.buetow.org
  *: E-Mail	: fype@dev.buetow.org
- *: 
- *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow 
+ *:
+ *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow
  *: All rights reserved.
- *: 
+ *:
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
  *:  * Redistributions of source code must retain the above copyright
@@ -15,20 +15,20 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of P. B. Labs nor the names of its contributors may 
- *:    be used to endorse or promote products derived from this software 
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may
+ *:    be used to endorse or promote products derived from this software
  *:    without specific prior written permission.
- *: 
- *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR 
- *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+ *:
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
+ *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT, 
- *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
- *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
- *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
+ *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  *: HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- *: STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
- *: IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ *: STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ *: IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
@@ -37,12 +37,6 @@
 #include <ctype.h>
 #include <string.h>
 
-const TokenType _TOKENENDS2[] = { 
-	TT_ASSIGN, TT_ASSIGN, TT_EQ,
-	TT_NOT, TT_ASSIGN, TT_NEQ,
-	TT_LT, TT_ASSIGN, TT_LE,
-	TT_GT, TT_ASSIGN, TT_GE,
-};
 const char _TOKENENDS[] = "})+-*/={(<>;:,.!";
 #define _ADD_SEMICOLON_INDEX 2
 int _CODESTR_INDEX = 0;
@@ -76,7 +70,6 @@ scanner_new(List *p_list_token, Tupel *p_tupel_argv) {
    p_scanner->i_current_pos_nr = 0;
 
    p_scanner->i_num_tokenends = strlen(_TOKENENDS);
-   p_scanner->i_num_tokenends2 = sizeof(_TOKENENDS2) / sizeof(TokenType);
 
    return p_scanner;
 }
@@ -90,11 +83,11 @@ scanner_delete(Scanner *p_scanner) {
 
 void
 _add_semicolon_to_list(Scanner *p_scanner) {
-	int i_token_len = 1;
-	char *c_token = calloc(2, sizeof(char*));
-	c_token[0] = ';';
-	c_token[1] = '\0';
-	scanner_add_token(p_scanner, &c_token, &i_token_len, TT_SEMICOLON);
+   int i_token_len = 1;
+   char *c_token = calloc(2, sizeof(char*));
+   c_token[0] = ';';
+   c_token[1] = '\0';
+   scanner_add_token(p_scanner, &c_token, &i_token_len, TT_SEMICOLON);
 }
 
 void
@@ -135,25 +128,7 @@ scanner_post_task(Scanner *p_scanner) {
 
             pt_last[0] = pt_last[1] = NULL;
             tt_last[0] = tt_last[1] = TT_NONE;
-		 } else {
-			 for (int i = 0; i < p_scanner->i_num_tokenends2; i += 3) {
-				 if (tt_cur == _TOKENENDS2[i+1] 
-						 && tt_last[1] == _TOKENENDS2[i]) {
-					 /*
-            token_ref_down(pt_last[1]);
-            list_remove_elem(p_list_token, p_le->p_prev);
-
-            pt_last[0] = pt_last[1] = NULL;
-            tt_last[0] = tt_last[1] = TT_NONE;
-
-            token_set_val(p_token, c_new);
-            token_set_tt(p_token, TT_DOUBLE);
-            token_set_dval(p_token, atof(c_new));
-			*/
-					break;
-				 }
-			 }
-		 }
+         }
       }
 
       tt_last[0] = tt_last[1];
@@ -233,7 +208,7 @@ scanner_run(Fype *p_fype) {
          }
          {
             int i_num_nl = 0;
-			_Bool flag = false;
+            _Bool flag = false;
             do {
                c = _scanner_get_next_char(p_scanner);
                if ( c == '\n' ) {
@@ -250,10 +225,10 @@ scanner_run(Fype *p_fype) {
                   if (i_token_len && c_token[i_token_len-1] == '\\') {
                      c_token[i_token_len-1] = '"';
 
-				  } else {
-					 flag = true;
+                  } else {
+                     flag = true;
                      break;
-				  }
+                  }
 
                } else {
                   ++i_token_len;
@@ -269,8 +244,8 @@ scanner_run(Fype *p_fype) {
             if (i_num_nl)
                p_scanner->i_current_line_nr += i_num_nl;
 
-			if (flag)
-			  _add_semicolon_to_list(p_scanner);
+            if (flag)
+               _add_semicolon_to_list(p_scanner);
          }
 
          break;
@@ -303,9 +278,9 @@ scanner_run(Fype *p_fype) {
                for (int i = 0; i < p_scanner->i_num_tokenends; ++i) {
                   if (_TOKENENDS[i] == c) {
                      TokenType tt_cur = scanner_get_tt_cur(c_token);
-					 scanner_add_token(p_scanner, &c_token, &i_token_len, tt_cur);
-					 if (i < _ADD_SEMICOLON_INDEX) 
-					 	_add_semicolon_to_list(p_scanner);
+                     scanner_add_token(p_scanner, &c_token, &i_token_len, tt_cur);
+                     if (i < _ADD_SEMICOLON_INDEX)
+                        _add_semicolon_to_list(p_scanner);
                      break;
                   }
                }
@@ -327,8 +302,8 @@ scanner_run(Fype *p_fype) {
    /* Check if there is a ; missing */
    List *p_list_token = scanner_get_list_token(p_scanner);
    Token *p_last_token = list_last(p_list_token);
-   if (token_get_tt(p_last_token) != TT_SEMICOLON) 
-	   _add_semicolon_to_list(p_scanner);
+   if (token_get_tt(p_last_token) != TT_SEMICOLON)
+      _add_semicolon_to_list(p_scanner);
 
    scanner_post_task(p_scanner);
 

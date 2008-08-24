@@ -1,13 +1,13 @@
 /*:*
  *: File: ./src/core/interpret.c
  *: A simple interpreter
- *: 
+ *:
  *: WWW		: http://fype.buetow.org
  *: E-Mail	: fype@dev.buetow.org
- *: 
- *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow 
+ *:
+ *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow
  *: All rights reserved.
- *: 
+ *:
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
  *:  * Redistributions of source code must retain the above copyright
@@ -15,20 +15,20 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of P. B. Labs nor the names of its contributors may 
- *:    be used to endorse or promote products derived from this software 
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may
+ *:    be used to endorse or promote products derived from this software
  *:    without specific prior written permission.
- *: 
- *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR 
- *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+ *:
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
+ *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT, 
- *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
- *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
- *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
+ *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  *: HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- *: STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
- *: IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ *: STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ *: IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
@@ -605,21 +605,35 @@ _compare(Interpret *p_interpret) {
       _Bool b_flag = true;
 
       do {
+         /*
+           ! = < > !! != !< !> =! == =< => <! <= << <> >! >= >< >>
+          */
          switch (p_interpret->tt) {
-         case TT_EQ:
-         case TT_NEQ:
+         case TT_NOT:
+         case TT_ASSIGN:
          case TT_LT:
          case TT_GT:
-         case TT_LE:
-         case TT_GE:
          {
-            Token *p_token = p_interpret->p_token;
+            Token *p_token_op = p_interpret->p_token;
+            Token *p_token_op2 = NULL;
             _NEXT
+
+            switch (p_interpret->tt) {
+            case TT_NOT:
+            case TT_ASSIGN:
+            case TT_LT:
+            case TT_GT:
+               p_token_op2 = p_interpret->p_token;
+               _NEXT
+            default:
+               break;
+            }
 
             if (!_sum(p_interpret))
                _INTERPRET_ERROR("Expected sum", p_interpret->p_token);
 
-            function_process(p_interpret, p_token, p_interpret->p_stack, 2);
+            function_process(p_interpret, p_token_op, p_token_op2,
+                             p_interpret->p_stack, 2);
          }
          break; /* case */
 
@@ -649,13 +663,14 @@ _sum(Interpret *p_interpret) {
          case TT_ADD:
          case TT_SUB:
          {
-            Token *p_token = p_interpret->p_token;
+            Token *p_token_op = p_interpret->p_token;
             _NEXT
 
             if (!_product(p_interpret))
-               _INTERPRET_ERROR("Expected product", p_token);
+               _INTERPRET_ERROR("Expected product", p_token_op);
 
-            function_process(p_interpret, p_token, p_interpret->p_stack, 2);
+            function_process(p_interpret, p_token_op, NULL,
+                             p_interpret->p_stack, 2);
 
          }
          break; /* case */
@@ -692,7 +707,8 @@ _product(Interpret *p_interpret) {
             if (!_product2(p_interpret))
                _INTERPRET_ERROR("Expected product2", p_token);
 
-            function_process(p_interpret, p_token, p_interpret->p_stack, 2);
+            function_process(p_interpret, p_token, NULL,
+                             p_interpret->p_stack, 2);
 
          }
          break; /* case */
@@ -730,7 +746,8 @@ _product2(Interpret *p_interpret) {
                _INTERPRET_ERROR("Expected expression", p_token);
 
             p_interpret->p_token_temp = p_token_temp;
-            function_process(p_interpret, p_token, p_interpret->p_stack, 2);
+            function_process(p_interpret, p_token, NULL,
+                             p_interpret->p_stack, 2);
             p_interpret->p_token_temp = NULL;
 
          }
@@ -778,7 +795,8 @@ _term(Interpret *p_interpret) {
                _SKIP
             }
 
-            function_process_buildin(p_interpret, p_token, p_interpret->p_stack);
+            function_process_buildin(p_interpret, p_token,
+                                     p_interpret->p_stack);
 
             stack_merge(p_stack, p_interpret->p_stack);
             stack_delete(p_interpret->p_stack);
