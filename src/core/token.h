@@ -36,6 +36,7 @@
 #define TOKEN_H
 
 #include "../defines.h"
+#include "../data/array.h"
 
 #define IS_TERMINAL(t) (START_TERMINALS < t && t < END_TERMINALS)
 #define IS_NOT_TERMINAL(t) !IS_TERMINAL(t)
@@ -86,6 +87,7 @@ typedef enum {
    TT_DOUBLE,
    END_NUMERICAL,
    TT_STRING,
+   TT_ARRAY,
    END_ASSIGNABLES,
    TT_IDENT,
    END_TYPES,
@@ -101,6 +103,7 @@ typedef enum {
    TT_PROC,
    TT_FUNC,
    TT_MY,
+   TT_ARR,
    TT_WHILE,
    TT_UNTIL,
    TT_NEXT,
@@ -112,6 +115,8 @@ typedef enum {
    START_PARANTS,
    TT_PARANT_CL,
    TT_PARANT_CR,
+   TT_PARANT_AL,
+   TT_PARANT_AR,
    TT_PARANT_L,
    TT_PARANT_R,
    END_PARANTS,
@@ -160,12 +165,14 @@ typedef struct {
    char *c_filename;
    unsigned int u_token_id;
    int i_ref_count;
+   Array *p_array;
 } Token;
 
 Token* token_new(char *c_val, TokenType tt_cur, int i_line_nr, int i_pos_nr, char *c_filename);
 Token* token_new_integer(int i_val);
 Token* token_new_couble(double d_val);
 Token* token_new_string(char *c_val);
+Token* token_new_array(int i_size);
 Token* token_new_copy(Token *p_token);
 Token* token_new_(char *c_val, TokenType tt_cur, char *c_filename);
 Token* token_new_dummy();

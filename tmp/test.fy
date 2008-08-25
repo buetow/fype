@@ -1,5 +1,3 @@
-my foo = 0;
 
-say foo;
 
-say 2 * 4.5 + 1 + gc;
+my foo = [1, 2.2, "3"];

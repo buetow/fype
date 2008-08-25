@@ -293,7 +293,8 @@ Special string behavior: A string will get auto convertet into an \textit{intege
 \item[{(\textit{integer}) \textit{any} \textbf{$<$=}}] \textbf{\textit{any}}
 \item[{(\textit{integer}) \textit{any} \textbf{$>$=}}] \textbf{\textit{any}}
 \item[{(\textit{integer}) \textit{any} \textbf{$<$}}] \textbf{\textit{any}}
-\item[{(\textit{integer}) \textit{any} \textbf{$>$}}] \textbf{\textit{any}}\end{description}
+\item[{(\textit{integer}) \textit{any} \textbf{$>$}}] \textbf{\textit{any}}
+\item[{(\textit{integer}) \textbf{not} \textit{any}}] \mbox{}\end{description}
 \subsection*{Definedness\label{Definedness}\index{Definedness}}
 \begin{description}
 
@@ -308,18 +309,13 @@ Tries to undefine/delete the \textit{identifier}. Returns 1 if success, otherwis
 
 \end{description}
 \subsection*{Bitwise\label{Bitwise}\index{Bitwise}}
-
-
-Bitwise operators do not work ATM. The fix is on its way!
-
 \begin{description}
 
-\item[{(\textit{any}) \textit{any} \textbf{$<$$<$}}] \textbf{\textit{any}}
-\item[{(\textit{any}) \textit{any} \textbf{$>$$>$}}] \textbf{\textit{any}}
-\item[{(\textit{any}) \textit{any} \textbf{and}}] \textbf{\textit{any}}
-\item[{(\textit{any}) \textit{any} \textbf{or}}] \textbf{\textit{any}}
-\item[{(\textit{any}) \textit{any} \textbf{xor}}] \textbf{\textit{any}}
-\item[{(\textit{any}) \textbf{not} \textit{any}}] \mbox{}\end{description}
+\item[{(\textit{integer}) \textit{any} \textbf{:$<$}}] \textbf{\textit{any}}
+\item[{(\textit{integer}) \textit{any} \textbf{:$>$}}] \textbf{\textit{any}}
+\item[{(\textit{integer}) \textit{any} \textbf{and}}] \textbf{\textit{any}}
+\item[{(\textit{integer}) \textit{any} \textbf{or}}] \textbf{\textit{any}}
+\item[{(\textit{integer}) \textit{any} \textbf{xor}}] \textbf{\textit{any}}\end{description}
 \subsection*{Numeric\label{Numeric}\index{Numeric}}
 \begin{description}
 

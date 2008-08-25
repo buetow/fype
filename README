@@ -223,6 +223,7 @@ BUILT IN FUNCTIONS
     (*integer*) *any* >= *any*
     (*integer*) *any* < *any*
     (*integer*) *any* > *any*
+    (*integer*) not *any*
 
   Definedness
     (*integer*) defined *identifier*
@@ -233,14 +234,11 @@ BUILT IN FUNCTIONS
         otherwise 0 is returned.
 
   Bitwise
-    Bitwise operators do not work ATM. The fix is on its way!
-
-    (*any*) *any* << *any*
-    (*any*) *any* >> *any*
-    (*any*) *any* and *any*
-    (*any*) *any* or *any*
-    (*any*) *any* xor *any*
-    (*any*) not *any*
+    (*integer*) *any* :< *any*
+    (*integer*) *any* :> *any*
+    (*integer*) *any* and *any*
+    (*integer*) *any* or *any*
+    (*integer*) *any* xor *any*
 
   Numeric
     (*number*) neg *number*

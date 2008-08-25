@@ -129,7 +129,7 @@
 .\" ========================================================================
 .\"
 .IX Title "FYPE 1"
-.TH FYPE 1 "2008-04-25" "Fype v0.0-devel Build 8860" "The Fype Users Manual Page"
+.TH FYPE 1 "2008-08-25" "Fype v0.0-devel Build 9175" "The Fype Users Manual Page"
 .SH "NAME"
 \&\fBFype\fR is \fBf\fRor \fBy\fRour \fBp\fRrogram \fBe\fRxecution
 .PP
@@ -365,6 +365,8 @@ Special string behavior: A string will get auto convertet into an \fIinteger\fR.
 .IX Item "(integer) any < any"
 .IP "(\fIinteger\fR) \fIany\fR \fB>\fR \fIany\fR" 4
 .IX Item "(integer) any > any"
+.IP "(\fIinteger\fR) \fBnot\fR \fIany\fR" 4
+.IX Item "(integer) not any"
 .PD
 .Sh "Definedness"
 .IX Subsection "Definedness"
@@ -376,20 +378,17 @@ Returns 1 if \fIidentifier\fR has been defined. Returns 0 else.
 Tries to undefine/delete the \fIidentifier\fR. Returns 1 if success, otherwise 0 is returned.
 .Sh "Bitwise"
 .IX Subsection "Bitwise"
-Bitwise operators do not work \s-1ATM\s0. The fix is on its way!
-.IP "(\fIany\fR) \fIany\fR \fB<<\fR \fIany\fR" 4
-.IX Item "(any) any << any"
+.IP "(\fIinteger\fR) \fIany\fR \fB:<\fR \fIany\fR" 4
+.IX Item "(integer) any :< any"
 .PD 0
-.IP "(\fIany\fR) \fIany\fR \fB>>\fR \fIany\fR" 4
-.IX Item "(any) any >> any"
-.IP "(\fIany\fR) \fIany\fR \fBand\fR \fIany\fR" 4
-.IX Item "(any) any and any"
-.IP "(\fIany\fR) \fIany\fR \fBor\fR \fIany\fR" 4
-.IX Item "(any) any or any"
-.IP "(\fIany\fR) \fIany\fR \fBxor\fR \fIany\fR" 4
-.IX Item "(any) any xor any"
-.IP "(\fIany\fR) \fBnot\fR \fIany\fR" 4
-.IX Item "(any) not any"
+.IP "(\fIinteger\fR) \fIany\fR \fB:>\fR \fIany\fR" 4
+.IX Item "(integer) any :> any"
+.IP "(\fIinteger\fR) \fIany\fR \fBand\fR \fIany\fR" 4
+.IX Item "(integer) any and any"
+.IP "(\fIinteger\fR) \fIany\fR \fBor\fR \fIany\fR" 4
+.IX Item "(integer) any or any"
+.IP "(\fIinteger\fR) \fIany\fR \fBxor\fR \fIany\fR" 4
+.IX Item "(integer) any xor any"
 .PD
 .Sh "Numeric"
 .IX Subsection "Numeric"

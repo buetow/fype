@@ -111,6 +111,18 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
             break;
          }
          break;
+      case TT_DDOT:
+         switch (tt_op2) {
+         case TT_LT:
+            tt_op = TT_LSHIFT;
+            break;
+         case TT_GT:
+            tt_op = TT_RSHIFT;
+            break;
+         default:
+            break;
+         }
+         break;
       default:
          break;
       }
@@ -371,6 +383,117 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
          NO_DEFAULT;
       }
       break;
+   case TT_AND:
+      switch (tt_highest) {
+      case TT_INTEGER:
+         token_set_ival(p_token_store,
+                        (int) token_get_ival(p_token_next) &
+                        token_get_ival(p_token_store));
+         break;
+      case TT_DOUBLE:
+         token_set_ival(p_token_store,
+                        (int) token_get_dval(p_token_next) &
+                        (int) token_get_dval(p_token_store));
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+      case TT_STRING:
+         token_set_ival(p_token_store,
+                        atoi(token_get_val(p_token_next)) &
+                        atoi(token_get_val(p_token_store)));
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+         NO_DEFAULT;
+      }
+      break;
+   case TT_OR:
+      switch (tt_highest) {
+      case TT_INTEGER:
+         token_set_ival(p_token_store,
+                        (int) token_get_ival(p_token_next) |
+                        token_get_ival(p_token_store));
+         break;
+      case TT_DOUBLE:
+         token_set_ival(p_token_store,
+                        (int) token_get_dval(p_token_next) |
+                        (int) token_get_dval(p_token_store));
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+      case TT_STRING:
+         token_set_ival(p_token_store,
+                        atoi(token_get_val(p_token_next)) |
+                        atoi(token_get_val(p_token_store)));
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+         NO_DEFAULT;
+      }
+      break;
+   case TT_XOR:
+      switch (tt_highest) {
+      case TT_INTEGER:
+         token_set_ival(p_token_store,
+                        (int) token_get_ival(p_token_next) ^
+                        token_get_ival(p_token_store));
+         break;
+      case TT_DOUBLE:
+         token_set_ival(p_token_store,
+                        (int) token_get_dval(p_token_next) ^
+                        (int) token_get_dval(p_token_store));
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+      case TT_STRING:
+         token_set_ival(p_token_store,
+                        atoi(token_get_val(p_token_next)) ^
+                        atoi(token_get_val(p_token_store)));
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+         NO_DEFAULT;
+      }
+      break;
+   case TT_LSHIFT:
+      switch (tt_highest) {
+      case TT_INTEGER:
+         token_set_ival(p_token_store,
+                        (int) token_get_ival(p_token_next) <<
+                        token_get_ival(p_token_store));
+         break;
+      case TT_DOUBLE:
+         token_set_ival(p_token_store,
+                        (int) token_get_dval(p_token_next) <<
+                        (int) token_get_dval(p_token_store));
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+      case TT_STRING:
+         token_set_ival(p_token_store,
+                        atoi(token_get_val(p_token_next)) <<
+                        atoi(token_get_val(p_token_store)));
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+         NO_DEFAULT;
+      }
+      break;
+   case TT_RSHIFT:
+      switch (tt_highest) {
+      case TT_INTEGER:
+         token_set_ival(p_token_store,
+                        (int) token_get_ival(p_token_next) >>
+                        token_get_ival(p_token_store));
+         break;
+      case TT_DOUBLE:
+         token_set_ival(p_token_store,
+                        (int) token_get_dval(p_token_next) >>
+                        (int) token_get_dval(p_token_store));
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+      case TT_STRING:
+         token_set_ival(p_token_store,
+                        atoi(token_get_val(p_token_next)) >>
+                        atoi(token_get_val(p_token_store)));
+         token_set_tt(p_token_store, TT_INTEGER);
+         break;
+         NO_DEFAULT;
+      }
+      break;
+
    default:
       _FUNCTION_ERROR("No such function/operator", p_token_op);
    }
@@ -447,6 +570,9 @@ function_is_buildin(Token *p_token_ident) {
       return (true);
 
    if (strcmp("yes", token_get_val(p_token_ident)) == 0)
+      return (true);
+
+   if (strcmp("not", token_get_val(p_token_ident)) == 0)
       return (true);
 
    return (false);
@@ -665,6 +791,27 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
       }
 
       stack_push(p_stack_args, p_token);
+
+   } else if (strcmp("not", token_get_val(p_token_ident)) == 0) {
+      if (0 == stack_size(p_stack_args))
+         _FUNCTION_ERROR("No argument given", p_token_ident);
+
+      Token *p_token = token_new_copy(stack_pop(p_stack_args));
+      stack_push(p_stack_args, p_token);
+
+      switch (token_get_tt(p_token)) {
+      case TT_INTEGER:
+         token_set_ival(p_token, !token_get_ival(p_token));
+         break;
+      case TT_DOUBLE:
+         token_set_dval(p_token, !token_get_dval(p_token));
+         break;
+      case TT_STRING:
+         token_set_ival(p_token, !atoi(token_get_val(p_token)));
+         token_set_tt(p_token, TT_INTEGER);
+         break;
+         NO_DEFAULT;
+      }
    }
 }
 

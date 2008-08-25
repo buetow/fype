@@ -55,6 +55,7 @@ typedef struct {
    char *c_codestring;
    FILE *fp;
    List *p_list_token;
+   TokenType tt_last;
 } Scanner;
 
 Scanner *scanner_new(List *p_list_token, Tupel *p_tupel_argv);

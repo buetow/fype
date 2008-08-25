@@ -37,7 +37,7 @@
 #include <ctype.h>
 #include <string.h>
 
-const char _TOKENENDS[] = "})+-*/={(<>;:,.!";
+const char _TOKENENDS[] = "}])+-*/={([<>;:,.!";
 #define _ADD_SEMICOLON_INDEX 2
 int _CODESTR_INDEX = 0;
 
@@ -70,6 +70,7 @@ scanner_new(List *p_list_token, Tupel *p_tupel_argv) {
    p_scanner->i_current_pos_nr = 0;
 
    p_scanner->i_num_tokenends = strlen(_TOKENENDS);
+   p_scanner->tt_last = TT_NONE;
 
    return p_scanner;
 }
@@ -208,7 +209,7 @@ scanner_run(Fype *p_fype) {
          }
          {
             int i_num_nl = 0;
-            _Bool flag = false;
+            //_Bool flag = false;
             do {
                c = _scanner_get_next_char(p_scanner);
                if ( c == '\n' ) {
@@ -226,7 +227,7 @@ scanner_run(Fype *p_fype) {
                      c_token[i_token_len-1] = '"';
 
                   } else {
-                     flag = true;
+                     //flag = true;
                      break;
                   }
 
@@ -244,8 +245,8 @@ scanner_run(Fype *p_fype) {
             if (i_num_nl)
                p_scanner->i_current_line_nr += i_num_nl;
 
-            if (flag)
-               _add_semicolon_to_list(p_scanner);
+            //if (flag)
+            //   _add_semicolon_to_list(p_scanner);
          }
 
          break;
@@ -267,17 +268,19 @@ scanner_run(Fype *p_fype) {
 
       default:
          if (i_token_len) {
+            TokenType tt_cur = scanner_get_tt_cur(c_token);
+            if (tt_cur == TT_PARANT_CR && p_scanner->tt_last == TT_STRING)
+               _add_semicolon_to_list(p_scanner);
+
             char d = c_token[i_token_len-1];
             if ((!isalpha(d) && !isdigit(d) /*&& d != '-'*/) &&
                   (isalpha(c) || isdigit(c))) {
 
-               TokenType tt_cur = scanner_get_tt_cur(c_token);
                scanner_add_token(p_scanner, &c_token, &i_token_len, tt_cur);
 
             } else {
                for (int i = 0; i < p_scanner->i_num_tokenends; ++i) {
                   if (_TOKENENDS[i] == c) {
-                     TokenType tt_cur = scanner_get_tt_cur(c_token);
                      scanner_add_token(p_scanner, &c_token, &i_token_len, tt_cur);
                      if (i < _ADD_SEMICOLON_INDEX)
                         _add_semicolon_to_list(p_scanner);
@@ -342,6 +345,8 @@ scanner_add_token(Scanner *p_scanner, char **cc_token, int *p_token_len,
    *cc_token = malloc(sizeof(char));
    (*cc_token)[0] = 0;
    *p_token_len = 0;
+
+   p_scanner->tt_last = tt_cur;
 }
 
 TokenType

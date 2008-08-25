@@ -174,7 +174,10 @@ int
 _var_decl(Interpret *p_interpret) {
    _CHECK TRACK
 
-   if (p_interpret->tt == TT_MY) {
+   switch (p_interpret->tt) {
+   //case TT_ARR: //TODO cleanup TT_ARR
+   case TT_MY:
+   {
       if (_NEXT_TT != TT_IDENT)
          _INTERPRET_ERROR("'my' expects identifier", p_interpret->p_token);
 
@@ -195,6 +198,9 @@ _var_decl(Interpret *p_interpret) {
       } else {
          _INTERPRET_ERROR("Expected ';' after", p_token_ident);
       }
+   }
+   default:
+   	break;
    }
 
    return (0);
@@ -220,7 +226,8 @@ _var_assign(Interpret *p_interpret) {
          p_interpret->p_stack = stack_new();
 
          if (_expression_(p_interpret)) {
-            function_process_buildin(p_interpret, p_token, p_interpret->p_stack);
+            function_process_buildin(p_interpret, p_token, 
+					p_interpret->p_stack);
 
             stack_merge(p_stack, p_interpret->p_stack);
             stack_delete(p_interpret->p_stack);
@@ -605,9 +612,6 @@ _compare(Interpret *p_interpret) {
       _Bool b_flag = true;
 
       do {
-         /*
-           ! = < > !! != !< !> =! == =< => <! <= << <> >! >= >< >>
-          */
          switch (p_interpret->tt) {
          case TT_NOT:
          case TT_ASSIGN:
@@ -659,17 +663,30 @@ _sum(Interpret *p_interpret) {
       _Bool b_flag = true;
 
       do {
+         Token *p_token_op2 = NULL, *p_token_tmp = NULL;
+
          switch (p_interpret->tt) {
+         case TT_DDOT:
+            p_token_tmp = p_interpret->p_token;
+            _NEXT
          case TT_ADD:
          case TT_SUB:
+         case TT_AND:
+         case TT_OR:
+         case TT_XOR:
          {
             Token *p_token_op = p_interpret->p_token;
             _NEXT
 
+            if (p_token_tmp != NULL) {
+               p_token_op2 = p_token_op;
+               p_token_op = p_token_tmp;;
+            }
+
             if (!_product(p_interpret))
                _INTERPRET_ERROR("Expected product", p_token_op);
 
-            function_process(p_interpret, p_token_op, NULL,
+            function_process(p_interpret, p_token_op, p_token_op2,
                              p_interpret->p_stack, 2);
 
          }
@@ -735,9 +752,8 @@ _product2(Interpret *p_interpret) {
       _Bool b_flag = true;
 
       do {
-         switch (p_interpret->tt) {
-         case TT_ASSIGN:
-         {
+         if (p_interpret->tt == TT_ASSIGN
+               && IS_NOT_OPERATOR(_NEXT_TT)) {
             Token *p_token = p_interpret->p_token;
             Token *p_token_temp = p_interpret->p_token_prev;
             _NEXT
@@ -750,15 +766,10 @@ _product2(Interpret *p_interpret) {
                              p_interpret->p_stack, 2);
             p_interpret->p_token_temp = NULL;
 
-         }
-         break; /* case */
-
-         default:
+         } else {
             b_flag = false;
             break;
-
-         } /* switch */
-
+         } /* if */
       } while (b_flag);
 
       return (1);
@@ -898,6 +909,17 @@ _term(Interpret *p_interpret) {
 
       _NEXT;
       return (1);
+   }
+   break;
+
+   case TT_PARANT_AL:
+   {
+      Token *p_token = p_interpret->p_token;
+      _NEXT
+
+	  Token *p_token_arr = token_new_array(ARRAY_SIZE);
+      stack_push(p_interpret->p_stack, p_token_arr);
+	  _INTERPRET_ERROR("arrays not yet fully implemented", p_token_arr);
    }
    break;
 

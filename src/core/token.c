@@ -57,11 +57,14 @@ get_tt(char *c_token) {
    CHECK("proc") TT_PROC;
    CHECK("func") TT_FUNC;
    CHECK("my") TT_MY;
-   CHECK("not") TT_NOT;
+   CHECK("arr") TT_ARR;
+   CHECK("!") TT_NOT;
    CHECK("!=") TT_NEQ;
    CHECK("=~") TT_RE;
    CHECK("(") TT_PARANT_L;
    CHECK(")") TT_PARANT_R;
+   CHECK("[") TT_PARANT_AL;
+   CHECK("]") TT_PARANT_AR;
    CHECK("*") TT_MULT;
    CHECK("+") TT_ADD;
    CHECK("++") TT_INCR;
@@ -102,6 +105,7 @@ tt_get_name(TokenType tt_cur) {
       CASE(TT_IDENT, "TT_IDENT")
       CASE(TT_DOUBLE,"TT_DOUBLE")
       CASE(TT_STRING,"TT_STRING")
+      CASE(TT_ARRAY,"TT_ARRAY")
       CASE(TT_INTEGER,"TT_INTEGER")
       CASE(TT_BOOL,"TT_BOOL")
       CASE(END_ASSIGNABLES, "END_ASSIGNABLES")
@@ -119,6 +123,7 @@ tt_get_name(TokenType tt_cur) {
       CASE(TT_PROC,"TT_PROC")
       CASE(TT_FUNC,"TT_FUNC")
       CASE(TT_MY,"TT_MY")
+      CASE(TT_ARR,"TT_ARR")
       CASE(TT_WHILE,"TT_WHILE")
       CASE(TT_UNTIL,"TT_UNTIL")
       CASE(TT_NEXT,"TT_NEXT")
@@ -131,6 +136,8 @@ tt_get_name(TokenType tt_cur) {
       CASE(START_PARANTS, "START_PARANTS")
       CASE(TT_PARANT_CL,"TT_PARANT_CL")
       CASE(TT_PARANT_CR,"TT_PARANT_CR")
+      CASE(TT_PARANT_AL,"TT_PARANT_AL")
+      CASE(TT_PARANT_AR,"TT_PARANT_AR")
       CASE(TT_PARANT_L,"TT_PARANT_L")
       CASE(TT_PARANT_R,"TT_PARANT_R")
       CASE(END_PARANTS, "END_PARANTS")
@@ -186,6 +193,7 @@ token_new(char *c_val, TokenType tt_cur, int i_line_nr, int i_pos_nr, char *c_fi
    p_token->i_line_nr = i_line_nr;
    p_token->i_pos_nr = i_pos_nr;
    p_token->c_filename = c_filename;
+   p_token->p_array = NULL;
 
    switch (tt_cur) {
    case TT_INTEGER:
@@ -194,6 +202,11 @@ token_new(char *c_val, TokenType tt_cur, int i_line_nr, int i_pos_nr, char *c_fi
    case TT_DOUBLE:
    {
       p_token->d_val = atof(c_val);
+      break;
+   }
+   case TT_ARRAY:
+   {
+      p_token->p_array = array_new();
       break;
    }
    NO_DEFAULT;
@@ -227,6 +240,15 @@ token_new_string(char *c_val) {
 
    p_token->c_val = calloc(strlen(c_val)+1, sizeof(char));
    strcpy(p_token->c_val, c_val);
+
+   return (p_token);
+}
+
+Token*
+token_new_array(int i_size) {
+   Token *p_token = token_new_dummy();
+   token_set_tt(p_token, TT_ARRAY);
+   array_resize(p_token->p_array, i_size);
 
    return (p_token);
 }
@@ -321,6 +343,9 @@ token_delete(Token *p_token) {
 #endif /* DEBUG_TOKEN_REFCOUNT */
          if (p_token->c_val)
             free(p_token->c_val);
+
+		 if (p_token->p_array)
+			 array_delete(p_token->p_array);
 
          free(p_token);
       }

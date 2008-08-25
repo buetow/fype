@@ -251,6 +251,8 @@ Special string behavior: A string will get auto convertet into an I<integer>.
 
 =item (I<integer>) I<any> B<E<gt>> I<any>
 
+=item (I<integer>) B<not> I<any>
+
 =back 
 
 =head2 Definedness 
@@ -269,21 +271,17 @@ Tries to undefine/delete the I<identifier>. Returns 1 if success, otherwise 0 is
 
 =head2 Bitwise 
 
-Bitwise operators do not work ATM. The fix is on its way!
-
 =over 
 
-=item (I<any>) I<any> B<<<> I<any>
+=item (I<integer>) I<any> B<:<> I<any>
 
-=item (I<any>) I<any> B<E<gt>E<gt>> I<any>
+=item (I<integer>) I<any> B<:E<gt>> I<any>
 
-=item (I<any>) I<any> B<and> I<any>
+=item (I<integer>) I<any> B<and> I<any>
 
-=item (I<any>) I<any> B<or> I<any>
+=item (I<integer>) I<any> B<or> I<any>
 
-=item (I<any>) I<any> B<xor> I<any>
-
-=item (I<any>) B<not> I<any>
+=item (I<integer>) I<any> B<xor> I<any>
 
 =back
 

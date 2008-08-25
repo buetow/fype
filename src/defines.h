@@ -45,6 +45,7 @@
 #define COPYRIGHT "Copyright by Paul C. Buetow (2005 - 2008) <fype@dev.buetow.org>"
 #define FYPE
 #define GRAMMAR_MAP_SIZES 128
+#define ARRAY_SIZE 16
 #define HASH_MAXOCC 5
 #define HASH_MKEYLEN 32
 #define HASH_SCALE 10
