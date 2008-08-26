@@ -53,8 +53,8 @@
 #define ASSEMBLER "yasm"
 #define LINKER "cc"
 #define SCANNER_BUFSIZE 512
-#define URL "<http://www.Fype.org>"
-#define VERSION "v0.0-devel Build"
+#define URL "<http://fype.buetow.org>"
+#define VERSION "v0.3-devel Build"
 
 
 
