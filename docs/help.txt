@@ -1,0 +1,8 @@
+Fype v0.1 Build 9205
+Copyright by Paul C. Buetow (2005 - 2008) <fype@dev.buetow.org>
+	-e	Executes given code string (see synopses)
+	-h	Prints this help
+	-s	Prints the synopsis
+	-v	Prints the current version
+	-T	Prints token list after scanning
+	-V	Verbose mode: Print all possible output
