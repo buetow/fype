@@ -54,7 +54,7 @@
 #define LINKER "cc"
 #define SCANNER_BUFSIZE 512
 #define URL "<http://fype.buetow.org>"
-#define VERSION "v0.3-devel Build"
+#define VERSION "v0.1-devel Build"
 
 
 
