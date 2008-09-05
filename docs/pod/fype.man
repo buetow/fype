@@ -129,11 +129,11 @@
 .\" ========================================================================
 .\"
 .IX Title "FYPE 1"
-.TH FYPE 1 "2008-08-25" "Fype v0.0-devel Build 9175" "The Fype Users Manual Page"
+.TH FYPE 1 "2008-09-05" "Fype v0.0-devel Build 9201" "The Fype Users Manual Page"
 .SH "NAME"
 \&\fBFype\fR is \fBf\fRor \fBy\fRour \fBp\fRrogram \fBe\fRxecution
 .PP
-\&\fBFype\fR is \fBf\fRree \fBy\fRack \fBp\fRrogramed for \fBE\fRLF
+\&\fBFype\fR is \fBf\fRree \fBy\fRak \fBp\fRrogramed for \fBE\fRLF
 .PP
 It's not a hype \- it's Fype!
 .SH "SYNOPSES"

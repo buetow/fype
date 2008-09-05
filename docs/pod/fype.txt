@@ -1,7 +1,7 @@
 NAME
     Fype is for your program execution
 
-    Fype is free yack programed for ELF
+    Fype is free yak programed for ELF
 
     It's not a hype - it's Fype!
 
