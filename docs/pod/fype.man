@@ -129,13 +129,13 @@
 .\" ========================================================================
 .\"
 .IX Title "FYPE 1"
-.TH FYPE 1 "2008-09-05" "Fype v0.0-devel Build 9201" "The Fype Users Manual Page"
+.TH FYPE 1 "2008-09-06" "Fype v0.1-devel Build 9207" "The Fype Users Manual Page"
 .SH "NAME"
 \&\fBFype\fR is \fBf\fRor \fBy\fRour \fBp\fRrogram \fBe\fRxecution
 .PP
 \&\fBFype\fR is \fBf\fRree \fBy\fRak \fBp\fRrogramed for \fBE\fRLF
 .PP
-It's not a hype \- it's Fype!
+It's not a hype \- it's \fBFype\fR!
 .SH "SYNOPSES"
 .IX Header "SYNOPSES"
 .IP "\fBfype\fR [\-[hsvTV]] file.fy" 4
@@ -162,7 +162,7 @@ Fancy stuff like \s-1OOP\s0 or unicode or threading is not yet planed. But fancy
 The Fype syntax is very simple and is using a maximum look ahead of 1 and a very easy top down parsing. Fype is parsing and interpreting its code simultaneous. This means, that syntax errors are only detected during program runtime. 
 .SH "REQUIREMENTS"
 .IX Header "REQUIREMENTS"
-Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows support is not planned. But may work using Cygwin or \s-1SFU\s0.
+Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows support is not planned. But may work using Cygwin or \s-1SFU\s0. Linux users have to install pmake before compiling Fype!
 .PP
 You will also need:
 .PP
@@ -172,7 +172,17 @@ You will also need:
 .Ve
 .SH "GETTING STARTED"
 .IX Header "GETTING STARTED"
-Extract, compile and install Fype:
+On Linux: Extract, compile and install Fype:
+.PP
+.Vb 5
+\&        tar xvjf fype.tar.bz2
+\&        cd fype
+\&        pmake
+\&        sudo pmake install 
+\&        pmake clean
+.Ve
+.PP
+On FreeBSD: Extract, compile and install Fype:
 .PP
 .Vb 5
 \&        tar xvjf fype.tar.bz2

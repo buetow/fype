@@ -9,7 +9,7 @@
 
 
 
-It's not a hype - it's Fype!
+It's not a hype - it's \textbf{Fype}!
 
 \section{SYNOPSES\label{SYNOPSES}\index{SYNOPSES}}
 \begin{description}
@@ -46,7 +46,7 @@ The Fype syntax is very simple and is using a maximum look ahead of 1 and a very
 \section{REQUIREMENTS\label{REQUIREMENTS}\index{REQUIREMENTS}}
 
 
-Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows support is not planned. But may work using Cygwin or SFU.
+Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows support is not planned. But may work using Cygwin or SFU. Linux users have to install pmake before compiling Fype!
 
 
 
@@ -59,7 +59,18 @@ You will also need:
 \section{GETTING STARTED\label{GETTING_STARTED}\index{GETTING STARTED}}
 
 
-Extract, compile and install Fype:
+On Linux: Extract, compile and install Fype:
+
+\begin{verbatim}
+        tar xvjf fype.tar.bz2
+        cd fype
+        pmake
+        sudo pmake install 
+        pmake clean
+\end{verbatim}
+
+
+On FreeBSD: Extract, compile and install Fype:
 
 \begin{verbatim}
         tar xvjf fype.tar.bz2

@@ -4,7 +4,7 @@ B<Fype> is B<f>or B<y>our B<p>rogram B<e>xecution
 
 B<Fype> is B<f>ree B<y>ak B<p>rogramed for B<E>LF
 
-It's not a hype - it's Fype!
+It's not a hype - it's B<Fype>!
 
 =head1 SYNOPSES
 
@@ -35,7 +35,7 @@ The Fype syntax is very simple and is using a maximum look ahead of 1 and a very
 
 =head1 REQUIREMENTS
 
-Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows support is not planned. But may work using Cygwin or SFU.
+Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows support is not planned. But may work using Cygwin or SFU. Linux users have to install pmake before compiling Fype!
 
 You will also need:
 
@@ -44,7 +44,15 @@ You will also need:
 
 =head1 GETTING STARTED
 
-Extract, compile and install Fype:
+On Linux: Extract, compile and install Fype:
+
+	tar xvjf fype.tar.bz2
+	cd fype
+	pmake
+	sudo pmake install 
+	pmake clean
+
+On FreeBSD: Extract, compile and install Fype:
 
 	tar xvjf fype.tar.bz2
 	cd fype

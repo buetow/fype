@@ -71,7 +71,7 @@
 <h1><a name="name">NAME</a></h1>
 <p><strong>Fype</strong> is <strong>f</strong>or <strong>y</strong>our <strong>p</strong>rogram <strong>e</strong>xecution</p>
 <p><strong>Fype</strong> is <strong>f</strong>ree <strong>y</strong>ak <strong>p</strong>rogramed for <strong>E</strong>LF</p>
-<p>It's not a hype - it's Fype!</p>
+<p>It's not a hype - it's <strong>Fype</strong>!</p>
 <p>
 </p>
 <hr />
@@ -101,7 +101,7 @@ TODO file of the source distribution of Fype!</p>
 </p>
 <hr />
 <h1><a name="requirements">REQUIREMENTS</a></h1>
-<p>Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows support is not planned. But may work using Cygwin or SFU.</p>
+<p>Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows support is not planned. But may work using Cygwin or SFU. Linux users have to install pmake before compiling Fype!</p>
 <p>You will also need:</p>
 <pre>
         GNU GCC C Compiler (gcc.gnu.org)
@@ -110,7 +110,14 @@ TODO file of the source distribution of Fype!</p>
 </p>
 <hr />
 <h1><a name="getting_started">GETTING STARTED</a></h1>
-<p>Extract, compile and install Fype:</p>
+<p>On Linux: Extract, compile and install Fype:</p>
+<pre>
+        tar xvjf fype.tar.bz2
+        cd fype
+        pmake
+        sudo pmake install 
+        pmake clean</pre>
+<p>On FreeBSD: Extract, compile and install Fype:</p>
 <pre>
         tar xvjf fype.tar.bz2
         cd fype

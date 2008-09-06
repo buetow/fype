@@ -41,7 +41,8 @@ PARSING / CODE GENERATION
 
 REQUIREMENTS
     Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows
-    support is not planned. But may work using Cygwin or SFU.
+    support is not planned. But may work using Cygwin or SFU. Linux users
+    have to install pmake before compiling Fype!
 
     You will also need:
 
@@ -49,7 +50,15 @@ REQUIREMENTS
             NetBSD Make aka pmake (GNU Make will not work) (it's included in any *BSD)
 
 GETTING STARTED
-    Extract, compile and install Fype:
+    On Linux: Extract, compile and install Fype:
+
+            tar xvjf fype.tar.bz2
+            cd fype
+            pmake
+            sudo pmake install 
+            pmake clean
+
+    On FreeBSD: Extract, compile and install Fype:
 
             tar xvjf fype.tar.bz2
             cd fype
