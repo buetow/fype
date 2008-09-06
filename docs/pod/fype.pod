@@ -1,8 +1,8 @@
 =head1 NAME
 
-B<Fype> is B<f>or B<y>our B<p>rogram B<e>xecution
+B<Fype> is B<F>or B<Y>our B<P>rogram B<E>xecution
 
-B<Fype> is B<f>ree B<y>ak B<p>rogramed for B<E>LF
+B<Fype> is B<F>ree B<Y>ak B<P>rogramed for B<E>LF
 
 It's not a hype - it's B<Fype>!
 
