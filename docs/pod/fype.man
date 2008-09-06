@@ -164,12 +164,14 @@ The Fype syntax is very simple and is using a maximum look ahead of 1 and a very
 .IX Header "REQUIREMENTS"
 Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows support is not planned. But may work using Cygwin or \s-1SFU\s0. Linux users have to install pmake before compiling Fype!
 .PP
-You will also need:
+You will need:
 .PP
 .Vb 2
 \&        GNU GCC C Compiler (gcc.gnu.org)
-\&        NetBSD Make aka pmake (GNU Make will not work) (it's included in any *BSD)
+\&        NetBSD Make aka pmake (GNU Make will not work)
 .Ve
+.PP
+NetBSD Make is included in any *BSD and can be run with just \fBmake\fR.
 .SH "GETTING STARTED"
 .IX Header "GETTING STARTED"
 On Linux: Extract, compile and install Fype:
