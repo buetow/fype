@@ -1,3 +1,4 @@
+# THIS MAKEFILE MAY WORK ONLY WITH (NET)BSD MAKE AKA PMAKE!
 
 all: man html latex txt
 html:
