@@ -20,21 +20,22 @@
 	<li><a href="#parsing___code_generation">PARSING / CODE GENERATION</a></li>
 	<li><a href="#requirements">REQUIREMENTS</a></li>
 	<li><a href="#getting_started">GETTING STARTED</a></li>
-	<li><a href="#data_types">DATA TYPES</a></li>
-	<ul>
-
-		<li><a href="#the_basic_data_types">The basic data types</a></li>
-		<li><a href="#explicit_type_conversions">Explicit type conversions</a></li>
-	</ul>
-
 	<li><a href="#syntax">SYNTAX</a></li>
 	<ul>
 
 		<li><a href="#comments">Comments</a></li>
 		<li><a href="#statements">Statements</a></li>
-		<li><a href="#paranthesis">Paranthesis</a></li>
+		<li><a href="#parenthesis">Parenthesis</a></li>
 		<li><a href="#scopeing">Scopeing</a></li>
 		<li><a href="#control_statements">Control statements</a></li>
+	</ul>
+
+	<li><a href="#data_types">DATA TYPES</a></li>
+	<ul>
+
+		<li><a href="#the_basic_data_types">The basic data types</a></li>
+		<li><a href="#explicit_type_conversions">Explicit type conversions</a></li>
+		<li><a href="#more_functions_for_data_types">More functions for data types</a></li>
 	</ul>
 
 	<li><a href="#variables">VARIABLES</a></li>
@@ -132,81 +133,6 @@ TODO file of the source distribution of Fype!</p>
 <p>
 </p>
 <hr />
-<h1><a name="data_types">DATA TYPES</a></h1>
-<p>Fype uses auto type conversion. However, if you want to know what's going on you may take a look at the provided basic datatypes.</p>
-<p>
-</p>
-<h2><a name="the_basic_data_types">The basic data types</a></h2>
-<dl>
-<dt><strong><a name="item_integer"><em>integer</em></a></strong>
-
-<dd>
-<p>Specifies an integer number</p>
-</dd>
-</li>
-<dt><strong><a name="item_double"><em>double</em></a></strong>
-
-<dd>
-<p>Specifies a double number</p>
-</dd>
-</li>
-<dt><strong><a name="item_string"><em>string</em></a></strong>
-
-<dd>
-<p>Specifies a string</p>
-</dd>
-</li>
-<dt><strong><a name="item_number"><em>number</em></a></strong>
-
-<dd>
-<p>May be an integer or a double number</p>
-</dd>
-</li>
-<dt><strong><a name="item_any"><em>any</em></a></strong>
-
-<dd>
-<p>May be of any type above</p>
-</dd>
-</li>
-<dt><strong><a name="item_void"><em>void</em></a></strong>
-
-<dd>
-<p>No type</p>
-</dd>
-</li>
-<dt><strong><a name="item_identifier"><em>identifier</em></a></strong>
-
-<dd>
-<p>It's a variable name or a procedure name or a function name</p>
-</dd>
-</li>
-</dl>
-<p>
-</p>
-<h2><a name="explicit_type_conversions">Explicit type conversions</a></h2>
-<dl>
-<dt><strong><a name="item__28integer_29_integer_any">(<em>integer</em>) <strong>integer</strong> <em>any</em></a></strong>
-
-<dd>
-<p>Converts any type to an integer</p>
-</dd>
-</li>
-<dt><strong><a name="item__28double_29_double_any">(<em>double</em>) <strong>double</strong> <em>any</em></a></strong>
-
-<dd>
-<p>Converts any type to a double</p>
-</dd>
-</li>
-<dt><strong><a name="item__28string_29_string_any">(<em>string</em>) <strong>string</strong> <em>any</em></a></strong>
-
-<dd>
-<p>Converts any type to a string</p>
-</dd>
-</li>
-</dl>
-<p>
-</p>
-<hr />
 <h1><a name="syntax">SYNTAX</a></h1>
 <p>
 </p>
@@ -222,8 +148,8 @@ TODO file of the source distribution of Fype!</p>
         exit foo - bar;</pre>
 <p>
 </p>
-<h2><a name="paranthesis">Paranthesis</a></h2>
-<p>All paranthesis of function calls are optional. They help to make the code better readable. They also help to force precedences of expressions.</p>
+<h2><a name="parenthesis">Parenthesis</a></h2>
+<p>All parenthesis of function calls are optional. They help to make the code better readable. They also help to force precedences of expressions.</p>
 <p>
 </p>
 <h2><a name="scopeing">Scopeing</a></h2>
@@ -276,6 +202,111 @@ TODO file of the source distribution of Fype!</p>
 
 <dd>
 <p>Runs the statements as long as the the expression evaluates to a false value.</p>
+</dd>
+</li>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="data_types">DATA TYPES</a></h1>
+<p>Fype uses auto type conversion. However, if you want to know what's going on you may take a look at the provided basic datatypes.</p>
+<p>
+</p>
+<h2><a name="the_basic_data_types">The basic data types</a></h2>
+<dl>
+<dt><strong><a name="item_integer"><em>integer</em></a></strong>
+
+<dd>
+<p>(Internal name TT_INTEGER)</p>
+</dd>
+</li>
+<dt><strong><a name="item_double"><em>double</em></a></strong>
+
+<dd>
+<p>(Internal name TT_DOUBLE)</p>
+</dd>
+</li>
+<dt><strong><a name="item_string"><em>string</em></a></strong>
+
+<dd>
+<p>(Internal name TT_STRING)</p>
+</dd>
+</li>
+<dt><strong><a name="item_array"><em>array</em></a></strong>
+
+<dd>
+<p>(Internal name TT_ARRAY)</p>
+</dd>
+</li>
+<dt><strong><a name="item_number"><em>number</em></a></strong>
+
+<dd>
+<p>May be an integer or a double number</p>
+</dd>
+</li>
+<dt><strong><a name="item_any"><em>any</em></a></strong>
+
+<dd>
+<p>May be of any type above</p>
+</dd>
+</li>
+<dt><strong><a name="item_void"><em>void</em></a></strong>
+
+<dd>
+<p>No type</p>
+</dd>
+</li>
+<dt><strong><a name="item_identifier"><em>identifier</em></a></strong>
+
+<dd>
+<p>It's a variable name or a procedure name or a function name</p>
+</dd>
+</li>
+</dl>
+<p>
+</p>
+<h2><a name="explicit_type_conversions">Explicit type conversions</a></h2>
+<p>The data types inside the brackets are only showing the return types of each function.</p>
+<dl>
+<dt><strong><a name="item__28integer_29_integer_any">(<em>integer</em>) <strong>integer</strong> <em>any</em></a></strong>
+
+<dd>
+<p>Converts any type to an integer.</p>
+</dd>
+</li>
+<dt><strong><a name="item__28double_29_double_any">(<em>double</em>) <strong>double</strong> <em>any</em></a></strong>
+
+<dd>
+<p>Converts any type to a double.</p>
+</dd>
+</li>
+<dt><strong><a name="item__28string_29_string_any">(<em>string</em>) <strong>string</strong> <em>any</em></a></strong>
+
+<dd>
+<p>Converts any type to a string.</p>
+</dd>
+</li>
+<dt><strong><a name="item__28array_29_array_any">(<em>array</em>) <strong>array</strong> <em>any</em></a></strong>
+
+<dd>
+<p>Converts any type to an array. This function is not yet implemented.</p>
+</dd>
+</li>
+</dl>
+<p>
+</p>
+<h2><a name="more_functions_for_data_types">More functions for data types</a></h2>
+<dl>
+<dt><strong><a name="item__28string_29_type_any">(<em>string</em>) <strong>type</strong> <em>any</em></a></strong>
+
+<dd>
+<p>Returns the name of the current type. Examples:</p>
+</dd>
+<dd>
+<pre>
+        my foo = 1;
+        put type foo; # Prints &quot;TT_INTEGER&quot;
+        put type 1.2; # Prints &quot;TT_DOUBLE&quot;</pre>
 </dd>
 </li>
 </dl>
@@ -580,7 +611,7 @@ keyword in order to check if a procedure has been defined or not.</p>
 </p>
 <hr />
 <h1><a name="see_also">SEE ALSO</a></h1>
-<p><code>awk(1)</code> <code>cc(1)</code> <code>make(1)</code>
+<p><code>awk(1)</code> <code>cc(1)</code> 
 
 </p>
 

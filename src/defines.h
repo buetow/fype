@@ -80,6 +80,7 @@
 //#define DEBUG_TRACK
 //#define DEBUG_BLOCK_GET
 //#define DEBUG_EXPRESSION_GET
+//#define DEBUG_ARRAY_GET
 
 #ifdef DEBUG_TRACK
 #define TRACK \

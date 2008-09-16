@@ -1,3 +1,29 @@
+#*
+my foo = [1 2 3]; 
+assert "TT_INTEGER" == type say integer foo;
 
+my bar = [1 2 3]; 
+assert "TT_DOUBLE" == type say double bar;
 
-my foo = [1, 2.2, "3"];
+my baz = [1 2 3]; 
+assert "TT_STRING" == type say string baz;
+*#
+say [1 3 5 6];
+
+Token (id=00000, line=00011, pos=0004, type=TT_IDENT, val=say, ival=0, dval=0.000000, refs=1)
+Token (id=00001, line=00011, pos=0006, type=TT_PARANT_AL, val=[, ival=0, dval=0.000000, refs=1)
+Token (id=00002, line=00011, pos=0007, type=TT_INTEGER, val=1, ival=1, dval=0.000000, refs=1)
+Token (id=00003, line=00011, pos=0009, type=TT_INTEGER, val=3, ival=3, dval=0.000000, refs=1)
+Token (id=00004, line=00011, pos=0011, type=TT_INTEGER, val=5, ival=5, dval=0.000000, refs=1)
+Token (id=00005, line=00011, pos=0013, type=TT_INTEGER, val=6, ival=6, dval=0.000000, refs=1)
+Token (id=00006, line=00011, pos=0013, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00007, line=00011, pos=0014, type=TT_PARANT_AR, val=], ival=0, dval=0.000000, refs=1)
+Token (id=00008, line=00011, pos=0015, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+1 3 5 6  
+The garbage collector still has 5 registered items which don't have a zero ref count!
+(id=00002, line=00011, pos=0007, type=TT_INTEGER, val=1, ival=1, dval=0.000000, refs=1)
+(id=00003, line=00011, pos=0009, type=TT_INTEGER, val=3, ival=3, dval=0.000000, refs=1)
+(id=00004, line=00011, pos=0011, type=TT_INTEGER, val=5, ival=5, dval=0.000000, refs=1)
+(id=00005, line=00011, pos=0013, type=TT_INTEGER, val=6, ival=6, dval=0.000000, refs=1)
+(id=00006, line=00011, pos=0013, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Garbage left: Garbage error (Fype @ ./src/core/garbage.c line 82)

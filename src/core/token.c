@@ -57,7 +57,6 @@ get_tt(char *c_token) {
    CHECK("proc") TT_PROC;
    CHECK("func") TT_FUNC;
    CHECK("my") TT_MY;
-   CHECK("arr") TT_ARR;
    CHECK("!") TT_NOT;
    CHECK("!=") TT_NEQ;
    CHECK("=~") TT_RE;
@@ -123,7 +122,6 @@ tt_get_name(TokenType tt_cur) {
       CASE(TT_PROC,"TT_PROC")
       CASE(TT_FUNC,"TT_FUNC")
       CASE(TT_MY,"TT_MY")
-      CASE(TT_ARR,"TT_ARR")
       CASE(TT_WHILE,"TT_WHILE")
       CASE(TT_UNTIL,"TT_UNTIL")
       CASE(TT_NEXT,"TT_NEXT")
@@ -248,7 +246,11 @@ Token*
 token_new_array(int i_size) {
    Token *p_token = token_new_dummy();
    token_set_tt(p_token, TT_ARRAY);
-   array_resize(p_token->p_array, i_size);
+
+   if (p_token->p_array == NULL)
+      p_token->p_array = array_new();
+
+   //array_resize(p_token->p_array, i_size);
 
    return (p_token);
 }
@@ -305,8 +307,22 @@ void token_copy_vals(Token *p_token_to, Token *p_token_from) {
       i_len = strlen(p_token_from->c_val);
       p_token_to->c_val = calloc(i_len+1, sizeof(char));
       strcpy(p_token_to->c_val, p_token_from->c_val);
+
    } else {
       p_token_to->c_val = NULL;
+   }
+
+   if (p_token_from->tt_cur == TT_ARRAY) {
+	   p_token_to->p_array = array_new();
+	   ArrayIterator *p_iter = arrayiterator_new(p_token_from->p_array);
+	   while (arrayiterator_has_next(p_iter)) {
+		   Token *p_token = arrayiterator_next(p_iter);
+		   token_ref_up(p_token);
+		   array_unshift(p_token_to->p_array, p_token);
+	   }
+	   arrayiterator_delete(p_iter);
+   } else {
+	   p_token_to->p_array = NULL;
    }
 
    p_token_to->tt_cur = p_token_from->tt_cur;
@@ -344,8 +360,10 @@ token_delete(Token *p_token) {
          if (p_token->c_val)
             free(p_token->c_val);
 
-		 if (p_token->p_array)
-			 array_delete(p_token->p_array);
+         if (p_token->p_array) {
+            array_iterate(p_token->p_array, token_delete_cb);
+            array_delete(p_token->p_array);
+         }
 
          free(p_token);
       }
@@ -366,16 +384,27 @@ token_delete(Token *p_token) {
 
 void
 token_print(Token *p_token) {
-   printf("(id=%05u, line=%05d, pos=%04d, type=%s, val=%s, ival=%d, dval=%f,"
-          " refs=%d)",
+   printf("(id=%05u, line=%05d, pos=%04d, type=%s",
           p_token->u_token_id,
           p_token->i_line_nr,
           p_token->i_pos_nr,
-          tt_get_name(p_token->tt_cur),
-          p_token->c_val,
-          p_token->i_val,
-          p_token->d_val,
-          p_token->i_ref_count);
+          tt_get_name(p_token->tt_cur));
+
+   if (IS_ARRAY(p_token)) {
+   } else {
+      printf(", val=%s, ival=%d, dval=%f",
+             p_token->c_val,
+             p_token->i_val,
+             p_token->d_val);
+   }
+
+   printf(", refs=%d)", p_token->i_ref_count);
+}
+
+void
+token_print_ln(Token *p_token) {
+   token_print(p_token);
+   printf("\n");
 }
 
 void
