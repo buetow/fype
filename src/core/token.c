@@ -396,10 +396,10 @@ token_delete(Token *p_token) {
 
       _token_free(p_token);
 
-   } 
+   }
 #ifdef DEBUG_TOKEN_REFCOUNT
-    else if (p_token->i_ref_count < 0) {
-		token_print_ln(p_token);
+   else if (p_token->i_ref_count < 0) {
+      token_print_ln(p_token);
       printf("Token ref count is 0 > %d\n",
              p_token->i_ref_count);
    }

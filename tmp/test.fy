@@ -1,4 +1,12 @@
 
+my foo = 1;
+
+if 1 {
+	say foo;
+}
+
+say 1 + 1;
+
 
 #my foo = [1 2 3]; 
 # Prints num of elements in foo
@@ -15,4 +23,4 @@
 # Prints "1 3 5 6\n"
 #say [1 3 5 6];
 
-my foo = 2 * 3 + 1.2;
+#my foo = 2 * 3 + 1.2;

@@ -63,7 +63,7 @@ stack_empty(Stack *p_stack) {
 
 void
 stack_debug(Stack *p_stack, void *p_val) {
-	printf("bPUSH %d %d\n", stack_size(p_stack), (int)p_stack);
+   printf("bPUSH %d %d\n", stack_size(p_stack), (int)p_stack);
    StackElem *p_elem = stackelem_new();
 
    p_elem->p_val = p_val;
@@ -74,13 +74,12 @@ stack_debug(Stack *p_stack, void *p_val) {
       p_stack->p_last = p_stack->p_first;
 
    ++p_stack->i_size;
-	printf("aPUSH %d %d\n", stack_size(p_stack), (int)p_stack);
+   printf("aPUSH %d %d\n", stack_size(p_stack), (int)p_stack);
 }
 
-void
+unsigned
 stack_push(Stack *p_stack, void *p_val) {
    StackElem *p_elem = stackelem_new();
-
    p_elem->p_val = p_val;
    p_elem->p_next = p_stack->p_first;
    p_stack->p_first = p_elem;
@@ -88,7 +87,7 @@ stack_push(Stack *p_stack, void *p_val) {
    if (p_stack->p_last == NULL)
       p_stack->p_last = p_stack->p_first;
 
-   ++p_stack->i_size;
+   return (++p_stack->i_size);
 }
 
 void*

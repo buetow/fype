@@ -104,7 +104,7 @@ interpret_new(List *p_list_token, Hash *p_hash_syms) {
 
 void
 interpret_delete(Interpret *p_interpret) {
-   if (!p_interpret)
+   if (p_interpret == NULL)
       return;
 
    if (p_interpret->b_scope_delete)
@@ -523,16 +523,16 @@ _control(Interpret *p_interpret) {
          switch (tt) {
          case TT_IF:
             if (convert_to_integer_get(p_token_top)) {
-               scope_up(p_interpret->p_scope);
+               //scope_up(p_interpret->p_scope);
                ret = interpret_subprocess(p_interpret, p_list_block);
-               scope_down(p_interpret->p_scope);
+               //scope_down(p_interpret->p_scope);
             }
             break;
          case TT_IFNOT:
             if (!convert_to_integer_get(p_token_top)) {
-               scope_up(p_interpret->p_scope);
+               //scope_up(p_interpret->p_scope);
                ret = interpret_subprocess(p_interpret, p_list_block);
-               scope_down(p_interpret->p_scope);
+               //scope_down(p_interpret->p_scope);
             }
             break;
             NO_DEFAULT;
