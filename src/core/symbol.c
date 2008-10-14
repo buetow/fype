@@ -57,15 +57,15 @@ symbol_delete(Symbol *p_symbol) {
       list_delete(p_list_token);
    }
    break;
-   case SYM_VARIABLE: 
+   case SYM_VARIABLE:
    {
-	   Token *p_token = symbol_get_val(p_symbol);
-	   switch (token_get_tt(p_token)) {
-		   case TT_ARRAY:
-			   array_iterate(p_token->p_array, token_delete_cb);
-			   break;
-			   NO_DEFAULT;
-	   }
+      Token *p_token = symbol_get_val(p_symbol);
+      switch (token_get_tt(p_token)) {
+      case TT_ARRAY:
+         //array_iterate(p_token->p_array, token_delete_cb);
+         break;
+         NO_DEFAULT;
+      }
    }
    break;
    NO_DEFAULT;

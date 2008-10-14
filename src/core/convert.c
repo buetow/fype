@@ -136,7 +136,7 @@ convert_to_string(Token *p_token) {
       p_token->c_val = realloc(p_token->c_val, sizeof(char) * (i_len + 1));
       strcpy(p_token->c_val, c_tmp);
       p_token->c_val[i_len] = 0;
-	  array_iterate(p_token->p_array, token_delete_cb);
+      //array_iterate(p_token->p_array, token_delete_cb);
 
       break;
    default:

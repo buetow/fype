@@ -35,7 +35,7 @@
 #ifndef BUILD_H
 #define BUILD_H
 
-#define BUILDNR 9330
+#define BUILDNR 9596
 #define OS_FREEBSD
 
 #endif

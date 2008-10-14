@@ -165,8 +165,13 @@ int
 _program(Interpret *p_interpret) {
    _CHECK TRACK
 
-   while (_statement(p_interpret) == 1)
-      garbage_collect();
+   int i_count = 0;
+   while (_statement(p_interpret) == 1) {
+      if (++i_count == 50) {
+         garbage_collect();
+         i_count = 0;
+      }
+   }
 
    return (1);
 }
@@ -299,7 +304,7 @@ _block_get(Interpret *p_interpret, List *p_list_block) {
 int
 __expression_get(Interpret *p_interpret, List *p_list_expression) {
    for (;;) {
-      if (p_interpret->tt == TT_PARANT_CL) 
+      if (p_interpret->tt == TT_PARANT_CL)
          break; /* for */
 
       list_add_back(p_list_expression, p_interpret->p_token);
@@ -950,7 +955,7 @@ _term(Interpret *p_interpret) {
       if (__array_get(p_interpret, p_token_arr) != 0)
          _INTERPRET_ERROR("Array syntax error", p_token);
 
-	  return (1);
+      return (1);
    }
    break;
 

@@ -61,9 +61,7 @@ fype_delete(Fype *p_fype) {
    hash_iterate(p_fype->p_hash_syms, symbol_cleanup_hash_syms_cb);
    hash_delete(p_fype->p_hash_syms);
 
-   //list_iterate(p_fype->p_list_token, token_print_cb);
-   list_iterate(p_fype->p_list_token, token_ref_down_cb);
-   //list_iterate(p_fype->p_list_token, token_print_cb);
+   list_iterate(p_fype->p_list_token, token_delete_force_cb);
    list_delete(p_fype->p_list_token);
 
    if (p_fype->c_basename)

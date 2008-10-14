@@ -58,7 +58,7 @@ scope_delete(Scope *p_scope) {
 
 void
 scope_up(Scope *p_scope) {
-   stack_push(p_scope->p_stack_scopes, hash_new(1024));
+   stack_push(p_scope->p_stack_scopes, hash_new(24));
 }
 
 void

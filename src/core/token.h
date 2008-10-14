@@ -55,6 +55,8 @@
 #define IS_NOT_NUMERICAL(t) !(IS_NUMERICAL(t))
 #define IS_ARRAY(t) (t->tt_cur == TT_ARRAY)
 #define IS_NOT_ARRAY(t) !(IS_ARRAY(t))
+#define IS_SOURCE_TOKEN(t) (t->b_source_token == true)
+#define IS_NOT_SOURCE_TOKEN(t) (t->b_source_token == false)
 
 #define token_get_filename(t) \
 	(t->c_filename != NULL ? t->c_filename : "Code string")
@@ -72,7 +74,6 @@
 #define token_get_posnr(t) t->i_pos_nr
 #define token_get_linenr(t) t->i_line_nr
 #define token_ref_up(t) ++t->i_ref_count
-#define token_ref_down(t) --t->i_ref_count
 
 typedef enum {
    // Diverse
@@ -166,6 +167,7 @@ typedef struct {
    char *c_filename;
    unsigned int u_token_id;
    int i_ref_count;
+   _Bool b_source_token;
    Array *p_array;
 } Token;
 
@@ -179,6 +181,8 @@ Token* token_new_(char *c_val, TokenType tt_cur, char *c_filename);
 Token* token_new_dummy();
 void token_copy_vals(Token *p_token_to, Token *p_token_from);
 void token_delete(Token *p_token);
+void token_delete_force(Token *p_token);
+void token_delete_force_cb(void *p_token);
 void token_delete_cb(void *p_token);
 void token_ref_down_cb(void *p_token);
 void* token_copy_cb(void *p_token);
@@ -187,6 +191,7 @@ void token_print_cb(void *p_void);
 void token_print(Token *p_token);
 void token_print_ln(Token *p_token);
 void token_print_val(Token *p_token);
+int token_ref_down(Token *p_token);
 TokenType get_tt(char *c_token);
 
 #endif

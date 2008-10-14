@@ -95,10 +95,8 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
       printf("PROCESS OPERATOR %s %s\n", tt_get_name(tt_op),
              tt_get_name(tt_op2));
 
-   token_print(p_token_next);
-   printf("\n");
-   token_print(p_token_store);
-   printf("\n");
+   token_print_ln(p_token_next);
+   token_print_ln(p_token_store);
 #endif /* DEBUG_FUNCTION_PROCESS */
 
    if (p_token_op2 != NULL) {
@@ -527,11 +525,10 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
    }
 
 #ifdef DEBUG_FUNCTION_PROCESS
-   token_print(p_token_store);
-   printf("\n\n");
+   token_print_ln(p_token_store);
 #endif /* DEBUG_FUNCTION_PROCESS */
 
-   token_delete(p_token_next);
+   //token_delete(p_token_next);
 }
 
 void

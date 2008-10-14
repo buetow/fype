@@ -60,6 +60,7 @@ StackElem *stackelem_new();
 _Bool stack_empty(Stack *p_stack);
 void stack_iterate(Stack *p_stack, void (*func)(void *p_void));
 void stack_push(Stack *p_stack, void *p_val);
+void stack_debug(Stack *p_stack, void *p_val);
 void *stack_pop(Stack *p_stack);
 void stack_clear(Stack *p_stack);
 void stack_delete(Stack *p_stack);

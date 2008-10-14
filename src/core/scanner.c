@@ -108,8 +108,8 @@ scanner_post_task(Scanner *p_scanner) {
          if (tt_cur == TT_INTEGER && tt_last[1] == TT_DOT
                && tt_last[0] == TT_INTEGER) {
 
-            token_ref_down(pt_last[0]);
-            token_ref_down(pt_last[1]);
+            //token_ref_down(pt_last[0]);
+            //token_ref_down(pt_last[1]);
 
             char *c_2 = token_get_val(p_token);
             char *c_0 = token_get_val(pt_last[0]);
@@ -338,9 +338,9 @@ scanner_add_token(Scanner *p_scanner, char **cc_token, int *p_token_len,
    List *p_list_token = scanner_get_list_token(p_scanner);
    Token *p_token = token_new(*cc_token, tt_cur, p_scanner->i_current_line_nr,
                               p_scanner->i_current_pos_nr, p_scanner->c_filename);
+   p_token->b_source_token = true;
 
    list_add_back(p_list_token, p_token);
-   token_ref_up(p_token);
 
    *cc_token = malloc(sizeof(char));
    (*cc_token)[0] = 0;
@@ -360,10 +360,4 @@ scanner_get_tt_cur(char *c_token) {
    TokenType tt_cur = get_tt(c_token);
 
    return tt_cur == TT_NONE ? TT_IDENT : tt_cur;
-}
-
-void
-scanner_cleanup_list_token_cb(void *p_void) {
-   Token *p_token = p_void;
-   token_delete(p_token);
 }

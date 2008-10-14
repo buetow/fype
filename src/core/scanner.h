@@ -65,6 +65,5 @@ void scanner_run(Fype *p_fype);
 void scanner_add_token(Scanner *p_scanner, char **cc_token, int *p_token_len,
                        TokenType tt_cur);
 TokenType scanner_get_tt_cur(char *c_token);
-void scanner_cleanup_list_token_cb(void *p_void);
 
 #endif
