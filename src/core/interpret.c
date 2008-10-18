@@ -175,7 +175,7 @@ _var_decl(Interpret *p_interpret) {
    _CHECK TRACK
 
    switch (p_interpret->tt) {
-   //case TT_ARR: //TODO cleanup TT_ARR
+      //case TT_ARR: //TODO cleanup TT_ARR
    case TT_MY:
    {
       if (_NEXT_TT != TT_IDENT)
@@ -200,7 +200,7 @@ _var_decl(Interpret *p_interpret) {
       }
    }
    default:
-   	break;
+      break;
    }
 
    return (0);
@@ -226,8 +226,8 @@ _var_assign(Interpret *p_interpret) {
          p_interpret->p_stack = stack_new();
 
          if (_expression_(p_interpret)) {
-            function_process_buildin(p_interpret, p_token, 
-					p_interpret->p_stack);
+            function_process_buildin(p_interpret, p_token,
+                                     p_interpret->p_stack);
 
             stack_merge(p_stack, p_interpret->p_stack);
             stack_delete(p_interpret->p_stack);
@@ -917,9 +917,9 @@ _term(Interpret *p_interpret) {
       Token *p_token = p_interpret->p_token;
       _NEXT
 
-	  Token *p_token_arr = token_new_array(ARRAY_SIZE);
+      Token *p_token_arr = token_new_array(ARRAY_SIZE);
       stack_push(p_interpret->p_stack, p_token_arr);
-	  _INTERPRET_ERROR("arrays not yet fully implemented", p_token_arr);
+      _INTERPRET_ERROR("arrays not yet fully implemented", p_token_arr);
    }
    break;
 

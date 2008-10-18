@@ -344,8 +344,8 @@ token_delete(Token *p_token) {
          if (p_token->c_val)
             free(p_token->c_val);
 
-		 if (p_token->p_array)
-			 array_delete(p_token->p_array);
+         if (p_token->p_array)
+            array_delete(p_token->p_array);
 
          free(p_token);
       }

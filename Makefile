@@ -5,7 +5,7 @@ SRCS!=find ./src -name '*.c'
 OBJS=$(SRCS:.c=.o)
 CC?=cc
 #CC=mingw32-gcc
-#DEBUG=-g3 -ggdb3
+DEBUG=-g3 -ggdb3
 CFLAGS+=-c -Wall -std=c99 -pedantic $(DEBUG)
 LDADD+=
 HEADER?=docs/header.txt
@@ -73,6 +73,8 @@ run:
 	./$(BIN) ./tmp/test.fy
 core:
 	gdb $(BIN) $(BIN).core
+gdb:
+	gdb --args $(BIN) ./tmp/test.fy
 newline:
 	@echo 
 examples: all
