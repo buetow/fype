@@ -52,34 +52,6 @@
 		)
 
 void
-_print_val(Token *p_token) {
-   switch (token_get_tt(p_token)) {
-   case TT_INTEGER:
-      printf("%d", token_get_ival(p_token));
-      break;
-   case TT_DOUBLE:
-      printf("%f", token_get_dval(p_token));
-      break;
-   case TT_STRING:
-      printf("%s", token_get_val(p_token));
-      break;
-   case TT_ARRAY:
-   {
-      Array *p_array = p_token->p_array;
-      ArrayIterator *p_iter = arrayiterator_new(p_array);
-      while (arrayiterator_has_next(p_iter)) {
-         Token *p_next = arrayiterator_next(p_iter);
-         _print_val(p_next);
-         printf(" ");
-      }
-      arrayiterator_delete(p_iter);
-   }
-   break;
-   NO_DEFAULT;
-   }
-}
-
-void
 _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
          Token *p_token_op2, Token *p_token_next) {
 
@@ -95,8 +67,10 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
       printf("PROCESS OPERATOR %s %s\n", tt_get_name(tt_op),
              tt_get_name(tt_op2));
 
-   token_print_ln(p_token_next);
-   token_print_ln(p_token_store);
+   token_print(p_token_next);
+   printf("\n");
+   token_print(p_token_store);
+   printf("\n");
 #endif /* DEBUG_FUNCTION_PROCESS */
 
    if (p_token_op2 != NULL) {
@@ -525,10 +499,11 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
    }
 
 #ifdef DEBUG_FUNCTION_PROCESS
-   token_print_ln(p_token_store);
+   token_print(p_token_store);
+   printf("\n\n");
 #endif /* DEBUG_FUNCTION_PROCESS */
 
-   //token_delete(p_token_next);
+   token_delete(p_token_next);
 }
 
 void
@@ -598,9 +573,6 @@ function_is_buildin(Token *p_token_ident) {
       return (true);
 
    if (strcmp("not", token_get_val(p_token_ident)) == 0)
-      return (true);
-
-   if (strcmp("type", token_get_val(p_token_ident)) == 0)
       return (true);
 
    return (false);
@@ -762,7 +734,18 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
       StackIterator *p_iter = stackiterator_new(p_stack_args);
       while (stackiterator_has_next(p_iter)) {
          Token *p_token = stackiterator_next(p_iter);
-         _print_val(p_token);
+         switch (token_get_tt(p_token)) {
+         case TT_INTEGER:
+            printf("%d", token_get_ival(p_token));
+            break;
+         case TT_DOUBLE:
+            printf("%f", token_get_dval(p_token));
+            break;
+         case TT_STRING:
+            printf("%s", token_get_val(p_token));
+            break;
+            NO_DEFAULT;
+         }
       }
       stackiterator_delete(p_iter);
 
@@ -770,7 +753,18 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
       StackIterator *p_iter = stackiterator_new(p_stack_args);
       while (stackiterator_has_next(p_iter)) {
          Token *p_token = stackiterator_next(p_iter);
-         _print_val(p_token);
+         switch (token_get_tt(p_token)) {
+         case TT_INTEGER:
+            printf("%d", token_get_ival(p_token));
+            break;
+         case TT_DOUBLE:
+            printf("%f", token_get_dval(p_token));
+            break;
+         case TT_STRING:
+            printf("%s", token_get_val(p_token));
+            break;
+            NO_DEFAULT;
+         }
       }
       stackiterator_delete(p_iter);
       printf("\n");
@@ -818,35 +812,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
          break;
          NO_DEFAULT;
       }
-   } else if (strcmp("not", token_get_val(p_token_ident)) == 0) {
-      if (0 == stack_size(p_stack_args))
-         _FUNCTION_ERROR("No argument given", p_token_ident);
-
-      Token *p_token = token_new_copy(stack_pop(p_stack_args));
-      stack_push(p_stack_args, p_token);
-
-      switch (token_get_tt(p_token)) {
-      case TT_INTEGER:
-         token_set_ival(p_token, !token_get_ival(p_token));
-         break;
-      case TT_DOUBLE:
-         token_set_dval(p_token, !token_get_dval(p_token));
-         break;
-      case TT_STRING:
-         token_set_ival(p_token, !atoi(token_get_val(p_token)));
-         token_set_tt(p_token, TT_INTEGER);
-         break;
-         NO_DEFAULT;
-      }
-   } else if (strcmp("type", token_get_val(p_token_ident)) == 0) {
-      if (0 == stack_size(p_stack_args))
-         _FUNCTION_ERROR("No argument given", p_token_ident);
-
-      Token *p_token = stack_pop(p_stack_args);
-      TokenType tt = token_get_tt(p_token);
-
-      Token *p_token_type = token_new_string(tt_get_name(tt));
-      stack_push(p_stack_args, p_token_type);
    }
 }
 

@@ -65,12 +65,6 @@ _garbage_print(_Garbage *p_garbage) {
 }
 
 void
-_garbage_free(_Garbage *p_garbage) {
-   (*p_garbage->p_func) (p_garbage->p_2free);
-   free(p_garbage);
-}
-
-void
 garbage_destroy() {
    garbage_collect();
 
@@ -93,18 +87,17 @@ garbage_destroy() {
 
 int
 garbage_collect() {
-   //printf("GARBAGE_COLLECT\n");
    ListIterator *p_iter = listiterator_new(LIST_GARBAGE);
    List *p_list_garbage_new = list_new();
    int i_count = 0;
-   //printf("size %d\n", list_size(LIST_GARBAGE));
 
    while (listiterator_has_next(p_iter)) {
       _Garbage *p_garbage = listiterator_next(p_iter);
 
       if (p_garbage->p_ref_count == NULL || *p_garbage->p_ref_count <= 0) {
-         //_garbage_print(p_garbage);
-         _garbage_free(p_garbage);
+         // _garbage_print(p_garbage);
+         (*p_garbage->p_func) (p_garbage->p_2free);
+         free(p_garbage);
          ++i_count;
 
       } else {
@@ -113,9 +106,9 @@ garbage_collect() {
    }
 
    listiterator_delete(p_iter);
+
    list_delete(LIST_GARBAGE);
    LIST_GARBAGE = p_list_garbage_new;
-   //printf("GARBAGE_COLLECT_END\n");
 
    return (i_count);
 }

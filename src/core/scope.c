@@ -36,9 +36,6 @@
 #include "scope.h"
 #include "symbol.h"
 
-#define _SCOPE_ERROR(m) \
-	 ERROR("%s: Scope error", m)
-
 Scope*
 scope_new(Hash *p_hash_syms) {
    Scope *p_scope = malloc(sizeof(Scope));
@@ -61,42 +58,14 @@ scope_delete(Scope *p_scope) {
 
 void
 scope_up(Scope *p_scope) {
-#ifdef EXTRA_CHECKS
-   int i_before = (int) stack_size(p_scope->p_stack_scopes);
-#elif DEBUG_SCOPE_UPDOWN
-   int i_before = (int) stack_size(p_scope->p_stack_scopes);
-#endif
-   stack_push(p_scope->p_stack_scopes, hash_new(24));
-#ifdef DEBUG_SCOPE_UPDOWN
-   printf("SCOPE UPPED %d => %d\n",
-          i_before,
-          (int) stack_size(p_scope->p_stack_scopes));
-#endif /* DEBUG_SCOPE_UPDOWN */
-#ifdef EXTRA_CHECKS
-   if (i_before >= (int) stack_size(p_scope->p_stack_scopes))
-      _SCOPE_ERROR("Scope should be higher");
-#endif /* EXTRA_CHECKS */
+   stack_push(p_scope->p_stack_scopes, hash_new(1024));
 }
 
 void
 scope_down(Scope *p_scope) {
-#ifdef EXTRA_CHECKS
-   int i_before = (int) stack_size(p_scope->p_stack_scopes);
-#elif DEBUG_SCOPE_UPDOWN
-   int i_before = (int) stack_size(p_scope->p_stack_scopes);
-#endif
    Hash *p_hash_syms = stack_pop(p_scope->p_stack_scopes);
    hash_iterate(p_hash_syms, symbol_cleanup_hash_syms_cb);
    hash_delete(p_hash_syms);
-#ifdef DEBUG_SCOPE_UPDOWN
-   printf("SCOPE DOWNED %d => %d\n",
-          i_before,
-          (int) stack_size(p_scope->p_stack_scopes));
-#endif /* DEBUG_SCOPE_UPDOWN */
-#ifdef EXTRA_CHECKS
-   if (i_before <= (int) stack_size(p_scope->p_stack_scopes))
-      _SCOPE_ERROR("Scope should be lower");
-#endif /* EXTRA_CHECKS */
 }
 
 static Hash*

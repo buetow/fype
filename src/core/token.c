@@ -57,6 +57,7 @@ get_tt(char *c_token) {
    CHECK("proc") TT_PROC;
    CHECK("func") TT_FUNC;
    CHECK("my") TT_MY;
+   CHECK("arr") TT_ARR;
    CHECK("!") TT_NOT;
    CHECK("!=") TT_NEQ;
    CHECK("=~") TT_RE;
@@ -122,6 +123,7 @@ tt_get_name(TokenType tt_cur) {
       CASE(TT_PROC,"TT_PROC")
       CASE(TT_FUNC,"TT_FUNC")
       CASE(TT_MY,"TT_MY")
+      CASE(TT_ARR,"TT_ARR")
       CASE(TT_WHILE,"TT_WHILE")
       CASE(TT_UNTIL,"TT_UNTIL")
       CASE(TT_NEXT,"TT_NEXT")
@@ -181,8 +183,7 @@ tt_get_name(TokenType tt_cur) {
 }
 
 Token*
-token_new(char *c_val, TokenType tt_cur, int i_line_nr, int i_pos_nr,
-          char *c_filename) {
+token_new(char *c_val, TokenType tt_cur, int i_line_nr, int i_pos_nr, char *c_filename) {
    Token *p_token = token_new_dummy();
 
    p_token->c_val = c_val;
@@ -193,7 +194,6 @@ token_new(char *c_val, TokenType tt_cur, int i_line_nr, int i_pos_nr,
    p_token->i_pos_nr = i_pos_nr;
    p_token->c_filename = c_filename;
    p_token->p_array = NULL;
-   p_token->b_source_token = false;
 
    switch (tt_cur) {
    case TT_INTEGER:
@@ -212,7 +212,7 @@ token_new(char *c_val, TokenType tt_cur, int i_line_nr, int i_pos_nr,
    NO_DEFAULT;
    }
 
-   return (p_token);
+   return p_token;
 }
 
 Token*
@@ -248,11 +248,7 @@ Token*
 token_new_array(int i_size) {
    Token *p_token = token_new_dummy();
    token_set_tt(p_token, TT_ARRAY);
-
-   if (p_token->p_array == NULL)
-      p_token->p_array = array_new();
-
-   //array_resize(p_token->p_array, i_size);
+   array_resize(p_token->p_array, i_size);
 
    return (p_token);
 }
@@ -273,7 +269,7 @@ token_new_dummy() {
    p_token->i_pos_nr = -1;
    p_token->c_filename = NULL;
    p_token->u_token_id = TOKEN_ID_COUNTER++;
-   p_token->i_ref_count = 1;
+   p_token->i_ref_count = 0;
 
    /* Register the token in the garbage collector */
    garbage_add_token(p_token);
@@ -284,7 +280,7 @@ token_new_dummy() {
 Token*
 token_new_copy(Token *p_token) {
    Token *p_token_copy = malloc(sizeof(Token));
-   p_token_copy->u_token_id = TOKEN_ID_COUNTER++;
+   p_token->u_token_id = TOKEN_ID_COUNTER++;
 
    if (p_token_copy == NULL)
       ERROR("Memory alloc error");
@@ -298,34 +294,19 @@ token_new_copy(Token *p_token) {
    return (p_token_copy);
 }
 
-void
-token_copy_vals(Token *p_token_to, Token *p_token_from) {
+void token_copy_vals(Token *p_token_to, Token *p_token_from) {
    int i_len;
 
    // TODO: Check against mem leak
-   if (p_token_to->c_val)
-      free(p_token_to->c_val);
+   //   if (p_token_to->c_val)
+   //     free(p_token_to->c_val);
 
    if (p_token_from->c_val) {
       i_len = strlen(p_token_from->c_val);
       p_token_to->c_val = calloc(i_len+1, sizeof(char));
       strcpy(p_token_to->c_val, p_token_from->c_val);
-
    } else {
       p_token_to->c_val = NULL;
-   }
-
-   if (p_token_from->tt_cur == TT_ARRAY) {
-      p_token_to->p_array = array_new();
-      ArrayIterator *p_iter = arrayiterator_new(p_token_from->p_array);
-      while (arrayiterator_has_next(p_iter)) {
-         Token *p_token = arrayiterator_next(p_iter);
-         token_ref_up(p_token);
-         array_unshift(p_token_to->p_array, p_token);
-      }
-      arrayiterator_delete(p_iter);
-   } else {
-      p_token_to->p_array = NULL;
    }
 
    p_token_to->tt_cur = p_token_from->tt_cur;
@@ -342,11 +323,6 @@ token_delete_cb(void *p_void) {
 }
 
 void
-token_delete_force_cb(void *p_void) {
-   token_delete_force(p_void);
-}
-
-void
 token_ref_down_cb(void *p_void) {
    Token *p_token = p_void;
    token_ref_down(p_token);
@@ -357,92 +333,49 @@ token_copy_cb(void *p_void) {
    return (token_new_copy(p_void));
 }
 
-int
-token_ref_down(Token *p_token) {
-//	if (p_token->i_ref_count > 0)
-   p_token->i_ref_count--;
-
-   return (p_token->i_ref_count);
-}
-
-void
-_token_free(Token *p_token) {
-   if (p_token->c_val)
-      free(p_token->c_val);
-   p_token->c_val = NULL;
-
-   if (p_token->p_array) {
-      array_iterate(p_token->p_array, token_delete_cb);
-      array_delete(p_token->p_array);
-   }
-   p_token->p_array = NULL;
-
-   free(p_token);
-}
-
 void
 token_delete(Token *p_token) {
-   if (IS_SOURCE_TOKEN(p_token))
-      return;
-
-   token_ref_down(p_token);
-
-   if (p_token->i_ref_count == 0) {
+   if (token_ref_down(p_token) <= 0) {
+      if (p_token->i_ref_count == 0) {
 #ifdef DEBUG_TOKEN_REFCOUNT
-      printf("Token refcount debug: Token ref count is 0 == %d\n",
-             p_token->i_ref_count);
-      token_print_ln(p_token);
+         printf("Token refcount debug: Token ref count is 0 == %d\n",
+                p_token->i_ref_count);
 #endif /* DEBUG_TOKEN_REFCOUNT */
+         if (p_token->c_val)
+            free(p_token->c_val);
 
-      _token_free(p_token);
+		 if (p_token->p_array)
+			 array_delete(p_token->p_array);
 
+         free(p_token);
+      }
+#ifdef DEBUG_TOKEN_REFCOUNT
+      else {
+         printf("Token refcount debug: Token ref count is 0 > %d\n",
+                p_token->i_ref_count);
+      }
+#endif /* DEBUG_TOKEN_REFCOUNT */
    }
 #ifdef DEBUG_TOKEN_REFCOUNT
-   else if (p_token->i_ref_count < 0) {
-      token_print_ln(p_token);
-      printf("Token ref count is 0 > %d\n",
-             p_token->i_ref_count);
-   }
    else {
       printf("Token refcount debug: Token ref count is 0 < %d\n",
              p_token->i_ref_count);
-      token_print_ln(p_token);
    }
 #endif /* DEBUG_TOKEN_REFCOUNT */
-}
-
-void
-token_delete_force(Token *p_token) {
-   token_ref_down(p_token);
-   //printf("FORCE DEL ");
-   //token_print_ln(p_token);
-   _token_free(p_token);
 }
 
 void
 token_print(Token *p_token) {
-   printf("(org=%d, id=%05u, line=%05d, pos=%04d, type=%s",
-          (int) p_token->b_source_token,
+   printf("(id=%05u, line=%05d, pos=%04d, type=%s, val=%s, ival=%d, dval=%f,"
+          " refs=%d)",
           p_token->u_token_id,
           p_token->i_line_nr,
           p_token->i_pos_nr,
-          tt_get_name(p_token->tt_cur));
-
-   if (IS_ARRAY(p_token)) {
-   } else {
-      printf(", val=%s, ival=%d, dval=%f",
-             p_token->c_val,
-             p_token->i_val,
-             p_token->d_val);
-   }
-
-   printf(", refs=%d)", p_token->i_ref_count);
-}
-
-void
-token_print_ln(Token *p_token) {
-   token_print(p_token);
-   printf("\n");
+          tt_get_name(p_token->tt_cur),
+          p_token->c_val,
+          p_token->i_val,
+          p_token->d_val,
+          p_token->i_ref_count);
 }
 
 void

@@ -58,7 +58,6 @@ typedef struct {
 typedef struct {
    Array *p_array;
    int i_cur_pos;
-   _Bool b_is_reverse;
 } ArrayIterator;
 
 Array *array_new();
@@ -81,7 +80,6 @@ ArrayElement *arrayelement_new(void *p_val);
 void arrayelement_delete(ArrayElement *p_ae);
 
 ArrayIterator *arrayiterator_new(Array *p_array);
-ArrayIterator *arrayiterator_new_reverse(Array *p_array);
 void arrayiterator_delete(ArrayIterator *p_arrayiterator);
 _Bool arrayiterator_has_next(ArrayIterator *p_arrayiterator);
 void *arrayiterator_next(ArrayIterator *p_arrayiterator);

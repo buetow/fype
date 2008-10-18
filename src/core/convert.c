@@ -33,7 +33,6 @@
  *:*/
 
 #include "convert.h"
-#include "../data/array.h"
 
 void
 convert_to_integer(Token *p_token) {
@@ -47,10 +46,6 @@ convert_to_integer(Token *p_token) {
    case TT_STRING:
       token_set_tt(p_token, TT_INTEGER);
       token_set_ival(p_token, atoi(token_get_val(p_token)));
-      break;
-   case TT_ARRAY:
-      token_set_tt(p_token, TT_INTEGER);
-      token_set_ival(p_token, array_get_size(p_token->p_array)-1);
       break;
    default:
       ERROR("Ouups(%s)", tt_get_name(token_get_tt(p_token)));
@@ -67,9 +62,6 @@ convert_to_integer_get(Token *p_token) {
       return ((int) token_get_dval(p_token));
    case TT_STRING:
       return (atoi(token_get_val(p_token)));
-   case TT_ARRAY:
-      return (array_get_size(p_token->p_array)-1);
-      break;
    default:
       ERROR("Ouups(%s)", tt_get_name(token_get_tt(p_token)));
    }
@@ -89,10 +81,6 @@ convert_to_double(Token *p_token) {
    case TT_STRING:
       token_set_tt(p_token, TT_DOUBLE);
       token_set_dval(p_token, atof(token_get_val(p_token)));
-      break;
-   case TT_ARRAY:
-      token_set_tt(p_token, TT_DOUBLE);
-      token_set_dval(p_token, array_get_size(p_token->p_array)-1);
       break;
    default:
       token_print_val(p_token);
@@ -127,17 +115,6 @@ convert_to_string(Token *p_token) {
    }
    break;
    case TT_STRING:
-      break;
-   case TT_ARRAY:
-      token_set_tt(p_token, TT_STRING);
-      char c_tmp[1024];
-      sprintf(c_tmp, "%d", array_get_size(p_token->p_array)-1);
-      int i_len = strlen(c_tmp);
-      p_token->c_val = realloc(p_token->c_val, sizeof(char) * (i_len + 1));
-      strcpy(p_token->c_val, c_tmp);
-      p_token->c_val[i_len] = 0;
-      //array_iterate(p_token->p_array, token_delete_cb);
-
       break;
    default:
       ERROR("Datatype conversion error");

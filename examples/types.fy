@@ -12,7 +12,3 @@ assert 2 == say integer 2.8; # Rounds down to the Integer 2
 
 assert say integer double string put say neg 12; # Nonsense but working :)
 
-assert "TT_INTEGER" == say type 1; 
-assert "TT_DOUBLE" == say type 1.0; 
-assert "TT_STRING" == say type "1"; 
-assert "TT_ARRAY" == say type [1 2 3]; 

@@ -94,6 +94,67 @@ Run a .fy file:
 
 See the ./examples subdir of the Fype source distribution for examples! See also fype -h for a list of all options.
 
+\section{DATA TYPES\label{DATA_TYPES}\index{DATA TYPES}}
+
+
+Fype uses auto type conversion. However, if you want to know what's going on you may take a look at the provided basic datatypes.
+
+\subsection*{The basic data types\label{The_basic_data_types}\index{The basic data types}}
+\begin{description}
+
+\item[{\textit{integer}}] \mbox{}
+
+Specifies an integer number
+
+
+\item[{\textit{double}}] \mbox{}
+
+Specifies a double number
+
+
+\item[{\textit{string}}] \mbox{}
+
+Specifies a string
+
+
+\item[{\textit{number}}] \mbox{}
+
+May be an integer or a double number
+
+
+\item[{\textit{any}}] \mbox{}
+
+May be of any type above
+
+
+\item[{\textit{void}}] \mbox{}
+
+No type
+
+
+\item[{\textit{identifier}}] \mbox{}
+
+It's a variable name or a procedure name or a function name
+
+\end{description}
+\subsection*{Explicit type conversions\label{Explicit_type_conversions}\index{Explicit type conversions}}
+\begin{description}
+
+\item[{(\textit{integer}) \textbf{integer} \textit{any}}] \mbox{}
+
+Converts any type to an integer
+
+
+\item[{(\textit{double}) \textbf{double} \textit{any}}] \mbox{}
+
+Converts any type to a double
+
+
+\item[{(\textit{string}) \textbf{string} \textit{any}}] \mbox{}
+
+Converts any type to a string
+
+\end{description}
 \section{SYNTAX\label{SYNTAX}\index{SYNTAX}}
 \subsection*{Comments\label{Comments}\index{Comments}}
 
@@ -110,10 +171,10 @@ A Fype program is a list of statements. Each keyword, expression or function cal
         say foo;
         exit foo - bar;
 \end{verbatim}
-\subsection*{Parenthesis\label{Parenthesis}\index{Parenthesis}}
+\subsection*{Paranthesis\label{Paranthesis}\index{Paranthesis}}
 
 
-All parenthesis of function calls are optional. They help to make the code better readable. They also help to force precedences of expressions.
+All paranthesis of function calls are optional. They help to make the code better readable. They also help to force precedences of expressions.
 
 \subsection*{Scopeing\label{Scopeing}\index{Scopeing}}
 
@@ -174,93 +235,6 @@ Runs the statements as long as the the expression evaluates to a true value.
 Runs the statements as long as the the expression evaluates to a false value.
 
 \end{description}
-\section{DATA TYPES\label{DATA_TYPES}\index{DATA TYPES}}
-
-
-Fype uses auto type conversion. However, if you want to know what's going on you may take a look at the provided basic datatypes.
-
-\subsection*{The basic data types\label{The_basic_data_types}\index{The basic data types}}
-\begin{description}
-
-\item[{\textit{integer}}] \mbox{}
-
-(Internal name TT\_INTEGER)
-
-
-\item[{\textit{double}}] \mbox{}
-
-(Internal name TT\_DOUBLE)
-
-
-\item[{\textit{string}}] \mbox{}
-
-(Internal name TT\_STRING)
-
-
-\item[{\textit{array}}] \mbox{}
-
-(Internal name TT\_ARRAY)
-
-
-\item[{\textit{number}}] \mbox{}
-
-May be an integer or a double number
-
-
-\item[{\textit{any}}] \mbox{}
-
-May be of any type above
-
-
-\item[{\textit{void}}] \mbox{}
-
-No type
-
-
-\item[{\textit{identifier}}] \mbox{}
-
-It's a variable name or a procedure name or a function name
-
-\end{description}
-\subsection*{Explicit type conversions\label{Explicit_type_conversions}\index{Explicit type conversions}}
-
-
-The data types inside the brackets are only showing the return types of each function.
-
-\begin{description}
-
-\item[{(\textit{integer}) \textbf{integer} \textit{any}}] \mbox{}
-
-Converts any type to an integer.
-
-
-\item[{(\textit{double}) \textbf{double} \textit{any}}] \mbox{}
-
-Converts any type to a double.
-
-
-\item[{(\textit{string}) \textbf{string} \textit{any}}] \mbox{}
-
-Converts any type to a string.
-
-
-\item[{(\textit{array}) \textbf{array} \textit{any}}] \mbox{}
-
-Converts any type to an array. This function is not yet implemented.
-
-\end{description}
-\subsection*{More functions for data types\label{More_functions_for_data_types}\index{More functions for data types}}
-\begin{description}
-
-\item[{(\textit{string}) \textbf{type} \textit{any}}] \mbox{}
-
-Returns the name of the current type. Examples:
-
-\begin{verbatim}
-        my foo = 1;
-        put type foo; # Prints "TT_INTEGER"
-        put type 1.2; # Prints "TT_DOUBLE"
-\end{verbatim}
 \section{VARIABLES\label{VARIABLES}\index{VARIABLES}}
 
 
@@ -536,5 +510,5 @@ The Fype Language (http://fype.buetow.org)
 \section{SEE ALSO\label{SEE_ALSO}\index{SEE ALSO}}
 
 
-awk(1) cc(1)
+awk(1) cc(1) make(1)
 

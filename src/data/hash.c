@@ -44,13 +44,13 @@ hash_new(unsigned i_size) {
 
    p_hash->i_size = i_size;
    p_hash->i_cur_size = 0;
-   p_hash->p_elems = (HashElem *) calloc((int)i_size, sizeof(HashElem));
+   p_hash->p_elems = (HashElem *) calloc(i_size, sizeof(HashElem));
 
    /*Set all positions as "free" */
    for (int i = 0; i < i_size; ++i)
       p_hash->p_elems[i].flag = 'f';
 
-   return (p_hash);
+   return p_hash;
 }
 
 void

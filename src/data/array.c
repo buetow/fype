@@ -41,7 +41,7 @@ array_new() {
    p_array->i_size = 0;
    p_array->pp_ae = NULL;
 
-   return (p_array);
+   return p_array;
 }
 
 
@@ -92,7 +92,7 @@ array_insert(Array *p_array, int i_index, void *p_val) {
 void*
 array_remove(Array *p_array, int i_index) {
    if (p_array->i_size <= i_index)
-      return (NULL);
+      return NULL;
 
    ArrayElement *p_ae = p_array->pp_ae[i_index];
    void *p_ret = p_ae->p_val;
@@ -105,7 +105,7 @@ array_remove(Array *p_array, int i_index) {
 
    array_resize(p_array, p_array->i_size - 1);
 
-   return (p_ret);
+   return p_ret;
 }
 
 void
@@ -147,17 +147,17 @@ array_resize(Array *p_array, int i_size) {
 void*
 array_get(Array *p_array, int i_index) {
    if (p_array->i_size > i_index)
-      return (p_array->pp_ae[i_index]->p_val);
+      return p_array->pp_ae[i_index]->p_val;
 
-   return (NULL);
+   return NULL;
 }
 
 _Bool
 array_defined(Array *p_array, int i_index) {
    if (i_index >= p_array->i_size)
-      return (false);
+      return false;
 
-   return (p_array->pp_ae[i_index]->p_val != NULL);
+   return p_array->pp_ae[i_index]->p_val != NULL;
 }
 
 void
@@ -222,7 +222,7 @@ arrayelement_new(void *p_val) {
 
    p_ae->p_val = p_val;
 
-   return (p_ae);
+   return p_ae;
 }
 
 void
@@ -235,27 +235,14 @@ arrayelement_delete(ArrayElement *p_ae) {
 
 ArrayIterator*
 arrayiterator_new(Array *p_array) {
-   if (p_array == NULL)
-      return (NULL);
+   if (!p_array)
+      return NULL;
 
    ArrayIterator *p_arrayiterator = malloc(sizeof(ArrayIterator));
    p_arrayiterator->p_array = p_array;
    p_arrayiterator->i_cur_pos = 0;
-   p_arrayiterator->b_is_reverse = false;
 
-   return (p_arrayiterator);
-}
-
-ArrayIterator*
-arrayiterator_new_reverse(Array *p_array) {
-   ArrayIterator *p_arrayiterator = arrayiterator_new(p_array);
-   if (p_arrayiterator == NULL)
-      return (NULL);
-
-   p_arrayiterator->b_is_reverse = true;
-   p_arrayiterator->i_cur_pos = p_array->i_size;
-
-   return (p_arrayiterator);
+   return p_arrayiterator;
 }
 
 void
@@ -266,21 +253,14 @@ arrayiterator_delete(ArrayIterator *p_arrayiterator) {
 
 _Bool
 arrayiterator_has_next(ArrayIterator *p_arrayiterator) {
-   if (p_arrayiterator->b_is_reverse)
-      return (p_arrayiterator->i_cur_pos >= 0);
-
-   return (p_arrayiterator->i_cur_pos <
-           array_get_size(p_arrayiterator->p_array));
+   return p_arrayiterator->i_cur_pos <
+          array_get_size(p_arrayiterator->p_array);
 }
 
 void*
 arrayiterator_next(ArrayIterator *p_arrayiterator) {
    if (!arrayiterator_has_next(p_arrayiterator))
-      return (NULL);
+      return NULL;
 
-   if (p_arrayiterator->b_is_reverse)
-      return (array_get(p_arrayiterator->p_array,
-                        p_arrayiterator->i_cur_pos--));
-
-   return (array_get(p_arrayiterator->p_array, p_arrayiterator->i_cur_pos++));
+   return array_get(p_arrayiterator->p_array, p_arrayiterator->i_cur_pos++);
 }

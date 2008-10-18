@@ -54,16 +54,15 @@
 #define _NEXT_TT _next_tt(p_interpret)
 #define _SKIP _next(p_interpret);
 
-int __expression_get(Interpret *p_interpret, List *p_list_block);
-int __array_get(Interpret *p_interpret, Token *p_token_arr);
-void __print_lookahead(Interpret *p_interpret);
+void _print_lookahead(Interpret *p_interpret);
 int _next(Interpret *p_interpret);
 int _program(Interpret *p_interpret);
 int _var_decl(Interpret *p_interpret);
 int _var_assign(Interpret *p_interpret);
 int _var_list(Interpret *p_interpret);
+int _expression_get(Interpret *p_interpret, List *p_list_block);
 int _block_get(Interpret *p_interpret, List *p_list_block);
-int __block_skip(Interpret *p_interpret);
+int _block_skip(Interpret *p_interpret);
 int _proc_decl(Interpret *p_interpret);
 int _func_decl(Interpret *p_interpret);
 int _statement(Interpret *p_interpret);
@@ -104,7 +103,7 @@ interpret_new(List *p_list_token, Hash *p_hash_syms) {
 
 void
 interpret_delete(Interpret *p_interpret) {
-   if (p_interpret == NULL)
+   if (!p_interpret)
       return;
 
    if (p_interpret->b_scope_delete)
@@ -115,7 +114,7 @@ interpret_delete(Interpret *p_interpret) {
 }
 
 void
-__print_lookahead(Interpret *p_interpret) {
+_print_lookahead(Interpret *p_interpret) {
    ListIterator *p_iter = p_interpret->p_iter;
    ListIteratorState *p_state = listiterator_get_state(p_iter);
 
@@ -165,13 +164,8 @@ int
 _program(Interpret *p_interpret) {
    _CHECK TRACK
 
-   int i_count = 0;
-   while (_statement(p_interpret) == 1) {
-      if (++i_count == 50) {
-         garbage_collect();
-         i_count = 0;
-      }
-   }
+   while (_statement(p_interpret) == 1)
+      garbage_collect();
 
    return (1);
 }
@@ -181,6 +175,7 @@ _var_decl(Interpret *p_interpret) {
    _CHECK TRACK
 
    switch (p_interpret->tt) {
+   //case TT_ARR: //TODO cleanup TT_ARR
    case TT_MY:
    {
       if (_NEXT_TT != TT_IDENT)
@@ -205,7 +200,7 @@ _var_decl(Interpret *p_interpret) {
       }
    }
    default:
-      break;
+   	break;
    }
 
    return (0);
@@ -231,8 +226,8 @@ _var_assign(Interpret *p_interpret) {
          p_interpret->p_stack = stack_new();
 
          if (_expression_(p_interpret)) {
-            function_process_buildin(p_interpret, p_token,
-                                     p_interpret->p_stack);
+            function_process_buildin(p_interpret, p_token, 
+					p_interpret->p_stack);
 
             stack_merge(p_stack, p_interpret->p_stack);
             stack_delete(p_interpret->p_stack);
@@ -241,6 +236,7 @@ _var_assign(Interpret *p_interpret) {
             p_token = stack_top(p_interpret->p_stack);
             Symbol *p_symbol = symbol_new(SYM_VARIABLE, p_token);
             scope_newset(p_interpret->p_scope, c_name, p_symbol);
+
          } else {
             return (0);
          }
@@ -302,10 +298,11 @@ _block_get(Interpret *p_interpret, List *p_list_block) {
 }
 
 int
-__expression_get(Interpret *p_interpret, List *p_list_expression) {
+_expression_get(Interpret *p_interpret, List *p_list_expression) {
    for (;;) {
-      if (p_interpret->tt == TT_PARANT_CL)
+      if (p_interpret->tt == TT_PARANT_CL) {
          break; /* for */
+      }
 
       list_add_back(p_list_expression, p_interpret->p_token);
 
@@ -322,36 +319,7 @@ __expression_get(Interpret *p_interpret, List *p_list_expression) {
 }
 
 int
-__array_get(Interpret *p_interpret, Token *p_token_arr) {
-#ifdef DEBUG_ARRAY_GET
-   printf("====> ARRAY\n");
-#endif /* DEBUG_ARRAY_GET */
-   Array *p_array = p_token_arr->p_array;
-
-   do {
-      Token *p_token = p_interpret->p_token;
-
-#ifdef DEBUG_ARRAY_GET
-      printf("Insert: ");
-      token_print_ln(p_token);
-#endif /* DEBUG_ARRAY_GET */
-
-      array_unshift(p_array, p_token);
-      token_ref_up(p_token);
-      _NEXT
-   } while (p_interpret->tt != TT_PARANT_AR);
-
-#ifdef DEBUG_ARRAY_GET
-   printf("<==== ARRAY\n");
-#endif /* DEBUG_ARRAY_GET */
-   /* Ignore TT_PARANT_AR */
-   _NEXT
-
-   return (0);
-}
-
-int
-__block_skip(Interpret *p_interpret) {
+_block_skip(Interpret *p_interpret) {
    if (p_interpret->tt != TT_PARANT_CL)
       _INTERPRET_ERROR("Expected '{'", p_interpret->p_token);
    _NEXT
@@ -523,16 +491,16 @@ _control(Interpret *p_interpret) {
          switch (tt) {
          case TT_IF:
             if (convert_to_integer_get(p_token_top)) {
-               //scope_up(p_interpret->p_scope);
+               scope_up(p_interpret->p_scope);
                ret = interpret_subprocess(p_interpret, p_list_block);
-               //scope_down(p_interpret->p_scope);
+               scope_down(p_interpret->p_scope);
             }
             break;
          case TT_IFNOT:
             if (!convert_to_integer_get(p_token_top)) {
-               //scope_up(p_interpret->p_scope);
+               scope_up(p_interpret->p_scope);
                ret = interpret_subprocess(p_interpret, p_list_block);
-               //scope_down(p_interpret->p_scope);
+               scope_down(p_interpret->p_scope);
             }
             break;
             NO_DEFAULT;
@@ -555,7 +523,7 @@ _control(Interpret *p_interpret) {
 
       _NEXT
 
-      __expression_get(p_interpret, p_list_expr);
+      _expression_get(p_interpret, p_list_expr);
       _block_get(p_interpret, p_list_block);
       Token *p_token_backup = p_interpret->p_token;
 
@@ -573,6 +541,7 @@ _control(Interpret *p_interpret) {
             Token *p_token_top = stack_pop(p_interpret->p_stack);
 
             if (p_token_top == NULL) {
+               printf("FOO\n");
                exit(0);
             }
             if (tt ==  TT_WHILE) {
@@ -817,7 +786,6 @@ _term(Interpret *p_interpret) {
    case TT_INTEGER:
    case TT_DOUBLE:
    case TT_STRING:
-   case TT_ARRAY:
       stack_push(p_interpret->p_stack, p_interpret->p_token);
       _NEXT
       return (1);
@@ -949,13 +917,9 @@ _term(Interpret *p_interpret) {
       Token *p_token = p_interpret->p_token;
       _NEXT
 
-      Token *p_token_arr = token_new_array(ARRAY_SIZE);
+	  Token *p_token_arr = token_new_array(ARRAY_SIZE);
       stack_push(p_interpret->p_stack, p_token_arr);
-
-      if (__array_get(p_interpret, p_token_arr) != 0)
-         _INTERPRET_ERROR("Array syntax error", p_token);
-
-      return (1);
+	  _INTERPRET_ERROR("arrays not yet fully implemented", p_token_arr);
    }
    break;
 
