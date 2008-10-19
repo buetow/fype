@@ -19,7 +19,12 @@ proc baz {
 
 # Make a synonym baz, and undefine baz
 my bay = \baz;
+
+# Should be the num of syms for the same value
+assert 2 == syms baz;
+assert 2 == syms bay;
 undef baz;
+assert 1 == syms bay;
 
 # bay still has a reference of the original procedure baz
 bay; # this prints aut "I am baz" 

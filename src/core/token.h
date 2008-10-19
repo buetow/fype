@@ -110,6 +110,7 @@ typedef enum {
    TT_INT,
    TT_DEFINED,
    TT_UNDEF,
+   TT_SYMS,
    END_KEYWORDS,
 
    START_PARANTS,

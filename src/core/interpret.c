@@ -927,6 +927,27 @@ _term(Interpret *p_interpret) {
    }
    break;
 
+   case TT_SYMS:
+   {
+      _NEXT
+      if (p_interpret->tt != TT_IDENT)
+         _INTERPRET_ERROR("Expexted identifier for 'syms'",
+                          p_interpret->p_token);
+
+      char *c_name = token_get_val(p_interpret->p_token);
+      Symbol *p_symbol = scope_get(p_interpret->p_scope, c_name);
+		if (p_symbol == NULL)
+       		_INTERPRET_ERROR("No such symbol", p_interpret->p_token);
+
+
+	  Token *p_token_num_refs = token_new_integer(p_symbol->i_refs);
+      stack_push(p_interpret->p_stack, p_token_num_refs);
+
+      _NEXT;
+      return (1);
+   }
+   break;
+
    /*
    case TT_PARANT_AL:
    {

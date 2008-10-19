@@ -205,7 +205,7 @@ VARIABLES
                     say foo;
             }
 
-SYNONYMS TO VARIABLES/IDENTIFIERS
+SYNONYMS
     Each variable can have as many synonyms as wished. A synonym is another
     name to access the content of a specific variable. Here is an example of
     how to use synomyms:
@@ -220,6 +220,30 @@ SYNONYMS TO VARIABLES/IDENTIFIERS
     Synonyms can be used for all kind of identifiers. It's not limited to
     normal variables but can be also used for function and procedure names
     etc.
+
+            # Create a new procedure baz
+            proc baz { say "I am baz"; }
+
+            # Make a synonym baz, and undefine baz
+            my bay = \baz;
+
+            undef baz;
+
+            # bay still has a reference of the original procedure baz
+            bay; # this prints aut "I am baz" 
+
+    The syms keyword gives you the total number of synonyms pointing to a
+    specific value:
+
+            my foo = 1;
+            say syms foo; # Prints 1
+
+            my baz = \foo; 
+            say syms foo; # Prints 2
+            say syms baz; # Prints 2
+
+            undef baz;
+            say syms foo; # Prints 1
 
 BUILT IN FUNCTIONS
     In Fype, operators are built in functions as well. The difference is,

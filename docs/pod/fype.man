@@ -129,7 +129,7 @@
 .\" ========================================================================
 .\"
 .IX Title "FYPE 1"
-.TH FYPE 1 "2008-10-19" "Fype v0.1-devel Build 9219" "The Fype Users Manual Page"
+.TH FYPE 1 "2008-10-19" "Fype v0.1-devel Build 9240" "The Fype Users Manual Page"
 .SH "NAME"
 \&\fBFype\fR is \fBF\fRor \fBY\fRour \fBP\fRrogram \fBE\fRxecution
 .PP
@@ -345,8 +345,8 @@ not.
 \&                say foo;
 \&        }
 .Ve
-.SH "SYNONYMS TO VARIABLES/IDENTIFIERS"
-.IX Header "SYNONYMS TO VARIABLES/IDENTIFIERS"
+.SH "SYNONYMS"
+.IX Header "SYNONYMS"
 Each variable can have as many synonyms as wished. A synonym is another name to access the content of a specific variable. Here is an example of how to use synomyms:
 .PP
 .Vb 3
@@ -361,6 +361,43 @@ Each variable can have as many synonyms as wished. A synonym is another name to 
 .Ve
 .PP
 Synonyms can be used for all kind of identifiers. It's not limited to normal variables but can be also used for function and procedure names etc.
+.PP
+.Vb 2
+\&        # Create a new procedure baz
+\&        proc baz { say "I am baz"; }
+.Ve
+.PP
+.Vb 2
+\&        # Make a synonym baz, and undefine baz
+\&        my bay = \ebaz;
+.Ve
+.PP
+.Vb 1
+\&        undef baz;
+.Ve
+.PP
+.Vb 2
+\&        # bay still has a reference of the original procedure baz
+\&        bay; # this prints aut "I am baz"
+.Ve
+.PP
+The \fBsyms\fR keyword gives you the total number of synonyms pointing to a specific value:
+.PP
+.Vb 2
+\&        my foo = 1;
+\&        say syms foo; # Prints 1
+.Ve
+.PP
+.Vb 3
+\&        my baz = \efoo; 
+\&        say syms foo; # Prints 2
+\&        say syms baz; # Prints 2
+.Ve
+.PP
+.Vb 2
+\&        undef baz;
+\&        say syms foo; # Prints 1
+.Ve
 .SH "BUILT IN FUNCTIONS"
 .IX Header "BUILT IN FUNCTIONS"
 In Fype, operators are built in functions as well. The difference is, that they may be written in infix notation instead in front of the arguments. The types inside the () specify the return types.

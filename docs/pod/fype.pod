@@ -219,7 +219,7 @@ not.
 		say foo;
 	}
 
-=head1 SYNONYMS TO VARIABLES/IDENTIFIERS
+=head1 SYNONYMS 
 
 Each variable can have as many synonyms as wished. A synonym is another name to access the content of a specific variable. Here is an example of how to use synomyms:
 
@@ -231,6 +231,30 @@ Each variable can have as many synonyms as wished. A synonym is another name to 
 	assert "bar" == bar;
 
 Synonyms can be used for all kind of identifiers. It's not limited to normal variables but can be also used for function and procedure names etc.
+
+	# Create a new procedure baz
+	proc baz { say "I am baz"; }
+
+	# Make a synonym baz, and undefine baz
+	my bay = \baz;
+
+	undef baz;
+
+	# bay still has a reference of the original procedure baz
+	bay; # this prints aut "I am baz" 
+
+The B<syms> keyword gives you the total number of synonyms pointing to a specific value:
+
+	my foo = 1;
+	say syms foo; # Prints 1
+
+	my baz = \foo; 
+	say syms foo; # Prints 2
+	say syms baz; # Prints 2
+
+	undef baz;
+	say syms foo; # Prints 1
+
 
 =head1 BUILT IN FUNCTIONS
 

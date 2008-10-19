@@ -52,6 +52,7 @@ get_tt(char *c_token) {
    CHECK("next") TT_NEXT;
    CHECK("defined") TT_DEFINED;
    CHECK("undef") TT_UNDEF;
+   CHECK("syms") TT_SYMS;
    CHECK("ret") TT_RET;
    CHECK("const") TT_CONST;
    CHECK("proc") TT_PROC;
@@ -129,6 +130,7 @@ tt_get_name(TokenType tt_cur) {
       CASE(TT_NEXT,"TT_NEXT")
       CASE(TT_DEFINED,"TT_DEFINED")
       CASE(TT_UNDEF,"TT_UNDEF")
+      CASE(TT_SYMS,"TT_SYMS")
       CASE(TT_INT,"TT_INT")
       CASE(END_KEYWORDS, "END_KEYWORDS")
 

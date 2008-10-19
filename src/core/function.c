@@ -575,6 +575,9 @@ function_is_buildin(Token *p_token_ident) {
    if (strcmp("not", token_get_val(p_token_ident)) == 0)
       return (true);
 
+   if (strcmp("refs", token_get_val(p_token_ident)) == 0)
+      return (true);
+
    return (false);
 }
 
@@ -812,6 +815,14 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
          break;
          NO_DEFAULT;
       }
+   
+   } else if (strcmp("refs", token_get_val(p_token_ident)) == 0) {
+      if (0 == stack_size(p_stack_args))
+         _FUNCTION_ERROR("No argument given", p_token_ident);
+
+      Token *p_token_top = stack_pop(p_stack_args);
+      Token *p_token = token_new_integer(p_token_top->i_ref_count);
+      stack_push(p_stack_args, p_token);
    }
 }
 

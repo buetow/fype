@@ -272,7 +272,7 @@ not.
                 say foo;
         }
 \end{verbatim}
-\section{SYNONYMS TO VARIABLES/IDENTIFIERS\label{SYNONYMS_TO_VARIABLES_IDENTIFIERS}\index{SYNONYMS TO VARIABLES/IDENTIFIERS}}
+\section{SYNONYMS\label{SYNONYMS}\index{SYNONYMS}}
 
 
 Each variable can have as many synonyms as wished. A synonym is another name to access the content of a specific variable. Here is an example of how to use synomyms:
@@ -290,6 +290,38 @@ Each variable can have as many synonyms as wished. A synonym is another name to 
 
 Synonyms can be used for all kind of identifiers. It's not limited to normal variables but can be also used for function and procedure names etc.
 
+\begin{verbatim}
+        # Create a new procedure baz
+        proc baz { say "I am baz"; }
+\end{verbatim}
+\begin{verbatim}
+        # Make a synonym baz, and undefine baz
+        my bay = \baz;
+\end{verbatim}
+\begin{verbatim}
+        undef baz;
+\end{verbatim}
+\begin{verbatim}
+        # bay still has a reference of the original procedure baz
+        bay; # this prints aut "I am baz"
+\end{verbatim}
+
+
+The \textbf{syms} keyword gives you the total number of synonyms pointing to a specific value:
+
+\begin{verbatim}
+        my foo = 1;
+        say syms foo; # Prints 1
+\end{verbatim}
+\begin{verbatim}
+        my baz = \foo; 
+        say syms foo; # Prints 2
+        say syms baz; # Prints 2
+\end{verbatim}
+\begin{verbatim}
+        undef baz;
+        say syms foo; # Prints 1
+\end{verbatim}
 \section{BUILT IN FUNCTIONS\label{BUILT_IN_FUNCTIONS}\index{BUILT IN FUNCTIONS}}
 
 
