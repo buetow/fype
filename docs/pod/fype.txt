@@ -205,6 +205,22 @@ VARIABLES
                     say foo;
             }
 
+SYNONYMS TO VARIABLES/IDENTIFIERS
+    Each variable can have as many synonyms as wished. A synonym is another
+    name to access the content of a specific variable. Here is an example of
+    how to use synomyms:
+
+            my foo = "foo";
+            my bar = \foo;
+            foo = "bar";
+
+            # The synonym variable should now also set to "bar"
+            assert "bar" == bar;
+
+    Synonyms can be used for all kind of identifiers. It's not limited to
+    normal variables but can be also used for function and procedure names
+    etc.
+
 BUILT IN FUNCTIONS
     In Fype, operators are built in functions as well. The difference is,
     that they may be written in infix notation instead in front of the

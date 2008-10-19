@@ -222,6 +222,22 @@ _var_assign(Interpret *p_interpret) {
       if (p_interpret->tt == TT_ASSIGN) {
          _NEXT
 
+      	if (p_interpret->tt == TT_VID) {
+         	_NEXT
+      		if (p_interpret->tt != TT_IDENT)
+         		_INTERPRET_ERROR("Expected identifier", p_interpret->p_token);
+
+      		char *c_name_ = token_get_val(p_interpret->p_token);
+      		Symbol *p_symbol = scope_get(p_interpret->p_scope, c_name_);
+
+      		if (p_symbol == NULL)
+         		_INTERPRET_ERROR("No such symbol", p_interpret->p_token);
+
+			symbol_ref_up(p_symbol);
+         	scope_newset(p_interpret->p_scope, c_name, p_symbol);
+			_NEXT
+
+		} else {
          Stack *p_stack = p_interpret->p_stack;
          p_interpret->p_stack = stack_new();
 
@@ -236,11 +252,10 @@ _var_assign(Interpret *p_interpret) {
             p_token = stack_top(p_interpret->p_stack);
             Symbol *p_symbol = symbol_new(SYM_VARIABLE, p_token);
             scope_newset(p_interpret->p_scope, c_name, p_symbol);
-
          } else {
             return (0);
          }
-
+		}
       } else {
          Token *p_token = token_new_integer(0);
          Symbol *p_symbol = symbol_new(SYM_VARIABLE, p_token);
@@ -912,6 +927,7 @@ _term(Interpret *p_interpret) {
    }
    break;
 
+   /*
    case TT_PARANT_AL:
    {
       Token *p_token = p_interpret->p_token;
@@ -922,6 +938,7 @@ _term(Interpret *p_interpret) {
       _INTERPRET_ERROR("arrays not yet fully implemented", p_token_arr);
    }
    break;
+   */
 
    case TT_PARANT_L:
    {

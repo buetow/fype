@@ -42,12 +42,14 @@ symbol_new(SymbolType sym, void *p_val) {
 
    p_symbol->sym = sym;
    p_symbol->p_val = p_val;
+   p_symbol->i_refs = 1;
 
    return p_symbol;
 }
 
 void
 symbol_delete(Symbol *p_symbol) {
+	if (--p_symbol->i_refs == 0) {
    switch (symbol_get_sym(p_symbol)) {
    case SYM_PROCEDURE:
    {
@@ -58,6 +60,7 @@ symbol_delete(Symbol *p_symbol) {
    NO_DEFAULT;
    }
    free(p_symbol);
+	}
 }
 
 void

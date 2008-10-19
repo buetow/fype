@@ -41,6 +41,7 @@
 #define symbol_set_sym(s,st) s->sym = st
 #define symbol_get_val(s) s->p_val
 #define symbol_get_sym(s) s->sym
+#define symbol_ref_up(s) ++s->i_refs
 #define IS_A_FUNCTION(s) (s == SYM_INLINEFUNCTION || s == SYM_FUNCTION)
 #define IS_NOT_A_FUNCTION(s) !IS_A_FUNCTION(s)
 
@@ -55,6 +56,7 @@ typedef enum {
 typedef struct {
    SymbolType sym;
    void *p_val;
+   unsigned i_refs;
 } Symbol;
 
 Symbol* symbol_new(SymbolType sym, void *p_val);

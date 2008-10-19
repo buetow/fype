@@ -129,7 +129,7 @@
 .\" ========================================================================
 .\"
 .IX Title "FYPE 1"
-.TH FYPE 1 "2008-09-06" "Fype v0.1-devel Build 9208" "The Fype Users Manual Page"
+.TH FYPE 1 "2008-10-19" "Fype v0.1-devel Build 9219" "The Fype Users Manual Page"
 .SH "NAME"
 \&\fBFype\fR is \fBF\fRor \fBY\fRour \fBP\fRrogram \fBE\fRxecution
 .PP
@@ -345,6 +345,22 @@ not.
 \&                say foo;
 \&        }
 .Ve
+.SH "SYNONYMS TO VARIABLES/IDENTIFIERS"
+.IX Header "SYNONYMS TO VARIABLES/IDENTIFIERS"
+Each variable can have as many synonyms as wished. A synonym is another name to access the content of a specific variable. Here is an example of how to use synomyms:
+.PP
+.Vb 3
+\&        my foo = "foo";
+\&        my bar = \efoo;
+\&        foo = "bar";
+.Ve
+.PP
+.Vb 2
+\&        # The synonym variable should now also set to "bar"
+\&        assert "bar" == bar;
+.Ve
+.PP
+Synonyms can be used for all kind of identifiers. It's not limited to normal variables but can be also used for function and procedure names etc.
 .SH "BUILT IN FUNCTIONS"
 .IX Header "BUILT IN FUNCTIONS"
 In Fype, operators are built in functions as well. The difference is, that they may be written in infix notation instead in front of the arguments. The types inside the () specify the return types.

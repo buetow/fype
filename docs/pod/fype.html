@@ -38,6 +38,7 @@
 	</ul>
 
 	<li><a href="#variables">VARIABLES</a></li>
+	<li><a href="#synonyms_to_variables_identifiers">SYNONYMS TO VARIABLES/IDENTIFIERS</a></li>
 	<li><a href="#built_in_functions">BUILT IN FUNCTIONS</a></li>
 	<ul>
 
@@ -307,6 +308,19 @@ not.</p>
                 put &quot;foo is defined and has the value &quot;;
                 say foo;
         }</pre>
+<p>
+</p>
+<hr />
+<h1><a name="synonyms_to_variables_identifiers">SYNONYMS TO VARIABLES/IDENTIFIERS</a></h1>
+<p>Each variable can have as many synonyms as wished. A synonym is another name to access the content of a specific variable. Here is an example of how to use synomyms:</p>
+<pre>
+        my foo = &quot;foo&quot;;
+        my bar = \foo;
+        foo = &quot;bar&quot;;</pre>
+<pre>
+        # The synonym variable should now also set to &quot;bar&quot;
+        assert &quot;bar&quot; == bar;</pre>
+<p>Synonyms can be used for all kind of identifiers. It's not limited to normal variables but can be also used for function and procedure names etc.</p>
 <p>
 </p>
 <hr />

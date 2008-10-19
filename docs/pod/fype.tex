@@ -272,6 +272,24 @@ not.
                 say foo;
         }
 \end{verbatim}
+\section{SYNONYMS TO VARIABLES/IDENTIFIERS\label{SYNONYMS_TO_VARIABLES_IDENTIFIERS}\index{SYNONYMS TO VARIABLES/IDENTIFIERS}}
+
+
+Each variable can have as many synonyms as wished. A synonym is another name to access the content of a specific variable. Here is an example of how to use synomyms:
+
+\begin{verbatim}
+        my foo = "foo";
+        my bar = \foo;
+        foo = "bar";
+\end{verbatim}
+\begin{verbatim}
+        # The synonym variable should now also set to "bar"
+        assert "bar" == bar;
+\end{verbatim}
+
+
+Synonyms can be used for all kind of identifiers. It's not limited to normal variables but can be also used for function and procedure names etc.
+
 \section{BUILT IN FUNCTIONS\label{BUILT_IN_FUNCTIONS}\index{BUILT IN FUNCTIONS}}
 
 
