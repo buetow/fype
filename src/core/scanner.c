@@ -160,7 +160,8 @@ _scanner_get_next_char(Scanner *p_scanner) {
 
 void
 scanner_run(Fype *p_fype) {
-   Scanner *p_scanner = scanner_new(p_fype->p_list_token, p_fype->p_tupel_argv);
+   Scanner *p_scanner = scanner_new(p_fype->p_list_token,
+                                    p_fype->p_tupel_argv);
 
    int i_token_len = 0;
    char *c_token = malloc(sizeof(char));
@@ -281,7 +282,8 @@ scanner_run(Fype *p_fype) {
             } else {
                for (int i = 0; i < p_scanner->i_num_tokenends; ++i) {
                   if (_TOKENENDS[i] == c) {
-                     scanner_add_token(p_scanner, &c_token, &i_token_len, tt_cur);
+                     scanner_add_token(p_scanner, &c_token,
+                                       &i_token_len, tt_cur);
                      if (i < _ADD_SEMICOLON_INDEX)
                         _add_semicolon_to_list(p_scanner);
                      break;
@@ -336,8 +338,10 @@ scanner_add_token(Scanner *p_scanner, char **cc_token, int *p_token_len,
                   TokenType tt_cur) {
 
    List *p_list_token = scanner_get_list_token(p_scanner);
-   Token *p_token = token_new(*cc_token, tt_cur, p_scanner->i_current_line_nr,
-                              p_scanner->i_current_pos_nr, p_scanner->c_filename);
+   Token *p_token = token_new(*cc_token, tt_cur,
+                              p_scanner->i_current_line_nr,
+                              p_scanner->i_current_pos_nr,
+                              p_scanner->c_filename);
 
    list_add_back(p_list_token, p_token);
    token_ref_up(p_token);

@@ -271,7 +271,9 @@ list_iterate2_ptr(List *p_list, void (*func)(void *, void *), void *p_void) {
 }
 
 void
-list_iterate3(List *p_list, void (*func)(void *, void *, void *), void *p_void1, void *p_void2) {
+list_iterate3(List *p_list,
+              void (*func)(void *, void *, void *),
+              void *p_void1, void *p_void2) {
    ListElem *p_elem = p_list->p_first;
 
    while (p_elem) {
@@ -281,7 +283,8 @@ list_iterate3(List *p_list, void (*func)(void *, void *, void *), void *p_void1,
 }
 
 void
-list_iterate3_ptr(List *p_list, void (*func)(void *, void *, void *),
+list_iterate3_ptr(List *p_list,
+                  void (*func)(void *, void *, void *),
                   void *p_void1, void *p_void2) {
    ListElem *p_elem = p_list->p_first;
 

@@ -169,7 +169,8 @@ typedef struct {
    Array *p_array;
 } Token;
 
-Token* token_new(char *c_val, TokenType tt_cur, int i_line_nr, int i_pos_nr, char *c_filename);
+Token* token_new(char *c_val, TokenType tt_cur, int i_line_nr,
+                 int i_pos_nr, char *c_filename);
 Token* token_new_integer(int i_val);
 Token* token_new_couble(double d_val);
 Token* token_new_string(char *c_val);

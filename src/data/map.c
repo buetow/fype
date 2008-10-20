@@ -261,21 +261,27 @@ map_iterate2(Map *p_map, void (*func) (void *, void *), void *p_void) {
 }
 
 void
-map_iterate2_keys(Map *p_map, void (*func) (void *, void *, char *), void *p_void) {
+map_iterate2_keys(Map *p_map,
+                  void (*func) (void *, void *, char *),
+                  void *p_void) {
    for (int i = 0; i < p_map->i_max_size; ++i)
       if (p_map->pc_keys[i] != NULL)
          (*func) (p_map->pp_vals[i], p_void, p_map->pc_keys[i]);
 }
 
 void
-map_iterate3(Map *p_map, void (*func) (void *, void *, void *), void *p_void1, void *p_void2) {
+map_iterate3(Map *p_map,
+             void (*func) (void *, void *, void *),
+             void *p_void1, void *p_void2) {
    for (int i = 0; i < p_map->i_max_size; ++i)
       if (p_map->pc_keys[i] != NULL)
          (*func) (p_map->pp_vals[i], p_void1, p_void2);
 }
 
 void
-map_iterate3_keys(Map *p_map, void (*func) (void *, void *, void *, char *), void *p_void1, void *p_void2) {
+map_iterate3_keys(Map *p_map,
+                  void (*func) (void *, void *, void *, char *),
+                  void *p_void1, void *p_void2) {
    for (int i = 0; i < p_map->i_max_size; ++i)
       if (p_map->pc_keys[i] != NULL)
          (*func) (p_map->pp_vals[i], p_void1, p_void2, p_map->pc_keys[i]);

@@ -43,8 +43,11 @@
 void function_process(Interpret *p_interp, Token *p_token_op,
                       Token *p_token_op2, Stack *p_stack_args, int i_args);
 _Bool function_is_buildin(Token *p_token_ident);
-void function_process_buildin(Interpret *p_interpret, Token *p_token_ident, Stack *p_stack_args);
+void function_process_buildin(Interpret *p_interpret,
+                              Token *p_token_ident,
+                              Stack *p_stack_args);
 _Bool function_is_self_defined(Interpret *p_interpret);
-void function_process_self_defined(Interpret *p_interpret, Token *p_token_ident);
+void function_process_self_defined(Interpret *p_interpret,
+                                   Token *p_token_ident);
 
 #endif /* FUNCTION_H */

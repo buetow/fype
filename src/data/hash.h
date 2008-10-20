@@ -71,7 +71,9 @@ RETCODE hash_size(Hash *p_hash, int i_size);
 int hash_getaddr(Hash *p_hash, char *c_key, HASH_OP OP);
 RETCODE hash_addrisfree(Hash *p_hash, int i_addr);
 RETCODE hash_addrisocc(Hash *p_hash, int i_addr, char *c_key);
-int hash_nextaddr(Hash *p_hash, int i_max_tries, char *c_key, int i_addr, HASH_OP OP);
+int hash_nextaddr(Hash *p_hash, int i_max_tries,
+                  char *c_key, int i_addr,
+                  HASH_OP OP);
 void hash_iterate(Hash *p_hash, void (*func)(void *));
 
 #define hash_get_cur_size(hash) hash->i_cur_size

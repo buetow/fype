@@ -185,7 +185,8 @@ tt_get_name(TokenType tt_cur) {
 }
 
 Token*
-token_new(char *c_val, TokenType tt_cur, int i_line_nr, int i_pos_nr, char *c_filename) {
+token_new(char *c_val, TokenType tt_cur, int i_line_nr,
+          int i_pos_nr, char *c_filename) {
    Token *p_token = token_new_dummy();
 
    p_token->c_val = c_val;
@@ -340,7 +341,7 @@ token_delete(Token *p_token) {
    if (token_ref_down(p_token) <= 0) {
       if (p_token->i_ref_count == 0) {
 #ifdef DEBUG_TOKEN_REFCOUNT
-         printf("DEBUG::TOKEN::REFCOUNT: Token refcount debug: Token ref count is 0 == %d\n",
+         printf("DEBUG::TOKEN::REFCOUNT: Token ref count is 0 == %d\n",
                 p_token->i_ref_count);
 #endif /* DEBUG_TOKEN_REFCOUNT */
          if (p_token->c_val)
@@ -353,14 +354,14 @@ token_delete(Token *p_token) {
       }
 #ifdef DEBUG_TOKEN_REFCOUNT
       else {
-         printf("DEBUG::TOKEN::REFCOUNT: Token refcount debug: Token ref count is 0 > %d\n",
+         printf("DEBUG::TOKEN::REFCOUNT: Token ref count is 0 > %d\n",
                 p_token->i_ref_count);
       }
 #endif /* DEBUG_TOKEN_REFCOUNT */
    }
 #ifdef DEBUG_TOKEN_REFCOUNT
    else {
-      printf("Token refcount debug: Token ref count is 0 < %d\n",
+      printf("DEBUG::TOKEN::REFCOUNT: Token ref count is 0 < %d\n",
              p_token->i_ref_count);
    }
 #endif /* DEBUG_TOKEN_REFCOUNT */

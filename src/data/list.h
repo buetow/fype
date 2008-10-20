@@ -84,10 +84,18 @@ void list_delete_cb(void *p_list);
 void list_delete_and_free_vals(List *p_list);
 unsigned list_size(List *p_list);
 void list_iterate(List *p_list, void (*func)(void *));
-void list_iterate2_ptr(List *p_list, void (*func)(void *, void *), void *p_void);
-void list_iterate2(List *p_list, void (*func)(void *, void *), void *p_void);
-void list_iterate3(List *p_list, void (*func)(void *, void *, void *), void *p_void1, void *p_void2);
-void list_iterate3_ptr(List *p_list, void (*func)(void *, void *, void *), void *p_void1, void *p_void2);
+void list_iterate2_ptr(List *p_list,
+                       void (*func)(void *, void *),
+                       void *p_void);
+void list_iterate2(List *p_list,
+                   void (*func)(void *, void *),
+                   void *p_void);
+void list_iterate3(List *p_list,
+                   void (*func)(void *, void *, void *),
+                   void *p_void1, void *p_void2);
+void list_iterate3_ptr(List *p_list,
+                       void (*func)(void *, void *, void *),
+                       void *p_void1, void *p_void2);
 ListIterator *listiterator_new(List *p_list);
 ListIterator *listiterator_new_reverse(List *p_list);
 void listiterator_delete(ListIterator *p_iter);

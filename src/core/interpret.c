@@ -594,7 +594,8 @@ _control(Interpret *p_interpret) {
             */
 
          } else {
-            _INTERPRET_ERROR("Expected expression after control keyword", p_token);
+            _INTERPRET_ERROR("Expected expression after control keyword",
+                             p_token);
          }
 
          listiterator_delete(p_interpret->p_iter);

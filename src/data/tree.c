@@ -126,7 +126,9 @@ _tree_print(TreeNode *p_treenode, int i_indent) {
 #endif
       printf("\nTree ");
 
-   array_iterate2(p_treenode->p_array_childs, _tree_print_cb2, (void*) (i_indent + TREE_PRINT_INDENT));
+   array_iterate2(p_treenode->p_array_childs,
+                  _tree_print_cb2,
+                  (void*) (i_indent + TREE_PRINT_INDENT));
 }
 
 void

@@ -72,9 +72,15 @@ void map_print(Map *p_map);
 void map_iterate(Map *p_map, void (*func) (void *));
 void map_iterate_keys(Map *p_map, void (*func) (void *, char *));
 void map_iterate2(Map *p_map, void (*func) (void *, void *), void *p_void);
-void map_iterate2_keys(Map *p_map, void (*func) (void *, void *, char *), void *p_void);
-void map_iterate3(Map *p_map, void (*func) (void *, void *, void *), void *p_void1, void *p_void2);
-void map_iterate3_keys(Map *p_map, void (*func) (void *, void *, void *, char *), void *p_void1, void *p_void2);
+void map_iterate2_keys(Map *p_map,
+                       void (*func) (void *, void *, char *),
+                       void *p_void);
+void map_iterate3(Map *p_map,
+                  void (*func) (void *, void *, void *),
+                  void *p_void1, void *p_void2);
+void map_iterate3_keys(Map *p_map,
+                       void (*func) (void *, void *, void *, char *),
+                       void *p_void1, void *p_void2);
 
 #define map_get_size(map) map->i_size
 #define map_get_max_size(map) map->i_max_size

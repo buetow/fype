@@ -204,7 +204,8 @@ hash_nextaddr(Hash *p_hash, int i_max_tries, char *c_key, int i_addr,
 
 void
 hash_print(Hash *p_hash) {
-   printf("hash_print [size:%d,cur:%d] syntax (flag[,key][=TYPE[<val>]]):\n -> ",
+   printf("hash_print [size:%d,cur:%d] syntax "
+          " (flag[,key][=TYPE[<val>]]):\n -> ",
           p_hash->i_size,p_hash->i_cur_size);
 
    for (int i = 0; i < p_hash->i_size; ++i) {

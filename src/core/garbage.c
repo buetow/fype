@@ -56,8 +56,9 @@ void
 garbage_destroy() {
    garbage_collect();
    if (!list_empty(LIST_GARBAGE)) {
-      EPRINTF("The garbage collector still has %d registered items which don't have"
-              " a zero ref count!\n", list_size(LIST_GARBAGE));
+      EPRINTF("The garbage collector still has %d registered items "
+              " which don't have a zero ref count!\n",
+              list_size(LIST_GARBAGE));
 
       /*
        ListIterator *p_iter = listiterator_new(LIST_GARBAGE);
