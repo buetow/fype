@@ -41,6 +41,7 @@ List *LIST_GARBAGE = NULL;
 
 typedef struct {
    void (*p_func)(void*);
+   void (*p_print)(void*);
    int *p_ref_count;
    void *p_2free;
    GarbageType type;
@@ -52,32 +53,19 @@ garbage_init() {
 }
 
 void
-_garbage_print(_Garbage *p_garbage) {
-   switch (p_garbage->type) {
-   case GC_TOKEN:
-   {
-      Token *p_token = p_garbage->p_2free;
-      token_print(p_token);
-      printf("\n");
-   }
-   break;
-   }
-}
-
-void
 garbage_destroy() {
    garbage_collect();
-
    if (!list_empty(LIST_GARBAGE)) {
       EPRINTF("The garbage collector still has %d registered items which don't have"
               " a zero ref count!\n", list_size(LIST_GARBAGE));
 
-      ListIterator *p_iter = listiterator_new(LIST_GARBAGE);
-      while (listiterator_has_next(p_iter)) {
-         _Garbage *p_garbage = listiterator_next(p_iter);
-         _garbage_print(p_garbage);
-      }
-      listiterator_delete(p_iter);
+      /*
+       ListIterator *p_iter = listiterator_new(LIST_GARBAGE);
+       while (listiterator_has_next(p_iter)) {
+          _Garbage *p_garbage = listiterator_next(p_iter);
+       }
+       listiterator_delete(p_iter);
+      */
 
       _GARBAGE_ERROR("Garbage left");
    }
@@ -95,7 +83,13 @@ garbage_collect() {
       _Garbage *p_garbage = listiterator_next(p_iter);
 
       if (p_garbage->p_ref_count == NULL || *p_garbage->p_ref_count <= 0) {
-         // _garbage_print(p_garbage);
+#ifdef DEBUG_GC
+         printf("DEBUG::GC: Freeing ");
+         if (NULL != p_garbage->p_print)
+            (*p_garbage->p_print) (p_garbage->p_2free);
+         else
+            printf("0x%x\n", (int) p_garbage->p_2free);
+#endif /* DEBUG_GC */
          (*p_garbage->p_func) (p_garbage->p_2free);
          free(p_garbage);
          ++i_count;
@@ -109,6 +103,9 @@ garbage_collect() {
 
    list_delete(LIST_GARBAGE);
    LIST_GARBAGE = p_list_garbage_new;
+#ifdef DEBUG_GC
+   printf("DEBUG::GC: Freed %d items\n", i_count);
+#endif /* DEBUG_GC */
 
    return (i_count);
 }
@@ -119,11 +116,25 @@ garbage_add(void *p, GarbageType type) {
 }
 
 void
-garbage_add2(void *p, void (*p_func)(void*), int *p_ref_count, GarbageType type) {
+garbage_add2(void *p,
+             void (*p_func)(void*),
+             int *p_ref_count,
+             GarbageType type) {
+   garbage_add3(p, free, p_func, NULL, type);
+}
+
+void
+garbage_add3(void *p,
+             void (*p_func)(void*),
+             void (*p_print)(void*),
+             int *p_ref_count,
+             GarbageType type) {
+
    _Garbage *p_garbage = malloc(sizeof(_Garbage));
 
    p_garbage->p_2free = p;
    p_garbage->p_func = p_func;
+   p_garbage->p_print = p_print;
    p_garbage->p_ref_count = p_ref_count;
    p_garbage->type = type;
 
@@ -132,5 +143,8 @@ garbage_add2(void *p, void (*p_func)(void*), int *p_ref_count, GarbageType type)
 
 void
 garbage_add_token(Token *p_token) {
-   garbage_add2(p_token, token_delete_cb, &p_token->i_ref_count, GC_TOKEN);
+   garbage_add3(p_token,
+                token_delete_cb,
+                token_print_cb,
+                &p_token->i_ref_count, GC_TOKEN);
 }

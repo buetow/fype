@@ -222,40 +222,40 @@ _var_assign(Interpret *p_interpret) {
       if (p_interpret->tt == TT_ASSIGN) {
          _NEXT
 
-      	if (p_interpret->tt == TT_VID) {
-         	_NEXT
-      		if (p_interpret->tt != TT_IDENT)
-         		_INTERPRET_ERROR("Expected identifier", p_interpret->p_token);
+         if (p_interpret->tt == TT_VID) {
+            _NEXT
+            if (p_interpret->tt != TT_IDENT)
+               _INTERPRET_ERROR("Expected identifier", p_interpret->p_token);
 
-      		char *c_name_ = token_get_val(p_interpret->p_token);
-      		Symbol *p_symbol = scope_get(p_interpret->p_scope, c_name_);
+            char *c_name_ = token_get_val(p_interpret->p_token);
+            Symbol *p_symbol = scope_get(p_interpret->p_scope, c_name_);
 
-      		if (p_symbol == NULL)
-         		_INTERPRET_ERROR("No such symbol", p_interpret->p_token);
+            if (p_symbol == NULL)
+               _INTERPRET_ERROR("No such symbol", p_interpret->p_token);
 
-			symbol_ref_up(p_symbol);
-         	scope_newset(p_interpret->p_scope, c_name, p_symbol);
-			_NEXT
-
-		} else {
-         Stack *p_stack = p_interpret->p_stack;
-         p_interpret->p_stack = stack_new();
-
-         if (_expression_(p_interpret)) {
-            function_process_buildin(p_interpret, p_token,
-                                     p_interpret->p_stack);
-
-            stack_merge(p_stack, p_interpret->p_stack);
-            stack_delete(p_interpret->p_stack);
-            p_interpret->p_stack = p_stack;
-
-            p_token = stack_top(p_interpret->p_stack);
-            Symbol *p_symbol = symbol_new(SYM_VARIABLE, p_token);
+            symbol_ref_up(p_symbol);
             scope_newset(p_interpret->p_scope, c_name, p_symbol);
+            _NEXT
+
          } else {
-            return (0);
+            Stack *p_stack = p_interpret->p_stack;
+            p_interpret->p_stack = stack_new();
+
+            if (_expression_(p_interpret)) {
+               function_process_buildin(p_interpret, p_token,
+                                        p_interpret->p_stack);
+
+               stack_merge(p_stack, p_interpret->p_stack);
+               stack_delete(p_interpret->p_stack);
+               p_interpret->p_stack = p_stack;
+
+               p_token = stack_top(p_interpret->p_stack);
+               Symbol *p_symbol = symbol_new(SYM_VARIABLE, p_token);
+               scope_newset(p_interpret->p_scope, c_name, p_symbol);
+            } else {
+               return (0);
+            }
          }
-		}
       } else {
          Token *p_token = token_new_integer(0);
          Symbol *p_symbol = symbol_new(SYM_VARIABLE, p_token);
@@ -304,9 +304,9 @@ _block_get(Interpret *p_interpret, List *p_list_block) {
    }
 
 #ifdef DEBUG_BLOCK_GET
-   printf("====> BLOCK\n");
+   printf("DEBUG::BLOCK::GET: ====>\n");
    list_iterate(p_list_block, token_print_cb);
-   printf("<==== BLOCK\n");
+   printf("DEBUG::BLOCK::GET: <====\n");
 #endif /* DEBUG_BLOCK_GET */
 
    return (1);
@@ -325,9 +325,9 @@ _expression_get(Interpret *p_interpret, List *p_list_expression) {
    }
 
 #ifdef DEBUG_EXPRESSION_GET
-   printf("====> EXPRESSION\n");
+   printf("DEBUG::EXPRESSION::GET: ====>\n");
    list_iterate(p_list_expression, token_print_cb);
-   printf("<==== EXPRESSION\n");
+   printf("DEBUG::EXPRESSION::GET: <====\n");
 #endif /* DEBUG_EXPRESSION_GET */
 
    return (1);
@@ -936,11 +936,11 @@ _term(Interpret *p_interpret) {
 
       char *c_name = token_get_val(p_interpret->p_token);
       Symbol *p_symbol = scope_get(p_interpret->p_scope, c_name);
-		if (p_symbol == NULL)
-       		_INTERPRET_ERROR("No such symbol", p_interpret->p_token);
+      if (p_symbol == NULL)
+         _INTERPRET_ERROR("No such symbol", p_interpret->p_token);
 
 
-	  Token *p_token_num_refs = token_new_integer(p_symbol->i_refs);
+      Token *p_token_num_refs = token_new_integer(p_symbol->i_refs);
       stack_push(p_interpret->p_stack, p_token_num_refs);
 
       _NEXT;

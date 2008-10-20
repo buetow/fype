@@ -15,7 +15,6 @@ _expression	./src/core/interpret.c	/^_expression(Interpret *p_interpret) {$/
 _expression_	./src/core/interpret.c	/^_expression_(Interpret *p_interpret) {$/
 _expression_get	./src/core/interpret.c	/^_expression_get(Interpret *p_interpret, List *p_li/
 _func_decl	./src/core/interpret.c	/^_func_decl(Interpret *p_interpret) {$/
-_garbage_print	./src/core/garbage.c	/^_garbage_print(_Garbage *p_garbage) {$/
 _indent	./src/data/tree.c	/^void _indent(int i_indent) {$/
 _list_copy_cb	./src/data/list.c	/^_list_copy_cb(void *p_void1, void *p_cpy) {$/
 _next	./src/core/interpret.c	/^_next(Interpret *p_interpret) {$/
@@ -110,7 +109,8 @@ fype_delete	./src/fype.c	/^fype_delete(Fype *p_fype) {$/
 fype_new	./src/fype.c	/^fype_new() {$/
 fype_run	./src/fype.c	/^fype_run(int i_argc, char **pc_argv) {$/
 garbage_add	./src/core/garbage.c	/^garbage_add(void *p, GarbageType type) {$/
-garbage_add2	./src/core/garbage.c	/^garbage_add2(void *p, void (*p_func)(void*), int */
+garbage_add2	./src/core/garbage.c	/^garbage_add2(void *p, $/
+garbage_add3	./src/core/garbage.c	/^garbage_add3(void *p, $/
 garbage_add_token	./src/core/garbage.c	/^garbage_add_token(Token *p_token) {$/
 garbage_collect	./src/core/garbage.c	/^garbage_collect() {$/
 garbage_destroy	./src/core/garbage.c	/^garbage_destroy() {$/

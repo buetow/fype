@@ -49,18 +49,18 @@ symbol_new(SymbolType sym, void *p_val) {
 
 void
 symbol_delete(Symbol *p_symbol) {
-	if (--p_symbol->i_refs == 0) {
-   switch (symbol_get_sym(p_symbol)) {
-   case SYM_PROCEDURE:
-   {
-      List *p_list_token = symbol_get_val(p_symbol);
-      list_delete(p_list_token);
+   if (--p_symbol->i_refs == 0) {
+      switch (symbol_get_sym(p_symbol)) {
+      case SYM_PROCEDURE:
+      {
+         List *p_list_token = symbol_get_val(p_symbol);
+         list_delete(p_list_token);
+      }
+      break;
+      NO_DEFAULT;
+      }
+      free(p_symbol);
    }
-   break;
-   NO_DEFAULT;
-   }
-   free(p_symbol);
-	}
 }
 
 void

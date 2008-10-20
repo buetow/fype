@@ -62,9 +62,9 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
 
 #ifdef DEBUG_FUNCTION_PROCESS
    if (p_token_op2 == NULL)
-      printf("PROCESS OPERATOR %s\n", tt_get_name(tt_op));
+      printf("DEBUG::FUNCTION::PROCESS: Operator %s\n", tt_get_name(tt_op));
    else
-      printf("PROCESS OPERATOR %s %s\n", tt_get_name(tt_op),
+      printf("DEBUG::FUNCTION::PROCESS: Operator %s %s\n", tt_get_name(tt_op),
              tt_get_name(tt_op2));
 
    token_print(p_token_next);
@@ -161,7 +161,7 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
    TokenType tt_highest = convert_to_highest(p_token_store, p_token_next);
 
 #ifdef DEBUG_FUNCTION_PROCESS
-   printf("===> %s %s %s\n",
+   printf("DEBUG::FUNCTION::PROCESS: ===> %s %s %s\n",
           tt_get_name(tt_highest),
           tt_get_name(tt_op),
           tt_get_name(tt_highest));
@@ -643,7 +643,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
 
    } else if (strcmp("gc", token_get_val(p_token_ident)) == 0) {
       int i_count = garbage_collect();
-      printf("ICOUNT %d\n", i_count);
       Token *p_token = token_new_integer(i_count);
       stack_push(p_stack_args, p_token);
 
@@ -815,7 +814,7 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
          break;
          NO_DEFAULT;
       }
-   
+
    } else if (strcmp("refs", token_get_val(p_token_ident)) == 0) {
       if (0 == stack_size(p_stack_args))
          _FUNCTION_ERROR("No argument given", p_token_ident);
