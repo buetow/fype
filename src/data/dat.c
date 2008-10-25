@@ -35,6 +35,7 @@
 #include "dat.h"
 
 #include <stdlib.h>
+#include "../defines.h"
 
 Dat*
 dat_new() {
