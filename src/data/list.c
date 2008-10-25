@@ -1,13 +1,13 @@
 /*:*
  *: File: ./src/data/list.c
  *: A simple interpreter
- *: 
+ *:
  *: WWW		: http://fype.buetow.org
  *: E-Mail	: fype@dev.buetow.org
- *: 
- *: Copyright (c) 2005 2006 2007 2008, Paul C. Buetow 
+ *:
+ *: Copyright (c) 2005 2006 2007 2008, Paul C. Buetow
  *: All rights reserved.
- *: 
+ *:
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
  *:  * Redistributions of source code must retain the above copyright
@@ -15,20 +15,20 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of P. B. Labs nor the names of its contributors may 
- *:    be used to endorse or promote products derived from this software 
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may
+ *:    be used to endorse or promote products derived from this software
  *:    without specific prior written permission.
- *: 
- *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR 
- *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+ *:
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
+ *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT, 
- *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
- *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
- *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
+ *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  *: HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- *: STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
- *: IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ *: STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ *: IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
@@ -42,7 +42,7 @@ list_new() {
    p_list->p_last = NULL;
    p_list->i_size = 0;
 
-   return p_list;
+   return (p_list);
 }
 
 void
@@ -78,12 +78,13 @@ listelem_new() {
    p_elem->p_next = NULL;
    p_elem->p_prev = NULL;
    p_elem->p_val = NULL;
-   return p_elem;
+
+   return (p_elem);
 }
 
 _Bool
 list_empty(List *p_list) {
-   return p_list->i_size == 0;
+   return (p_list->i_size == 0);
 }
 
 void
@@ -172,7 +173,7 @@ list_add_back(List *p_list, void *p_val) {
 void*
 list_remove_front(List *p_list) {
    if (list_empty(p_list))
-      return NULL;
+      return (NULL);
 
    ListElem *p_elem = p_list->p_first;
    p_list->p_first = p_elem->p_next;
@@ -185,13 +186,13 @@ list_remove_front(List *p_list) {
 
    --p_list->i_size;
 
-   return p_val;
+   return (p_val);
 }
 
 void*
 list_remove_back(List *p_list) {
    if (list_empty(p_list))
-      return NULL;
+      return (NULL);
 
    ListElem *p_elem = p_list->p_last;
    p_list->p_last = p_elem->p_prev;
@@ -202,7 +203,7 @@ list_remove_back(List *p_list) {
 
    --p_list->i_size;
 
-   return p_val;
+   return (p_val);
 }
 
 void
@@ -237,7 +238,7 @@ list_delete_and_free_vals(List *p_list) {
 
 unsigned
 list_size(List *p_list) {
-   return p_list->i_size;
+   return (p_list->i_size);
 }
 
 void
@@ -329,7 +330,7 @@ list_remove_elem(List *p_list, ListElem *p_elem_remove) {
 ListIterator*
 listiterator_new(List *p_list) {
    if (!p_list)
-      return NULL;
+      return (NULL);
 
    ListIterator *p_iter = malloc(sizeof(ListIterator));
 
@@ -337,20 +338,20 @@ listiterator_new(List *p_list) {
    p_iter->b_reverse = false;
    p_iter->func = NULL;
 
-   return p_iter;
+   return (p_iter);
 }
 
 ListIterator*
 listiterator_new_reverse(List *p_list) {
    if (!p_list)
-      return NULL;
+      return (NULL);
 
    ListIterator *p_iter = listiterator_new(p_list);
 
    p_iter->p_cur = p_list->p_last;
    p_iter->b_reverse = true;
 
-   return p_iter;
+   return (p_iter);
 }
 
 void

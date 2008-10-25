@@ -1,13 +1,13 @@
 /*:*
  *: File: ./src/data/array.c
  *: A simple interpreter
- *: 
+ *:
  *: WWW		: http://fype.buetow.org
  *: E-Mail	: fype@dev.buetow.org
- *: 
- *: Copyright (c) 2005 2006 2007 2008, Paul C. Buetow 
+ *:
+ *: Copyright (c) 2005 2006 2007 2008, Paul C. Buetow
  *: All rights reserved.
- *: 
+ *:
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
  *:  * Redistributions of source code must retain the above copyright
@@ -15,20 +15,20 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of P. B. Labs nor the names of its contributors may 
- *:    be used to endorse or promote products derived from this software 
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may
+ *:    be used to endorse or promote products derived from this software
  *:    without specific prior written permission.
- *: 
- *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR 
- *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+ *:
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
+ *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT, 
- *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
- *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
- *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
+ *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  *: HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- *: STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
- *: IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ *: STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ *: IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
@@ -41,7 +41,7 @@ array_new() {
    p_array->i_size = 0;
    p_array->pp_ae = NULL;
 
-   return p_array;
+   return (p_array);
 }
 
 
@@ -92,7 +92,7 @@ array_insert(Array *p_array, int i_index, void *p_val) {
 void*
 array_remove(Array *p_array, int i_index) {
    if (p_array->i_size <= i_index)
-      return NULL;
+      return (NULL);
 
    ArrayElement *p_ae = p_array->pp_ae[i_index];
    void *p_ret = p_ae->p_val;
@@ -105,7 +105,7 @@ array_remove(Array *p_array, int i_index) {
 
    array_resize(p_array, p_array->i_size - 1);
 
-   return p_ret;
+   return (p_ret);
 }
 
 void
@@ -147,17 +147,17 @@ array_resize(Array *p_array, int i_size) {
 void*
 array_get(Array *p_array, int i_index) {
    if (p_array->i_size > i_index)
-      return p_array->pp_ae[i_index]->p_val;
+      return (p_array->pp_ae[i_index]->p_val);
 
-   return NULL;
+   return (NULL);
 }
 
 _Bool
 array_defined(Array *p_array, int i_index) {
    if (i_index >= p_array->i_size)
-      return false;
+      return (false);
 
-   return p_array->pp_ae[i_index]->p_val != NULL;
+   return (p_array->pp_ae[i_index]->p_val != NULL);
 }
 
 void
@@ -222,7 +222,7 @@ arrayelement_new(void *p_val) {
 
    p_ae->p_val = p_val;
 
-   return p_ae;
+   return (p_ae);
 }
 
 void
@@ -236,13 +236,13 @@ arrayelement_delete(ArrayElement *p_ae) {
 ArrayIterator*
 arrayiterator_new(Array *p_array) {
    if (!p_array)
-      return NULL;
+      return (NULL);
 
    ArrayIterator *p_arrayiterator = malloc(sizeof(ArrayIterator));
    p_arrayiterator->p_array = p_array;
    p_arrayiterator->i_cur_pos = 0;
 
-   return p_arrayiterator;
+   return (p_arrayiterator);
 }
 
 void
@@ -253,14 +253,14 @@ arrayiterator_delete(ArrayIterator *p_arrayiterator) {
 
 _Bool
 arrayiterator_has_next(ArrayIterator *p_arrayiterator) {
-   return p_arrayiterator->i_cur_pos <
-          array_get_size(p_arrayiterator->p_array);
+   return (p_arrayiterator->i_cur_pos <
+           array_get_size(p_arrayiterator->p_array));
 }
 
 void*
 arrayiterator_next(ArrayIterator *p_arrayiterator) {
    if (!arrayiterator_has_next(p_arrayiterator))
-      return NULL;
+      return (NULL);
 
-   return array_get(p_arrayiterator->p_array, p_arrayiterator->i_cur_pos++);
+   return (array_get(p_arrayiterator->p_array, p_arrayiterator->i_cur_pos++));
 }
