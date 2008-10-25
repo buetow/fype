@@ -55,5 +55,6 @@ _Bool scope_newset(Scope *p_scope, char *c_key, Symbol *p_symbol);
 _Bool scope_reset(Scope *p_scope, char *c_key, Symbol *p_symbol);
 void scope_down(Scope *p_scope);
 void scope_up(Scope *p_scope);
+void scope_print(Scope *p_scope);
 
 #endif /* SCOPE_H */

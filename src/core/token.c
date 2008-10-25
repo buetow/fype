@@ -300,14 +300,11 @@ token_new_copy(Token *p_token) {
 void token_copy_vals(Token *p_token_to, Token *p_token_from) {
    int i_len;
 
-   // TODO: Check against mem leak
-   //   if (p_token_to->c_val)
-   //     free(p_token_to->c_val);
-
    if (p_token_from->c_val) {
       i_len = strlen(p_token_from->c_val);
       p_token_to->c_val = calloc(i_len+1, sizeof(char));
       strcpy(p_token_to->c_val, p_token_from->c_val);
+
    } else {
       p_token_to->c_val = NULL;
    }

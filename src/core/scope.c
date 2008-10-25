@@ -148,3 +148,10 @@ scope_newset(Scope *p_scope, char *c_key, Symbol *p_symbol) {
 
    return (true);
 }
+
+void
+scopes_print(Scope *p_scope) {
+   printf("Scopes:\n");
+   printf("Scope stack size: %d\n", p_scope->p_stack_scopes);
+    
+}
