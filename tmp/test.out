@@ -1,3 +1,173 @@
+#*
+ * Examples of how to use synonyms
+ *#
 
+# Create a variable foo, and bar is a synonym for foo
+my foo = "foo";
+my bar = \foo;
 
-my foo = [1, 2.2, "3"];
+# Reset the value of foo
+foo = "bar";
+
+# The synonym variable should now also set to "bar"
+assert "bar" == say bar;
+
+# Create a new procedure baz
+proc baz { 
+	say "I am baz";
+}
+
+# Make a synonym baz, and undefine baz
+my bay = \baz;
+undef baz;
+
+# bay still has a reference of the original procedure baz
+bay; # this prints aut "I am baz" 
+
+assert 0 == defined baz;
+assert 1 == defined bay;
+
+# This removes the procedure from memory
+undef bay; 
+
+Token (id=00000, line=00006, pos=0003, type=TT_MY, val=my, ival=0, dval=0.000000, refs=1)
+Token (id=00001, line=00006, pos=0007, type=TT_IDENT, val=foo, ival=0, dval=0.000000, refs=1)
+Token (id=00002, line=00006, pos=0009, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00003, line=00006, pos=0010, type=TT_STRING, val=foo, ival=0, dval=0.000000, refs=1)
+Token (id=00004, line=00006, pos=0012, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00005, line=00007, pos=0003, type=TT_MY, val=my, ival=0, dval=0.000000, refs=1)
+Token (id=00006, line=00007, pos=0007, type=TT_IDENT, val=bar, ival=0, dval=0.000000, refs=1)
+Token (id=00007, line=00007, pos=0009, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00008, line=00007, pos=0011, type=TT_VID, val=\, ival=0, dval=0.000000, refs=1)
+Token (id=00009, line=00007, pos=0014, type=TT_IDENT, val=foo, ival=0, dval=0.000000, refs=1)
+Token (id=00010, line=00007, pos=0015, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00011, line=00010, pos=0004, type=TT_IDENT, val=foo, ival=0, dval=0.000000, refs=1)
+Token (id=00012, line=00010, pos=0006, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00013, line=00010, pos=0007, type=TT_STRING, val=bar, ival=0, dval=0.000000, refs=1)
+Token (id=00014, line=00010, pos=0009, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00015, line=00013, pos=0007, type=TT_IDENT, val=assert, ival=0, dval=0.000000, refs=1)
+Token (id=00016, line=00013, pos=0008, type=TT_STRING, val=bar, ival=0, dval=0.000000, refs=1)
+Token (id=00017, line=00013, pos=0011, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00018, line=00013, pos=0012, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00019, line=00013, pos=0016, type=TT_IDENT, val=say, ival=0, dval=0.000000, refs=1)
+Token (id=00020, line=00013, pos=0020, type=TT_IDENT, val=bar, ival=0, dval=0.000000, refs=1)
+Token (id=00021, line=00013, pos=0021, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00022, line=00016, pos=0005, type=TT_PROC, val=proc, ival=0, dval=0.000000, refs=1)
+Token (id=00023, line=00016, pos=0009, type=TT_IDENT, val=baz, ival=0, dval=0.000000, refs=1)
+Token (id=00024, line=00016, pos=0011, type=TT_PARANT_CL, val={, ival=0, dval=0.000000, refs=1)
+Token (id=00025, line=00017, pos=0005, type=TT_IDENT, val=say, ival=0, dval=0.000000, refs=1)
+Token (id=00026, line=00017, pos=0006, type=TT_STRING, val=I am baz, ival=0, dval=0.000000, refs=1)
+Token (id=00027, line=00017, pos=0008, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00028, line=00018, pos=0002, type=TT_PARANT_CR, val=}, ival=0, dval=0.000000, refs=1)
+Token (id=00029, line=00021, pos=0003, type=TT_MY, val=my, ival=0, dval=0.000000, refs=1)
+Token (id=00030, line=00021, pos=0007, type=TT_IDENT, val=bay, ival=0, dval=0.000000, refs=1)
+Token (id=00031, line=00021, pos=0009, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00032, line=00021, pos=0011, type=TT_VID, val=\, ival=0, dval=0.000000, refs=1)
+Token (id=00033, line=00021, pos=0014, type=TT_IDENT, val=baz, ival=0, dval=0.000000, refs=1)
+Token (id=00034, line=00021, pos=0015, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00035, line=00022, pos=0006, type=TT_UNDEF, val=undef, ival=0, dval=0.000000, refs=1)
+Token (id=00036, line=00022, pos=0010, type=TT_IDENT, val=baz, ival=0, dval=0.000000, refs=1)
+Token (id=00037, line=00022, pos=0011, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00038, line=00025, pos=0004, type=TT_IDENT, val=bay, ival=0, dval=0.000000, refs=1)
+Token (id=00039, line=00025, pos=0005, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00040, line=00027, pos=0007, type=TT_IDENT, val=assert, ival=0, dval=0.000000, refs=1)
+Token (id=00041, line=00027, pos=0009, type=TT_INTEGER, val=0, ival=0, dval=0.000000, refs=1)
+Token (id=00042, line=00027, pos=0011, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00043, line=00027, pos=0012, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00044, line=00027, pos=0020, type=TT_DEFINED, val=defined, ival=0, dval=0.000000, refs=1)
+Token (id=00045, line=00027, pos=0024, type=TT_IDENT, val=baz, ival=0, dval=0.000000, refs=1)
+Token (id=00046, line=00027, pos=0025, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00047, line=00028, pos=0007, type=TT_IDENT, val=assert, ival=0, dval=0.000000, refs=1)
+Token (id=00048, line=00028, pos=0009, type=TT_INTEGER, val=1, ival=1, dval=0.000000, refs=1)
+Token (id=00049, line=00028, pos=0011, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00050, line=00028, pos=0012, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00051, line=00028, pos=0020, type=TT_DEFINED, val=defined, ival=0, dval=0.000000, refs=1)
+Token (id=00052, line=00028, pos=0024, type=TT_IDENT, val=bay, ival=0, dval=0.000000, refs=1)
+Token (id=00053, line=00028, pos=0025, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00054, line=00031, pos=0006, type=TT_UNDEF, val=undef, ival=0, dval=0.000000, refs=1)
+Token (id=00055, line=00031, pos=0010, type=TT_IDENT, val=bay, ival=0, dval=0.000000, refs=1)
+Token (id=00056, line=00031, pos=0011, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+DEBUG::GC: Freed 0 items
+DEBUG::GC: Freed 0 items
+DEBUG::GC: Freeing Token (id=00000, line=00010, pos=0007, type=TT_STRING, val=bar, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freed 1 items
+bar
+DEBUG::GC: Freeing Token (id=00000, line=00010, pos=0007, type=TT_INTEGER, val=bar, ival=1, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00000, line=00013, pos=0008, type=TT_STRING, val=bar, ival=0, dval=0.000000, refs=-1)
+DEBUG::GC: Freed 2 items
+DEBUG::GC: Freed 0 items
+DEBUG::GC: Freed 0 items
+DEBUG::GC: Freeing Token (id=00060, line=-0001, pos=-001, type=TT_INTEGER, val=(null), ival=1, dval=0.000000, refs=0)
+DEBUG::GC: Freed 1 items
+I am baz
+DEBUG::GC: Freed 0 items
+DEBUG::GC: Freeing Token (id=00061, line=-0001, pos=-001, type=TT_INTEGER, val=(null), ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freed 1 items
+DEBUG::GC: Freeing Token (id=00063, line=-0001, pos=-001, type=TT_INTEGER, val=(null), ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00000, line=-0001, pos=-001, type=TT_INTEGER, val=(null), ival=1, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00000, line=00027, pos=0009, type=TT_INTEGER, val=0, ival=0, dval=0.000000, refs=-1)
+DEBUG::GC: Freed 3 items
+DEBUG::GC: Freeing Token (id=00066, line=-0001, pos=-001, type=TT_INTEGER, val=(null), ival=1, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00000, line=-0001, pos=-001, type=TT_INTEGER, val=(null), ival=1, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00000, line=00028, pos=0009, type=TT_INTEGER, val=1, ival=1, dval=0.000000, refs=-1)
+DEBUG::GC: Freed 3 items
+DEBUG::GC: Freeing Token (id=00068, line=-0001, pos=-001, type=TT_INTEGER, val=(null), ival=1, dval=0.000000, refs=0)
+DEBUG::GC: Freed 1 items
+DEBUG::GC: Freeing Token (id=00000, line=00006, pos=0003, type=TT_MY, val=my, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00001, line=00006, pos=0007, type=TT_IDENT, val=foo, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00002, line=00006, pos=0009, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00003, line=00006, pos=0010, type=TT_STRING, val=foo, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00004, line=00006, pos=0012, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00005, line=00007, pos=0003, type=TT_MY, val=my, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00006, line=00007, pos=0007, type=TT_IDENT, val=bar, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00007, line=00007, pos=0009, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00008, line=00007, pos=0011, type=TT_VID, val=\, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00009, line=00007, pos=0014, type=TT_IDENT, val=foo, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00010, line=00007, pos=0015, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00011, line=00010, pos=0004, type=TT_IDENT, val=foo, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00012, line=00010, pos=0006, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00057, line=00010, pos=0007, type=TT_STRING, val=bar, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00014, line=00010, pos=0009, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00015, line=00013, pos=0007, type=TT_IDENT, val=assert, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00059, line=00013, pos=0008, type=TT_STRING, val=bar, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00017, line=00013, pos=0011, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00018, line=00013, pos=0012, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00019, line=00013, pos=0016, type=TT_IDENT, val=say, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00020, line=00013, pos=0020, type=TT_IDENT, val=bar, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00021, line=00013, pos=0021, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00022, line=00016, pos=0005, type=TT_PROC, val=proc, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00023, line=00016, pos=0009, type=TT_IDENT, val=baz, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00024, line=00016, pos=0011, type=TT_PARANT_CL, val={, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00025, line=00017, pos=0005, type=TT_IDENT, val=say, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00026, line=00017, pos=0006, type=TT_STRING, val=I am baz, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00027, line=00017, pos=0008, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00028, line=00018, pos=0002, type=TT_PARANT_CR, val=}, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00029, line=00021, pos=0003, type=TT_MY, val=my, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00030, line=00021, pos=0007, type=TT_IDENT, val=bay, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00031, line=00021, pos=0009, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00032, line=00021, pos=0011, type=TT_VID, val=\, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00033, line=00021, pos=0014, type=TT_IDENT, val=baz, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00034, line=00021, pos=0015, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00035, line=00022, pos=0006, type=TT_UNDEF, val=undef, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00036, line=00022, pos=0010, type=TT_IDENT, val=baz, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00037, line=00022, pos=0011, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00038, line=00025, pos=0004, type=TT_IDENT, val=bay, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00039, line=00025, pos=0005, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00040, line=00027, pos=0007, type=TT_IDENT, val=assert, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00064, line=00027, pos=0009, type=TT_INTEGER, val=0, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00042, line=00027, pos=0011, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00043, line=00027, pos=0012, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00044, line=00027, pos=0020, type=TT_DEFINED, val=defined, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00045, line=00027, pos=0024, type=TT_IDENT, val=baz, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00046, line=00027, pos=0025, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00047, line=00028, pos=0007, type=TT_IDENT, val=assert, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00067, line=00028, pos=0009, type=TT_INTEGER, val=1, ival=1, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00049, line=00028, pos=0011, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00050, line=00028, pos=0012, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00051, line=00028, pos=0020, type=TT_DEFINED, val=defined, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00052, line=00028, pos=0024, type=TT_IDENT, val=bay, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00053, line=00028, pos=0025, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00054, line=00031, pos=0006, type=TT_UNDEF, val=undef, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00055, line=00031, pos=0010, type=TT_IDENT, val=bay, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freeing Token (id=00056, line=00031, pos=0011, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=0)
+DEBUG::GC: Freed 57 items

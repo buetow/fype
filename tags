@@ -109,8 +109,8 @@ fype_delete	./src/fype.c	/^fype_delete(Fype *p_fype) {$/
 fype_new	./src/fype.c	/^fype_new() {$/
 fype_run	./src/fype.c	/^fype_run(int i_argc, char **pc_argv) {$/
 garbage_add	./src/core/garbage.c	/^garbage_add(void *p, GarbageType type) {$/
-garbage_add2	./src/core/garbage.c	/^garbage_add2(void *p, $/
-garbage_add3	./src/core/garbage.c	/^garbage_add3(void *p, $/
+garbage_add2	./src/core/garbage.c	/^garbage_add2(void *p,$/
+garbage_add3	./src/core/garbage.c	/^garbage_add3(void *p,$/
 garbage_add_token	./src/core/garbage.c	/^garbage_add_token(Token *p_token) {$/
 garbage_collect	./src/core/garbage.c	/^garbage_collect() {$/
 garbage_destroy	./src/core/garbage.c	/^garbage_destroy() {$/
@@ -152,8 +152,8 @@ list_empty	./src/data/list.c	/^list_empty(List *p_list) {$/
 list_iterate	./src/data/list.c	/^list_iterate(List *p_list, void (*func)(void *)) {/
 list_iterate2	./src/data/list.c	/^list_iterate2(List *p_list, void (*func)(void *, v/
 list_iterate2_ptr	./src/data/list.c	/^list_iterate2_ptr(List *p_list, void (*func)(void /
-list_iterate3	./src/data/list.c	/^list_iterate3(List *p_list, void (*func)(void *, v/
-list_iterate3_ptr	./src/data/list.c	/^list_iterate3_ptr(List *p_list, void (*func)(void /
+list_iterate3	./src/data/list.c	/^list_iterate3(List *p_list,$/
+list_iterate3_ptr	./src/data/list.c	/^list_iterate3_ptr(List *p_list,$/
 list_new	./src/data/list.c	/^list_new() {$/
 list_remove_back	./src/data/list.c	/^list_remove_back(List *p_list) {$/
 list_remove_elem	./src/data/list.c	/^list_remove_elem(List *p_list, ListElem *p_elem_re/
@@ -189,9 +189,9 @@ map_insert2	./src/data/map.c	/^map_insert2(Map *p_map, char *c_key1, char *c_key
 map_insert_if_not_exists	./src/data/map.c	/^map_insert_if_not_exists(Map *p_map, char *c_key, /
 map_iterate	./src/data/map.c	/^map_iterate(Map *p_map, void (*func) (void *)) {$/
 map_iterate2	./src/data/map.c	/^map_iterate2(Map *p_map, void (*func) (void *, voi/
-map_iterate2_keys	./src/data/map.c	/^map_iterate2_keys(Map *p_map, void (*func) (void */
-map_iterate3	./src/data/map.c	/^map_iterate3(Map *p_map, void (*func) (void *, voi/
-map_iterate3_keys	./src/data/map.c	/^map_iterate3_keys(Map *p_map, void (*func) (void */
+map_iterate2_keys	./src/data/map.c	/^map_iterate2_keys(Map *p_map,$/
+map_iterate3	./src/data/map.c	/^map_iterate3(Map *p_map,$/
+map_iterate3_keys	./src/data/map.c	/^map_iterate3_keys(Map *p_map,$/
 map_iterate_keys	./src/data/map.c	/^map_iterate_keys(Map *p_map, void (*func) (void *,/
 map_new	./src/data/map.c	/^map_new(int i_max_size) {$/
 map_new_named	./src/data/map.c	/^map_new_named(int i_max_size, char *c_name) {$/

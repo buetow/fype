@@ -1,5 +1,5 @@
-Fype v0.1-devel Build 9255
-Copyright by Paul C. Buetow (2005 - 2008) <fype@dev.buetow.org>
+Fype v0.1-devel Build 9257
+(c) Paul C. Buetow (2005 - 2008) <fype@dev.buetow.org>
 	-e	Executes given code string (see synopses)
 	-h	Prints this help
 	-s	Prints the synopsis
