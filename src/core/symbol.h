@@ -62,5 +62,8 @@ typedef struct {
 Symbol* symbol_new(SymbolType sym, void *p_val);
 void symbol_delete(Symbol *p_symbol);
 void symbol_cleanup_hash_syms_cb(void *p_void);
+void symbol_print(Symbol *p_symbol, char *c_key);
+void symbol_print_cb(void *p_void, char *c_key);
+char* sym_get_name(SymbolType sym);
 
 #endif

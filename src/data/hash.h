@@ -39,7 +39,7 @@
 #include "types.h"
 
 typedef enum HASH_OP_ {
-   free_ADDR,
+   FREE_ADDR,
    OCC_ADDR
 } HASH_OP;
 
@@ -75,6 +75,7 @@ int hash_nextaddr(Hash *p_hash, int i_max_tries,
                   char *c_key, int i_addr,
                   HASH_OP OP);
 void hash_iterate(Hash *p_hash, void (*func)(void *));
+void hash_iterate_key(Hash *p_hash, void (*func)(void *, char *));
 
 #define hash_get_cur_size(hash) hash->i_cur_size
 #define hash_get_size(hash) hash->i_size

@@ -75,7 +75,7 @@
 	exit(1); }
 #define DPRINTF(...) printf("DEBUG("); printf(__VA_ARGS__); printf(")\n");
 
-#define DEBUG_GC
+//#define DEBUG_GC
 //#define DEBUG_TOKEN_REFCOUNT
 //#define DEBUG_FUNCTION_PROCESS
 //#define DEBUG_TRACK

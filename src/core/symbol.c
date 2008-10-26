@@ -35,6 +35,7 @@
 #include "symbol.h"
 
 #include "../data/list.h"
+#include "token.h"
 
 Symbol*
 symbol_new(SymbolType sym, void *p_val) {
@@ -66,4 +67,49 @@ symbol_delete(Symbol *p_symbol) {
 void
 symbol_cleanup_hash_syms_cb(void *p_void) {
    symbol_delete(p_void);
+}
+
+void
+symbol_print(Symbol *p_symbol, char *c_key) {
+   printf("%s: %s", sym_get_name(p_symbol->sym), c_key);
+
+   switch (p_symbol->sym) {
+   case SYM_BUILDIN:
+   case SYM_CONSTANT:
+      break;
+   case SYM_PROCEDURE:
+   case SYM_FUNCTION:
+      //list_iterate(symbol_get_val(p_symbol), token_print_cb);
+      break;
+   case SYM_VARIABLE:
+      printf(" ");
+      token_print(symbol_get_val(p_symbol));
+      break;
+   }
+
+   printf("\n");
+}
+
+void
+symbol_print_cb(void *p_void, char *c_key) {
+   symbol_print(p_void, c_key);
+}
+
+char*
+sym_get_name(SymbolType sym) {
+   switch (sym) {
+   case SYM_CONSTANT:
+      return ("SYM_CONSTANT");
+   case SYM_VARIABLE:
+      return ("SYM_VARIABLE");
+   case SYM_BUILDIN:
+      return ("SYM_BUILDIN");
+   case SYM_PROCEDURE:
+      return ("SYM_PROCEDURE");
+   case SYM_FUNCTION:
+      return ("SYM_FUNCTION");
+   }
+
+   // Never reach this point
+   return ("NONE");
 }

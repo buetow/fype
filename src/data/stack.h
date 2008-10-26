@@ -59,6 +59,10 @@ Stack *stack_new();
 StackElem *stackelem_new();
 _Bool stack_empty(Stack *p_stack);
 void stack_iterate(Stack *p_stack, void (*func)(void *p_void));
+void stack_iterate2(Stack *p_stack, void (*func)(void *p_void, void *p_void2),
+                    void *p_void_arg);
+void stack_iterate_level(Stack *p_stack, void (*func)(void *p_void,
+                         int i_level));
 void stack_push(Stack *p_stack, void *p_val);
 void *stack_pop(Stack *p_stack);
 void stack_clear(Stack *p_stack);

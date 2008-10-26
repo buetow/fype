@@ -134,8 +134,9 @@ SYNTAX
   Scopeing
     A new scope starts with an { and ends with an }. An exception is a
     procedure, which does not use its own scope (see later in this manual).
-    Control statements and functions support scopeings. Here is a small
-    example how to use scopes:
+    Control statements and functions support scopeings. The scope function
+    will print out all available symbols at the current position. Here is a
+    small example of how to use scopes:
 
             my foo = 1;
 
@@ -147,6 +148,10 @@ SYNTAX
 
                             # Prints out 1
                             put defined bar;
+
+                            # Prints out all available symbols at this
+                            # point to stdout. Those are: bar and foo
+                            scope;
                     }
 
                     # Prints out 0

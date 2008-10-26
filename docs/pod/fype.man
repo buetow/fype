@@ -129,7 +129,7 @@
 .\" ========================================================================
 .\"
 .IX Title "FYPE 1"
-.TH FYPE 1 "2008-10-19" "Fype v0.1-devel Build 9240" "The Fype Users Manual Page"
+.TH FYPE 1 "2008-10-26" "Fype v0.1-devel Build 9276" "The Fype Users Manual Page"
 .SH "NAME"
 \&\fBFype\fR is \fBF\fRor \fBY\fRour \fBP\fRrogram \fBE\fRxecution
 .PP
@@ -257,7 +257,7 @@ A Fype program is a list of statements. Each keyword, expression or function cal
 All paranthesis of function calls are optional. They help to make the code better readable. They also help to force precedences of expressions.
 .Sh "Scopeing"
 .IX Subsection "Scopeing"
-A new scope starts with an { and ends with an }. An exception is a procedure, which does not use its own scope (see later in this manual). Control statements and functions support scopeings. Here is a small example how to use scopes:
+A new scope starts with an { and ends with an }. An exception is a procedure, which does not use its own scope (see later in this manual). Control statements and functions support scopeings.  The \fBscope\fR function will print out all available symbols at the current position. Here is a small example of how to use scopes: 
 .PP
 .Vb 1
 \&        my foo = 1;
@@ -271,9 +271,15 @@ A new scope starts with an { and ends with an }. An exception is a procedure, wh
 \&                        my bar = 2;
 .Ve
 .PP
-.Vb 3
+.Vb 2
 \&                        # Prints out 1
 \&                        put defined bar;
+.Ve
+.PP
+.Vb 4
+\&                        # Prints out all available symbols at this
+\&                        # point to stdout. Those are: bar and foo
+\&                        scope;
 \&                }
 .Ve
 .PP

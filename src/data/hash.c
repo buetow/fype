@@ -68,7 +68,7 @@ hash_insert_ht(Hash *p_hash, char *c_key, void *p_val, TYPE type) {
    if (p_hash->i_cur_size == p_hash->i_size)
       hash_size(p_hash, p_hash->i_size *2);
 
-   int i_addr = hash_getaddr(p_hash, c_key, free_ADDR);
+   int i_addr = hash_getaddr(p_hash, c_key, FREE_ADDR);
 
    if (i_addr == RET_ERROR )
       return (RET_NO_SPACE);
@@ -144,7 +144,7 @@ hash_getaddr(Hash *p_hash, char *c_key, HASH_OP OP) {
       i_addr = (i_addr *p_hash->i_size + (int) c_key[i]) % p_hash->i_size;
 
    switch (OP) {
-   case free_ADDR:
+   case FREE_ADDR:
       if (!hash_addrisfree(p_hash,i_addr))
          return (i_addr);
       break;
@@ -188,7 +188,7 @@ hash_nextaddr(Hash *p_hash, int i_max_tries, char *c_key, int i_addr,
    i_addr = (i_addr + 1) % p_hash->i_size;
 
    switch (OP) {
-   case free_ADDR:
+   case FREE_ADDR:
       if (!hash_addrisfree(p_hash,i_addr))
          return (i_addr);
       break;
@@ -288,4 +288,11 @@ hash_iterate(Hash *p_hash, void (*func)(void *)) {
    for (int i = 0; i < p_hash->i_size; ++i)
       if (p_hash->p_elems[i].flag == 'o')
          (*func) (p_hash->p_elems[i].p_val);
+}
+
+void
+hash_iterate_key(Hash *p_hash, void (*func)(void *, char *)) {
+   for (int i = 0; i < p_hash->i_size; ++i)
+      if (p_hash->p_elems[i].flag == 'o')
+         (*func) (p_hash->p_elems[i].p_val, p_hash->p_elems[i].c_key);
 }

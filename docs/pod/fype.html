@@ -228,7 +228,7 @@ TODO file of the source distribution of Fype!</p>
 <p>
 </p>
 <h2><a name="scopeing">Scopeing</a></h2>
-<p>A new scope starts with an { and ends with an }. An exception is a procedure, which does not use its own scope (see later in this manual). Control statements and functions support scopeings. Here is a small example how to use scopes:</p>
+<p>A new scope starts with an { and ends with an }. An exception is a procedure, which does not use its own scope (see later in this manual). Control statements and functions support scopeings.  The <strong>scope</strong> function will print out all available symbols at the current position. Here is a small example of how to use scopes:</p>
 <pre>
         my foo = 1;</pre>
 <pre>
@@ -239,7 +239,11 @@ TODO file of the source distribution of Fype!</p>
                         my bar = 2;</pre>
 <pre>
                         # Prints out 1
-                        put defined bar;
+                        put defined bar;</pre>
+<pre>
+                        # Prints out all available symbols at this
+                        # point to stdout. Those are: bar and foo
+                        scope;
                 }</pre>
 <pre>
                 # Prints out 0

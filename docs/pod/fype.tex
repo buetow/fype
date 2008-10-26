@@ -179,7 +179,7 @@ All paranthesis of function calls are optional. They help to make the code bette
 \subsection*{Scopeing\label{Scopeing}\index{Scopeing}}
 
 
-A new scope starts with an \{ and ends with an \}. An exception is a procedure, which does not use its own scope (see later in this manual). Control statements and functions support scopeings. Here is a small example how to use scopes:
+A new scope starts with an \{ and ends with an \}. An exception is a procedure, which does not use its own scope (see later in this manual). Control statements and functions support scopeings.  The \textbf{scope} function will print out all available symbols at the current position. Here is a small example of how to use scopes:
 
 \begin{verbatim}
         my foo = 1;
@@ -194,6 +194,11 @@ A new scope starts with an \{ and ends with an \}. An exception is a procedure, 
 \begin{verbatim}
                         # Prints out 1
                         put defined bar;
+\end{verbatim}
+\begin{verbatim}
+                        # Prints out all available symbols at this
+                        # point to stdout. Those are: bar and foo
+                        scope;
                 }
 \end{verbatim}
 \begin{verbatim}

@@ -13,6 +13,10 @@ my foo = 1;
 
 		# Prints out 1
 		assert 1 == (put defined bar);
+
+		# Prints out all available symbols at
+		# the current program position.
+		scope;
 	}
 
 	# Prints out 0

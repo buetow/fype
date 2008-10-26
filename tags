@@ -28,6 +28,7 @@ _program	./src/core/interpret.c	/^_program(Interpret *p_interpret) {$/
 _scanner_get_next_char	./src/core/scanner.c	/^_scanner_get_next_char(Scanner *p_scanner) {$/
 _scanner_has_next_char	./src/core/scanner.c	/^_scanner_has_next_char(Scanner *p_scanner) {$/
 _scope_get_hash	./src/core/scope.c	/^_scope_get_hash(Scope *p_scope, char *c_key) {$/
+_scope_print_cb	./src/core/scope.c	/^_scope_print_cb(void *p_void, int i_level) {$/
 _statement	./src/core/interpret.c	/^_statement(Interpret *p_interpret) {$/
 _sum	./src/core/interpret.c	/^_sum(Interpret *p_interpret) {$/
 _term	./src/core/interpret.c	/^_term(Interpret *p_interpret) {$/
@@ -126,6 +127,7 @@ hash_getaddr	./src/data/hash.c	/^hash_getaddr(Hash *p_hash, char *c_key, HASH_OP
 hash_insert	./src/data/hash.c	/^hash_insert(Hash *p_hash, char *c_key, void *p_val/
 hash_insert_ht	./src/data/hash.c	/^hash_insert_ht(Hash *p_hash, char *c_key, void *p_/
 hash_iterate	./src/data/hash.c	/^hash_iterate(Hash *p_hash, void (*func)(void *)) {/
+hash_iterate_key	./src/data/hash.c	/^hash_iterate_key(Hash *p_hash, void (*func)(void */
 hash_new	./src/data/hash.c	/^hash_new(unsigned i_size) {$/
 hash_nextaddr	./src/data/hash.c	/^hash_nextaddr(Hash *p_hash, int i_max_tries, char /
 hash_print	./src/data/hash.c	/^hash_print(Hash *p_hash) {$/
@@ -231,6 +233,7 @@ scope_exists	./src/core/scope.c	/^scope_exists(Scope *p_scope, char *c_key) {$/
 scope_get	./src/core/scope.c	/^scope_get(Scope *p_scope, char *c_key) {$/
 scope_new	./src/core/scope.c	/^scope_new(Hash *p_hash_syms) {$/
 scope_newset	./src/core/scope.c	/^scope_newset(Scope *p_scope, char *c_key, Symbol */
+scope_print	./src/core/scope.c	/^scope_print(Scope *p_scope) {$/
 scope_remove	./src/core/scope.c	/^scope_remove(Scope *p_scope, char *c_key) {$/
 scope_reset	./src/core/scope.c	/^scope_reset(Scope *p_scope, char *c_key, Symbol *p/
 scope_up	./src/core/scope.c	/^scope_up(Scope *p_scope) {$/
@@ -240,6 +243,8 @@ stack_delete	./src/data/stack.c	/^stack_delete(Stack *p_stack) {$/
 stack_delete_and_free	./src/data/stack.c	/^stack_delete_and_free(Stack *p_stack) {$/
 stack_empty	./src/data/stack.c	/^stack_empty(Stack *p_stack) {$/
 stack_iterate	./src/data/stack.c	/^stack_iterate(Stack *p_stack, void (*func)(void *p/
+stack_iterate2	./src/data/stack.c	/^stack_iterate2(Stack *p_stack, void (*func)(void */
+stack_iterate_level	./src/data/stack.c	/^stack_iterate_level(Stack *p_stack, void (*func)(v/
 stack_merge	./src/data/stack.c	/^stack_merge(Stack *p_stack, Stack *p_stack_merge) /
 stack_new	./src/data/stack.c	/^stack_new() {$/
 stack_pop	./src/data/stack.c	/^stack_pop(Stack *p_stack) {$/
@@ -251,9 +256,12 @@ stackiterator_has_next	./src/data/stack.c	/^stackiterator_has_next(StackIterator
 stackiterator_new	./src/data/stack.c	/^stackiterator_new(Stack *p_stack) {$/
 stackiterator_next	./src/data/stack.c	/^stackiterator_next(StackIterator *p_iter) {$/
 stackiterator_remove_prev	./src/data/stack.c	/^stackiterator_remove_prev(StackIterator *p_iter) {/
+sym_get_name	./src/core/symbol.c	/^sym_get_name(SymbolType sym) {$/
 symbol_cleanup_hash_syms_cb	./src/core/symbol.c	/^symbol_cleanup_hash_syms_cb(void *p_void) {$/
 symbol_delete	./src/core/symbol.c	/^symbol_delete(Symbol *p_symbol) {$/
 symbol_new	./src/core/symbol.c	/^symbol_new(SymbolType sym, void *p_val) {$/
+symbol_print	./src/core/symbol.c	/^symbol_print(Symbol *p_symbol, char *c_key) {$/
+symbol_print_cb	./src/core/symbol.c	/^symbol_print_cb(void *p_void, char *c_key) {$/
 token_copy_cb	./src/core/token.c	/^token_copy_cb(void *p_void) {$/
 token_copy_vals	./src/core/token.c	/^void token_copy_vals(Token *p_token_to, Token *p_t/
 token_delete	./src/core/token.c	/^token_delete(Token *p_token) {$/

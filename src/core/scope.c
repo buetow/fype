@@ -150,8 +150,19 @@ scope_newset(Scope *p_scope, char *c_key, Symbol *p_symbol) {
 }
 
 void
-scopes_print(Scope *p_scope) {
+_scope_print_cb(void *p_void, int i_level) {
+   Hash *p_hash_syms = p_void;
+   if (i_level > 0)
+      printf("%d level(s) up:\n", i_level);
+   hash_iterate_key(p_hash_syms, symbol_print_cb);
+}
+
+void
+scope_print(Scope *p_scope) {
    printf("Scopes:\n");
-   printf("Scope stack size: %d\n", p_scope->p_stack_scopes);
-    
+   printf("Scope stack size: %d\n", stack_size(p_scope->p_stack_scopes));
+   printf("Global symbols:\n");
+   hash_iterate_key(p_scope->p_hash_global, symbol_print_cb);
+   printf("Local symbols:\n");
+   stack_iterate_level(p_scope->p_stack_scopes, _scope_print_cb);
 }

@@ -524,6 +524,7 @@ function_process(Interpret *p_interpret, Token *p_token_op,
 
 _Bool
 function_is_buildin(Token *p_token_ident) {
+   /* TODO: optimize this function */
    if (strcmp("assert", token_get_val(p_token_ident)) == 0)
       return (true);
 
@@ -561,6 +562,9 @@ function_is_buildin(Token *p_token_ident) {
       return (true);
 
    if (strcmp("put", token_get_val(p_token_ident)) == 0)
+      return (true);
+
+   if (strcmp("scope", token_get_val(p_token_ident)) == 0)
       return (true);
 
    if (strcmp("say", token_get_val(p_token_ident)) == 0)
@@ -750,6 +754,9 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
          }
       }
       stackiterator_delete(p_iter);
+
+   } else if (strcmp("scope", token_get_val(p_token_ident)) == 0) {
+      scope_print(p_interpret->p_scope);
 
    } else if (strcmp("say", token_get_val(p_token_ident)) == 0) {
       StackIterator *p_iter = stackiterator_new(p_stack_args);

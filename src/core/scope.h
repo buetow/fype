@@ -40,7 +40,6 @@
 #include "../defines.h"
 #include "symbol.h"
 
-
 typedef struct {
    Hash *p_hash_global;
    Stack *p_stack_scopes;

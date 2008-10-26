@@ -173,6 +173,35 @@ stack_iterate(Stack *p_stack, void (*func)(void *p_void)) {
    }
 }
 
+void
+stack_iterate2(Stack *p_stack, void (*func)(void *p_void, void *p_void2),
+               void *p_void_arg) {
+   if (!p_stack)
+      return;
+
+   StackElem *p_elem = p_stack->p_first;
+
+   while (p_elem) {
+      (*func)(p_elem->p_val, p_void_arg);
+      p_elem = p_elem->p_next;
+   }
+}
+
+void
+stack_iterate_level(Stack *p_stack, void (*func)(void *p_void,
+                    int i_level)) {
+   if (!p_stack)
+      return;
+
+   StackElem *p_elem = p_stack->p_first;
+
+   int i_level = 0;
+   while (p_elem) {
+      (*func)(p_elem->p_val, i_level++);
+      p_elem = p_elem->p_next;
+   }
+}
+
 StackIterator*
 stackiterator_new(Stack *p_stack) {
    StackIterator *p_iter = malloc(sizeof(StackIterator));
