@@ -1,10 +1,5 @@
 Todo's (not in any specific order)
 
-Scopes/Garbage output for detailed infos
-	scopes_print(Scope *p_scope)
-		for all scopes
-			for all syms
-				print
 Arrays
 Closures
 Function arguments and return values
