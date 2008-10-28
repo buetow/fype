@@ -1,13 +1,13 @@
 /*:*
  *: File: ./src/core/interpret.c
  *: A simple interpreter
- *:
+ *: 
  *: WWW		: http://fype.buetow.org
  *: E-Mail	: fype@dev.buetow.org
- *:
- *: Copyright (c) 2005 2006 2007 2008, Paul C. Buetow
+ *: 
+ *: Copyright (c) 2005 2006 2007 2008, Paul C. Buetow 
  *: All rights reserved.
- *:
+ *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
  *:  * Redistributions of source code must retain the above copyright
@@ -15,20 +15,20 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of P. B. Labs nor the names of its contributors may
- *:    be used to endorse or promote products derived from this software
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may 
+ *:    be used to endorse or promote products derived from this software 
  *:    without specific prior written permission.
- *:
- *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
- *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ *: 
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR 
+ *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
- *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT, 
+ *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
+ *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
+ *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
  *: HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- *: STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- *: IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ *: STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
+ *: IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
@@ -54,27 +54,27 @@
 #define _NEXT_TT _next_tt(p_interpret)
 #define _SKIP _next(p_interpret);
 
-void _print_lookahead(Interpret *p_interpret);
-int _next(Interpret *p_interpret);
-int _program(Interpret *p_interpret);
-int _var_decl(Interpret *p_interpret);
-int _var_assign(Interpret *p_interpret);
-int _var_list(Interpret *p_interpret);
-int _expression_get(Interpret *p_interpret, List *p_list_block);
+int _block(Interpret *p_interpret);
 int _block_get(Interpret *p_interpret, List *p_list_block);
 int _block_skip(Interpret *p_interpret);
-int _proc_decl(Interpret *p_interpret);
-int _func_decl(Interpret *p_interpret);
-int _statement(Interpret *p_interpret);
-int _block(Interpret *p_interpret);
+int _compare(Interpret *p_interpret);
+int _control(Interpret *p_interpret);
 int _expression(Interpret *p_interpret);
 int _expression_(Interpret *p_interpret);
-int _control(Interpret *p_interpret);
-int _compare(Interpret *p_interpret);
-int _sum(Interpret *p_interpret);
+int _expression_get(Interpret *p_interpret, List *p_list_block);
+int _func_decl(Interpret *p_interpret);
+int _next(Interpret *p_interpret);
+int _proc_decl(Interpret *p_interpret);
 int _product(Interpret *p_interpret);
 int _product2(Interpret *p_interpret);
+int _program(Interpret *p_interpret);
+int _statement(Interpret *p_interpret);
+int _sum(Interpret *p_interpret);
 int _term(Interpret *p_interpret);
+int _var_assign(Interpret *p_interpret);
+int _var_decl(Interpret *p_interpret);
+int _var_list(Interpret *p_interpret);
+void _print_lookahead(Interpret *p_interpret);
 
 Interpret*
 interpret_new(List *p_list_token, Hash *p_hash_syms) {
@@ -175,7 +175,6 @@ _var_decl(Interpret *p_interpret) {
    _CHECK TRACK
 
    switch (p_interpret->tt) {
-      //case TT_ARR: //TODO cleanup TT_ARR
    case TT_MY:
    {
       if (_NEXT_TT != TT_IDENT)
@@ -944,6 +943,34 @@ _term(Interpret *p_interpret) {
       Token *p_token_num_refs = token_new_integer(p_symbol->i_refs);
       stack_push(p_interpret->p_stack, p_token_num_refs);
 
+      _NEXT;
+      return (1);
+   }
+   break;
+
+   /* Reference operator */
+   case TT_AAND:
+   {
+      _NEXT
+      if (p_interpret->tt != TT_IDENT)
+         _INTERPRET_ERROR("Expexted identifier for '&'",
+                          p_interpret->p_token);
+      _INTERPRET_ERROR("nyi", p_interpret->p_token);
+
+      _NEXT;
+      return (1);
+   }
+   break;
+
+   /* Dereference opeator */
+   case TT_MULT:
+   {
+      _NEXT
+      if (p_interpret->tt != TT_IDENT)
+         _INTERPRET_ERROR("Expexted identifier for '*'",
+                          p_interpret->p_token);
+
+      _INTERPRET_ERROR("nyi", p_interpret->p_token);
       _NEXT;
       return (1);
    }

@@ -220,6 +220,9 @@ queueiter_new	./src/data/queue.c	/^queueiter_new(Queue *p_queue) {$/
 queueiter_next	./src/data/queue.c	/^queueiter_next(QueueIter *p_iter) {$/
 queueiter_next_t	./src/data/queue.c	/^queueiter_next_t(QueueIter *p_iter, TYPE *p_type) /
 queueiter_queue	./src/data/queue.c	/^queueiter_queue(QueueIter *p_iter) {$/
+reference_delete	./src/core/reference.c	/^reference_delete(Reference *p_reference) {$/
+reference_delete_cb	./src/core/reference.c	/^reference_delete_cb(void *p_void) {$/
+reference_new	./src/core/reference.c	/^reference_new(Symbol *p_symbol) {$/
 scanner_add_token	./src/core/scanner.c	/^scanner_add_token(Scanner *p_scanner, char **cc_to/
 scanner_cleanup_list_token_cb	./src/core/scanner.c	/^scanner_cleanup_list_token_cb(void *p_void) {$/
 scanner_delete	./src/core/scanner.c	/^scanner_delete(Scanner *p_scanner) {$/
