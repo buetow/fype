@@ -38,6 +38,7 @@ Reference*
 reference_new(Symbol *p_symbol) {
    Reference *p_reference = malloc(sizeof(Reference));
 
+   symbol_ref_up(p_symbol);
    p_reference->p_symbol = p_symbol;
 
    return (p_reference);
