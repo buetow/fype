@@ -772,7 +772,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
          case TT_STRING:
             printf("%s", token_get_val(p_token));
             break;
-            NO_DEFAULT;
          }
       }
       stackiterator_delete(p_iter);

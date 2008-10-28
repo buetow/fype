@@ -38,6 +38,8 @@
 #include "../defines.h"
 #include "symbol.h"
 
+#define reference_get_sym(r) (r->p_symbol)
+
 typedef struct {
    Symbol *p_symbol;
 } Reference;
