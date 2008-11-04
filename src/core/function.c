@@ -186,14 +186,10 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                         atoi(token_get_val(p_token_store)));
          token_set_tt(p_token_store, TT_INTEGER);
          break;
-         /*
-         case TT_ARRAY:
-           token_set_ival(p_token_store,
-                          atoi(token_get_val(p_token_next)) +
-                          atoi(token_get_val(p_token_store)));
-           token_set_tt(p_token_store, TT_INTEGER);
-           break;
-         */
+      case TT_ARRAY:
+         array_append(p_token_store->p_array,
+                      p_token_next->p_array);
+         break;
          NO_DEFAULT;
       }
       break;
@@ -214,6 +210,9 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                         atoi(token_get_val(p_token_next)) -
                         atoi(token_get_val(p_token_store)));
          token_set_tt(p_token_store, TT_INTEGER);
+         break;
+      case TT_ARRAY:
+         ERROR("TT_ARRAY - TT_ARRAY not yet implemented");
          break;
          NO_DEFAULT;
       }
@@ -236,6 +235,9 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                         atoi(token_get_val(p_token_store)));
          token_set_tt(p_token_store, TT_INTEGER);
          break;
+      case TT_ARRAY:
+         ERROR("TT_ARRAY * TT_ARRAY not yet implemented");
+         break;
          NO_DEFAULT;
       }
       break;
@@ -256,6 +258,9 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                         atof(token_get_val(p_token_next)) /
                         atof(token_get_val(p_token_store)));
          token_set_tt(p_token_store, TT_DOUBLE);
+         break;
+      case TT_ARRAY:
+         ERROR("TT_ARRAY / TT_ARRAY not yet implemented");
          break;
          NO_DEFAULT;
       }
@@ -278,6 +283,8 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                         strcmp(token_get_val(p_token_next),
                                token_get_val(p_token_store)) == 0);
          token_set_tt(p_token_store, TT_INTEGER);
+      case TT_ARRAY:
+         ERROR("TT_ARRAY eq TT_ARRAY not yet implemented");
          break;
          NO_DEFAULT;
       }
@@ -301,6 +308,9 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                                token_get_val(p_token_store)) != 0);
          token_set_tt(p_token_store, TT_INTEGER);
          break;
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
+         break;
          NO_DEFAULT;
       }
       break;
@@ -322,6 +332,9 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                         strcmp(token_get_val(p_token_next),
                                token_get_val(p_token_store)) <= 0);
          token_set_tt(p_token_store, TT_INTEGER);
+         break;
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
          break;
          NO_DEFAULT;
       }
@@ -345,6 +358,9 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                                token_get_val(p_token_store)) >= 0);
          token_set_tt(p_token_store, TT_INTEGER);
          break;
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
+         break;
          NO_DEFAULT;
       }
       break;
@@ -366,6 +382,9 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                         strcmp(token_get_val(p_token_next),
                                token_get_val(p_token_store)) < 0);
          token_set_tt(p_token_store, TT_INTEGER);
+         break;
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
          break;
          NO_DEFAULT;
       }
@@ -389,27 +408,8 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                                token_get_val(p_token_store)) > 0);
          token_set_tt(p_token_store, TT_INTEGER);
          break;
-         NO_DEFAULT;
-      }
-      break;
-   case TT_AND:
-      switch (tt_highest) {
-      case TT_INTEGER:
-         token_set_ival(p_token_store,
-                        (int) token_get_ival(p_token_next) &
-                        token_get_ival(p_token_store));
-         break;
-      case TT_DOUBLE:
-         token_set_ival(p_token_store,
-                        (int) token_get_dval(p_token_next) &
-                        (int) token_get_dval(p_token_store));
-         token_set_tt(p_token_store, TT_INTEGER);
-         break;
-      case TT_STRING:
-         token_set_ival(p_token_store,
-                        atoi(token_get_val(p_token_next)) &
-                        atoi(token_get_val(p_token_store)));
-         token_set_tt(p_token_store, TT_INTEGER);
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
          break;
          NO_DEFAULT;
       }
@@ -433,6 +433,9 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                         atoi(token_get_val(p_token_store)));
          token_set_tt(p_token_store, TT_INTEGER);
          break;
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
+         break;
          NO_DEFAULT;
       }
       break;
@@ -454,6 +457,9 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                         atoi(token_get_val(p_token_next)) ^
                         atoi(token_get_val(p_token_store)));
          token_set_tt(p_token_store, TT_INTEGER);
+         break;
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
          break;
          NO_DEFAULT;
       }
@@ -477,6 +483,9 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                         atoi(token_get_val(p_token_store)));
          token_set_tt(p_token_store, TT_INTEGER);
          break;
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
+         break;
          NO_DEFAULT;
       }
       break;
@@ -498,6 +507,9 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
                         atoi(token_get_val(p_token_next)) >>
                         atoi(token_get_val(p_token_store)));
          token_set_tt(p_token_store, TT_INTEGER);
+         break;
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
          break;
          NO_DEFAULT;
       }
@@ -617,6 +629,9 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
          if (atoi(token_get_val(p_token)) == 0)
             _FUNCTION_ERROR("Assert failed", p_token);
          break;
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
+         break;
          NO_DEFAULT;
       }
 
@@ -635,6 +650,9 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
       case TT_STRING:
          convert_to_integer(p_token);
          token_set_ival(p_token, token_get_ival(p_token) - 1);
+         break;
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
          break;
          NO_DEFAULT;
       }
@@ -684,6 +702,9 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
          convert_to_integer(p_token);
          token_set_ival(p_token, token_get_ival(p_token) + 1);
          break;
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
+         break;
          NO_DEFAULT;
       }
 
@@ -716,6 +737,9 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
          token_set_ival(p_token, -atoi(token_get_val(p_token)));
          token_set_tt(p_token, TT_INTEGER);
          break;
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
+         break;
          NO_DEFAULT;
       }
 
@@ -739,6 +763,9 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
             token_set_ival(p_token, !atoi(token_get_val(p_token)));
             token_set_tt(p_token, TT_INTEGER);
             break;
+         case TT_ARRAY:
+            ERROR("ARRAY bla yet implemented");
+            break;
             NO_DEFAULT;
          }
       }
@@ -758,6 +785,9 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
             break;
          case TT_STRING:
             printf("%s", token_get_val(p_token));
+            break;
+         case TT_ARRAY:
+            ERROR("ARRAY bla yet implemented");
             break;
             NO_DEFAULT;
          }
@@ -780,6 +810,9 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
             break;
          case TT_STRING:
             printf("%s", token_get_val(p_token));
+         case TT_ARRAY:
+            ERROR("ARRAY bla yet implemented");
+            break;
             break;
          }
       }
@@ -826,6 +859,9 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
       case TT_STRING:
          token_set_ival(p_token, !atoi(token_get_val(p_token)));
          token_set_tt(p_token, TT_INTEGER);
+         break;
+      case TT_ARRAY:
+         ERROR("ARRAY bla yet implemented");
          break;
          NO_DEFAULT;
       }

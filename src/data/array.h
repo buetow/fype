@@ -74,6 +74,7 @@ _Bool array_defined(Array *p_array, int i_index);
 void array_print_int(Array *p_array);
 void array_splice(Array *p_array, int i_index, Array *p_array2);
 void array_push(Array *p_array, void *p_void);
+void array_append(Array *p_array, Array *p_array_append);
 void array_unshift(Array *p_array, void *p_void);
 void array_iterate(Array *p_array, void (*func)(void *));
 void array_iterate2(Array *p_array, void (*func)(void *, void *),

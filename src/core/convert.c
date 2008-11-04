@@ -147,36 +147,6 @@ convert_to_string(Token *p_token) {
 void
 convert_to_array(Token *p_token) {
    ERROR("not yet implemented");
-   switch (token_get_tt(p_token)) {
-   case TT_INTEGER:
-   {
-      token_set_tt(p_token, TT_STRING);
-      char c_tmp[1024];
-      sprintf(c_tmp, "%d", token_get_ival(p_token));
-      int i_len = strlen(c_tmp);
-      p_token->c_val = realloc(p_token->c_val, sizeof(char) * (i_len + 1));
-      strcpy(p_token->c_val, c_tmp);
-      p_token->c_val[i_len] = 0;
-   }
-   break;
-   case TT_DOUBLE:
-   {
-      token_set_tt(p_token, TT_STRING);
-      char c_tmp[1024];
-      sprintf(c_tmp, "%f", token_get_dval(p_token));
-      int i_len = strlen(c_tmp);
-      p_token->c_val = realloc(p_token->c_val, sizeof(char) * (i_len + 1));
-      strcpy(p_token->c_val, c_tmp);
-      p_token->c_val[i_len] = 0;
-   }
-   case TT_STRING:
-      break;
-   case TT_ARRAY:
-      break;
-   default:
-      ERROR("Datatype conversion error");
-      break;
-   }
 }
 
 void

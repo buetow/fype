@@ -398,7 +398,8 @@ token_print_val(Token *p_token) {
       printf("(%s, %s)", tt_get_name(tt), token_get_val(p_token));
       break;
    case TT_ARRAY:
-      printf("(%s, size:%d)", tt_get_name(tt), array_get_size(p_token->p_array));
+      printf("(%s, size:%d)", tt_get_name(tt),
+             array_get_size(p_token->p_array));
       break;
    default:
       ERROR("Ouups(%s)!", tt_get_name(tt));

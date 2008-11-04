@@ -6,7 +6,6 @@ _GARBAGE_ERROR	./src/core/garbage.c	/^#define _GARBAGE_ERROR(m) \\$/
 _Garbage	./src/core/garbage.c	/^} _Garbage;$/
 _INTERPRET_ERROR	./src/core/interpret.c	/^#define _INTERPRET_ERROR(m,t) \\$/
 _add_semicolon_to_list	./src/core/scanner.c	/^_add_semicolon_to_list(Scanner *p_scanner) {$/
-_array_new_copy_cb	./src/data/array.c	/^_array_new_copy_cb(void *p_array, void *p_void) {$/
 _block	./src/core/interpret.c	/^_block(Interpret *p_interpret) {$/
 _block_get	./src/core/interpret.c	/^_block_get(Interpret *p_interpret, List *p_list_bl/
 _block_skip	./src/core/interpret.c	/^_block_skip(Interpret *p_interpret) {$/
@@ -36,6 +35,7 @@ _term	./src/core/interpret.c	/^_term(Interpret *p_interpret) {$/
 _tree_print	./src/data/tree.c	/^_tree_print(TreeNode *p_treenode, int i_indent) {$/
 _tree_print_cb	./src/data/tree.c	/^_tree_print_cb(void *p_void, void *p_indent) {$/
 _tree_print_cb2	./src/data/tree.c	/^_tree_print_cb2(void *p_void, void *p_indent) {$/
+_unshift_cb	./src/data/array.c	/^_unshift_cb(void *p_array, void *p_void) {$/
 _var_assign	./src/core/interpret.c	/^_var_assign(Interpret *p_interpret) {$/
 _var_decl	./src/core/interpret.c	/^_var_decl(Interpret *p_interpret) {$/
 _var_list	./src/core/interpret.c	/^_var_list(Interpret *p_interpret) {$/
@@ -48,6 +48,7 @@ argv_run	./src/argv.c	/^argv_run(Fype *p_fype, int i_argc, char **pc_argv)/
 argv_switch	./src/argv.c	/^argv_switch(char c_arg, Tupel *p_tupel_argv, unsig/
 argv_synopsis	./src/argv.c	/^argv_synopsis(Tupel *p_tupel_argv) {$/
 argv_tupel_delete	./src/argv.c	/^argv_tupel_delete(Tupel *p_tupel_argv) {$/
+array_append	./src/data/array.c	/^array_append(Array *p_array, Array *p_array_append/
 array_defined	./src/data/array.c	/^array_defined(Array *p_array, int i_index) {$/
 array_delete	./src/data/array.c	/^array_delete(Array *p_array) {$/
 array_delete_iterate	./src/data/array.c	/^array_delete_iterate(Array *p_array, void (*func)(/

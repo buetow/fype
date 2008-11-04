@@ -801,6 +801,7 @@ _term(Interpret *p_interpret) {
    case TT_INTEGER:
    case TT_DOUBLE:
    case TT_STRING:
+   case TT_ARRAY:
       stack_push(p_interpret->p_stack, p_interpret->p_token);
       _NEXT
       return (1);
