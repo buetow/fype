@@ -66,9 +66,12 @@ stats:
 		tail -n 1 | sed s/total//`"'
 stats-tofile:
 	make stats | tee ./docs/stats.txt
-test: all
+testrun:
 	cat ./tmp/test.fy > ./tmp/test.out
 	./$(BIN) -V ./tmp/test.fy | tee -a ./tmp/test.out
+tr: testrun
+test: all testrun
+t: test
 run:
 	./$(BIN) ./tmp/test.fy
 core:
@@ -109,4 +112,5 @@ deinstall:
 uninstall: deinstall
 pod:
 	@cd ./docs/pod; make clean all
-
+sess:
+	vim -S Session.vim

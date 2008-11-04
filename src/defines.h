@@ -78,7 +78,7 @@
 //#define DEBUG_GC
 //#define DEBUG_TOKEN_REFCOUNT
 //#define DEBUG_FUNCTION_PROCESS
-#define DEBUG_TRACK
+//#define DEBUG_TRACK
 //#define DEBUG_BLOCK_GET
 //#define DEBUG_EXPRESSION_GET
 
