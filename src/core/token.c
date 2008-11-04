@@ -319,7 +319,8 @@ void token_copy_vals(Token *p_token_to, Token *p_token_from) {
    p_token_to->c_filename = p_token_from->c_filename;
 
    if (NULL != p_token_from->p_array)
-   		p_token_to->p_array = array_new_copy(p_token_from);
+	    // Copy all tokens by reference (pointers)
+   		p_token_to->p_array = array_new_copy(p_token_from->p_array);
 }
 
 void
@@ -349,10 +350,8 @@ token_delete(Token *p_token) {
          if (p_token->c_val)
             free(p_token->c_val);
 
-         if (NULL != p_token->p_array) {
-			array_iterate(p_token->p_array, token_delete_cb);
-            array_delete(p_token->p_array);
-		 }
+         if (NULL != p_token->p_array) 
+            array_delete_iterate(p_token->p_array, token_delete_cb);
 
          free(p_token);
       }

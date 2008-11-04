@@ -84,6 +84,23 @@ array_delete(Array *p_array) {
 }
 
 void
+array_delete_iterate(Array *p_array, void (*func)(void *)) {
+   if (!p_array)
+      return;
+
+   array_iterate(p_array, func);
+
+   if (p_array->i_size)
+      for (int i = p_array->i_size - 1; i >= 0; --i)
+         arrayelement_delete(p_array->pp_ae[i]);
+
+   if (p_array->pp_ae)
+      free(p_array->pp_ae);
+
+   free(p_array);
+}
+
+void
 array_set(Array *p_array, int i_index, void *p_val) {
    if (p_array->i_size > i_index) {
       p_array->pp_ae[i_index]->p_val = p_val;

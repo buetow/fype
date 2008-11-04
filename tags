@@ -50,6 +50,7 @@ argv_synopsis	./src/argv.c	/^argv_synopsis(Tupel *p_tupel_argv) {$/
 argv_tupel_delete	./src/argv.c	/^argv_tupel_delete(Tupel *p_tupel_argv) {$/
 array_defined	./src/data/array.c	/^array_defined(Array *p_array, int i_index) {$/
 array_delete	./src/data/array.c	/^array_delete(Array *p_array) {$/
+array_delete_iterate	./src/data/array.c	/^array_delete_iterate(Array *p_array, void (*func)(/
 array_get	./src/data/array.c	/^array_get(Array *p_array, int i_index) {$/
 array_insert	./src/data/array.c	/^array_insert(Array *p_array, int i_index, void *p_/
 array_iterate	./src/data/array.c	/^array_iterate(Array *p_array, void (*func)(void *)/

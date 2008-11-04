@@ -64,6 +64,7 @@ Array *array_new();
 Array *array_new_size(int i_size);
 Array *array_new_copy(Array *p_array);
 void array_delete(Array *p_array);
+void array_delete_iterate(Array *p_array, void (*func)(void*));
 void array_set(Array *p_array, int i_index, void *p_val);
 void array_insert(Array *p_array, int i_index, void *p_val);
 void *array_remove(Array *p_array, int i_index);
