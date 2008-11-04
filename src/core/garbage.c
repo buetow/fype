@@ -60,14 +60,6 @@ garbage_destroy() {
               " which don't have a zero ref count!\n",
               list_size(LIST_GARBAGE));
 
-      /*
-       ListIterator *p_iter = listiterator_new(LIST_GARBAGE);
-       while (listiterator_has_next(p_iter)) {
-          _Garbage *p_garbage = listiterator_next(p_iter);
-       }
-       listiterator_delete(p_iter);
-      */
-
       _GARBAGE_ERROR("Garbage left");
    }
 
