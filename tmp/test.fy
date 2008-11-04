@@ -1,8 +1,6 @@
 #*
- * Examples of how to use references
+ * Examples of how to use arrays
  *#
 
-# Create a variable foo, and bar is a reference to foo
-my foo = "foo";
-my bar = &foo;
-
+my foo = 1, bar = 2;
+my arr = [foo bar];

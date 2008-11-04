@@ -61,6 +61,8 @@ typedef struct {
 } ArrayIterator;
 
 Array *array_new();
+Array *array_new_size(int i_size);
+Array *array_new_copy(Array *p_array);
 void array_delete(Array *p_array);
 void array_set(Array *p_array, int i_index, void *p_val);
 void array_insert(Array *p_array, int i_index, void *p_val);

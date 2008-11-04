@@ -50,7 +50,7 @@ typedef enum {
    SYM_CONSTANT,
    SYM_FUNCTION,
    SYM_PROCEDURE,
-   SYM_REFERENCE,
+   SYM_ARRAY,
    SYM_VARIABLE,
 } SymbolType;
 

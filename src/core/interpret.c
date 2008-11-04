@@ -948,7 +948,8 @@ _term(Interpret *p_interpret) {
    }
    break;
 
-   /* Reference operator */
+   /*
+   // Reference operator
    case TT_AAND:
    {
       _NEXT
@@ -956,7 +957,9 @@ _term(Interpret *p_interpret) {
          _INTERPRET_ERROR("Expexted identifier for '&'",
                           p_interpret->p_token);
 
-	  
+      char *c_name = token_get_val(p_interpret->p_token);
+      Symbol *p_symbol = scope_get(p_interpret->p_scope, c_name);
+
 	  _INTERPRET_ERROR("nyi", p_interpret->p_token);
 
       _NEXT;
@@ -964,7 +967,7 @@ _term(Interpret *p_interpret) {
    }
    break;
 
-   /* Dereference opeator */
+   // Dereference opeator
    case TT_MULT:
    {
       _NEXT
@@ -972,11 +975,13 @@ _term(Interpret *p_interpret) {
          _INTERPRET_ERROR("Expexted identifier for '*'",
                           p_interpret->p_token);
 
+
 	  _INTERPRET_ERROR("nyi", p_interpret->p_token);
       _NEXT;
       return (1);
    }
    break;
+   */
 
    /*
    case TT_PARANT_AL:

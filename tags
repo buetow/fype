@@ -6,6 +6,7 @@ _GARBAGE_ERROR	./src/core/garbage.c	/^#define _GARBAGE_ERROR(m) \\$/
 _Garbage	./src/core/garbage.c	/^} _Garbage;$/
 _INTERPRET_ERROR	./src/core/interpret.c	/^#define _INTERPRET_ERROR(m,t) \\$/
 _add_semicolon_to_list	./src/core/scanner.c	/^_add_semicolon_to_list(Scanner *p_scanner) {$/
+_array_new_copy_cb	./src/data/array.c	/^_array_new_copy_cb(void *p_array, void *p_void) {$/
 _block	./src/core/interpret.c	/^_block(Interpret *p_interpret) {$/
 _block_get	./src/core/interpret.c	/^_block_get(Interpret *p_interpret, List *p_list_bl/
 _block_skip	./src/core/interpret.c	/^_block_skip(Interpret *p_interpret) {$/
@@ -54,6 +55,8 @@ array_insert	./src/data/array.c	/^array_insert(Array *p_array, int i_index, void
 array_iterate	./src/data/array.c	/^array_iterate(Array *p_array, void (*func)(void *)/
 array_iterate2	./src/data/array.c	/^array_iterate2(Array *p_array, void (*func)(void */
 array_new	./src/data/array.c	/^array_new() {$/
+array_new_copy	./src/data/array.c	/^array_new_copy(Array *p_array) {$/
+array_new_size	./src/data/array.c	/^array_new_size(int i_size) {$/
 array_print_int	./src/data/array.c	/^array_print_int(Array *p_array) {$/
 array_push	./src/data/array.c	/^array_push(Array *p_array, void *p_void) {$/
 array_remove	./src/data/array.c	/^array_remove(Array *p_array, int i_index) {$/

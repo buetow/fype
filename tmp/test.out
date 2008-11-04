@@ -1,20 +1,14 @@
 #*
- * Examples of how to use references
+ * Examples of how to use arrays
  *#
 
-# Create a variable foo, and bar is a reference to foo
-my foo = "foo";
-my bar = &foo;
-
-Token (id=00000, line=00006, pos=0003, type=TT_MY, val=my, ival=0, dval=0.000000, refs=1)
-Token (id=00001, line=00006, pos=0007, type=TT_IDENT, val=foo, ival=0, dval=0.000000, refs=1)
-Token (id=00002, line=00006, pos=0009, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
-Token (id=00003, line=00006, pos=0010, type=TT_STRING, val=foo, ival=0, dval=0.000000, refs=1)
-Token (id=00004, line=00006, pos=0012, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
-Token (id=00005, line=00007, pos=0003, type=TT_MY, val=my, ival=0, dval=0.000000, refs=1)
-Token (id=00006, line=00007, pos=0007, type=TT_IDENT, val=bar, ival=0, dval=0.000000, refs=1)
-Token (id=00007, line=00007, pos=0009, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
-Token (id=00008, line=00007, pos=0011, type=TT_AAND, val=&, ival=0, dval=0.000000, refs=1)
-Token (id=00009, line=00007, pos=0014, type=TT_IDENT, val=foo, ival=0, dval=0.000000, refs=1)
-Token (id=00010, line=00007, pos=0015, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
-nyi: Interpret error in ./tmp/test.fy line 7 pos 14 near 'foo' (Fype @ ./src/core/interpret.c line 960)
+my foo = 1, bar = 2;
+Token (id=00000, line=00005, pos=0003, type=TT_MY, val=my, ival=0, dval=0.000000, refs=1)
+Token (id=00001, line=00005, pos=0007, type=TT_IDENT, val=foo, ival=0, dval=0.000000, refs=1)
+Token (id=00002, line=00005, pos=0009, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00003, line=00005, pos=0011, type=TT_INTEGER, val=1, ival=1, dval=0.000000, refs=1)
+Token (id=00004, line=00005, pos=0012, type=TT_COMMA, val=,, ival=0, dval=0.000000, refs=1)
+Token (id=00005, line=00005, pos=0016, type=TT_IDENT, val=bar, ival=0, dval=0.000000, refs=1)
+Token (id=00006, line=00005, pos=0018, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00007, line=00005, pos=0020, type=TT_INTEGER, val=2, ival=2, dval=0.000000, refs=1)
+Token (id=00008, line=00005, pos=0021, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)

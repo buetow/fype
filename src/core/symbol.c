@@ -57,6 +57,8 @@ symbol_delete(Symbol *p_symbol) {
          List *p_list_token = symbol_get_val(p_symbol);
          list_delete(p_list_token);
       }
+	  case SYM_ARRAY:
+	  symbol_delete(symbol_get_val(p_symbol));
       break;
       NO_DEFAULT;
       }
@@ -81,7 +83,7 @@ symbol_print(Symbol *p_symbol, char *c_key) {
    case SYM_FUNCTION:
       //list_iterate(symbol_get_val(p_symbol), token_print_cb);
       break;
-   case SYM_REFERENCE:
+   case SYM_ARRAY:
       break;
    case SYM_VARIABLE:
       printf(" ");
@@ -102,8 +104,8 @@ sym_get_name(SymbolType sym) {
    switch (sym) {
    case SYM_CONSTANT:
       return ("SYM_CONSTANT");
-   case SYM_REFERENCE:
-      return ("SYM_REFERENCE");
+   case SYM_ARRAY:
+      return ("SYM_ARRAY");
    case SYM_VARIABLE:
       return ("SYM_VARIABLE");
    case SYM_BUILDIN:

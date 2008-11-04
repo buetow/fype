@@ -33,6 +33,7 @@
  *:*/
 
 #include "convert.h"
+#include "../data/array.h"
 
 void
 convert_to_integer(Token *p_token) {
@@ -46,6 +47,10 @@ convert_to_integer(Token *p_token) {
    case TT_STRING:
       token_set_tt(p_token, TT_INTEGER);
       token_set_ival(p_token, atoi(token_get_val(p_token)));
+      break;
+   case TT_ARRAY:
+      token_set_tt(p_token, TT_INTEGER);
+      token_set_ival(p_token, array_get_size(p_token->p_array));
       break;
    default:
       ERROR("Ouups(%s)", tt_get_name(token_get_tt(p_token)));

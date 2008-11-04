@@ -44,6 +44,29 @@ array_new() {
    return (p_array);
 }
 
+Array*
+array_new_size(int i_size) {
+   Array *p_array = malloc(sizeof(Array));
+
+   p_array->i_size = 0;
+   p_array->pp_ae = NULL;
+   array_resize(p_array, i_size);
+
+   return (p_array);
+}
+
+void
+_array_new_copy_cb(void *p_array, void *p_void) {
+   array_unshift(p_array, p_void);
+}
+
+Array*
+array_new_copy(Array *p_array) {
+   Array *p_array_cpy = array_new_size(array_get_size(p_array));
+   array_iterate2(p_array, _array_new_copy_cb, p_array_cpy);   
+
+   return (p_array_cpy);
+}
 
 void
 array_delete(Array *p_array) {
