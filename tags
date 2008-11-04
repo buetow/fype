@@ -72,6 +72,7 @@ arrayiterator_has_next	./src/data/array.c	/^arrayiterator_has_next(ArrayIterator
 arrayiterator_new	./src/data/array.c	/^arrayiterator_new(Array *p_array) {$/
 arrayiterator_next	./src/data/array.c	/^arrayiterator_next(ArrayIterator *p_arrayiterator)/
 convert_function_arg_types_to_highest	./src/core/convert.c	/^convert_function_arg_types_to_highest(Stack *p_sta/
+convert_to_array	./src/core/convert.c	/^convert_to_array(Token *p_token) {$/
 convert_to_double	./src/core/convert.c	/^convert_to_double(Token *p_token) {$/
 convert_to_highest	./src/core/convert.c	/^convert_to_highest(Token *p_token1, Token *p_token/
 convert_to_integer	./src/core/convert.c	/^convert_to_integer(Token *p_token) {$/
