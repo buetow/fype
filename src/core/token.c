@@ -275,6 +275,7 @@ token_new_dummy() {
    p_token->c_filename = NULL;
    p_token->u_token_id = TOKEN_ID_COUNTER++;
    p_token->i_ref_count = 0;
+   p_token->p_array = NULL;
 
    /* Register the token in the garbage collector */
    garbage_add_token(p_token);
@@ -290,6 +291,7 @@ token_new_copy(Token *p_token) {
    if (p_token_copy == NULL)
       ERROR("Memory alloc error");
 
+   p_token->p_array = NULL;
    token_copy_vals(p_token_copy, p_token);
    p_token_copy->i_ref_count = 0;
 
