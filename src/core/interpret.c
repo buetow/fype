@@ -984,18 +984,16 @@ _term(Interpret *p_interpret) {
    break;
    */
 
-   /*
    case TT_PARANT_AL:
    {
       Token *p_token = p_interpret->p_token;
       _NEXT
 
+      _INTERPRET_ERROR("arrays not yet fully implemented", p_token);
       Token *p_token_arr = token_new_array(ARRAY_SIZE);
-      stack_push(p_interpret->p_stack, p_token_arr);
-      _INTERPRET_ERROR("arrays not yet fully implemented", p_token_arr);
+      //stack_push(p_interpret->p_stack, p_token_arr);
    }
    break;
-   */
 
    case TT_PARANT_L:
    {

@@ -3,4 +3,4 @@
  *#
 
 my foo = 1, bar = 2;
-my arr = [foo bar];
+my baz = [foo, bar];

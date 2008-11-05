@@ -112,5 +112,3 @@ deinstall:
 uninstall: deinstall
 pod:
 	@cd ./docs/pod; make clean all
-sess:
-	vim -S Session.vim
