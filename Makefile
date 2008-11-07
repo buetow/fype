@@ -67,17 +67,17 @@ stats:
 stats-tofile:
 	make stats | tee ./docs/stats.txt
 testrun:
-	cat ./tmp/test.fy > ./tmp/test.out
-	./$(BIN) -V ./tmp/test.fy | tee -a ./tmp/test.out
+	cat ./test.fy > ./test.out
+	./$(BIN) -V ./test.fy | tee -a ./test.out
 tr: testrun
 test: all testrun
 t: test
 run:
-	./$(BIN) ./tmp/test.fy
+	./$(BIN) ./test.fy
 core:
 	gdb $(BIN) $(BIN).core
 gdb:
-	gdb --args $(BIN) ./tmp/test.fy
+	gdb --args $(BIN) .//test.fy
 newline:
 	@echo 
 examples: all

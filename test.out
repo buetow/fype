@@ -1,0 +1,11 @@
+#*
+ * Examples of how to use arrays
+ *#
+
+say ["string"];
+Token (id=00000, line=00005, pos=0004, type=TT_IDENT, val=say, ival=0, dval=0.000000, refs=1)
+Token (id=00001, line=00005, pos=0006, type=TT_PARANT_AL, val=[, ival=0, dval=0.000000, refs=1)
+Token (id=00002, line=00005, pos=0006, type=TT_STRING, val=string, ival=0, dval=0.000000, refs=1)
+Token (id=00003, line=00005, pos=0008, type=TT_PARANT_AR, val=], ival=0, dval=0.000000, refs=1)
+Token (id=00004, line=00005, pos=0009, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+string
