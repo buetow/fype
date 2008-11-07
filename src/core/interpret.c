@@ -981,6 +981,7 @@ _term(Interpret *p_interpret) {
 
       stack_push(p_interpret->p_stack, p_token_arr);
       _NEXT
+      return (1);
    }
    break;
 
