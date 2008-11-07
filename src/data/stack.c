@@ -93,6 +93,14 @@ stack_pop(Stack *p_stack) {
    return (p_val);
 }
 
+void*
+stack_top(Stack *p_stack) {
+   if (stack_empty(p_stack))
+      return (NULL);
+
+   return (p_stack->p_first->p_val);
+}
+
 void
 stack_clear(Stack *p_stack) {
    for (;!stack_empty(p_stack); stack_pop(p_stack));

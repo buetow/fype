@@ -1,4 +1,4 @@
-Fype v0.1-devel Build 9363
+Fype v0.1-devel Build 9477
 (c) Paul C. Buetow (2005 - 2008) <fype@dev.buetow.org>
 	-e	Executes given code string (see synopses)
 	-h	Prints this help

@@ -41,6 +41,7 @@
 #include "../defines.h"
 
 #define array_get_size(a) a->i_size
+#define array_get_used(a) a->i_used
 #define array_empty(a) a->i_size == 0
 #define array_clear(a) array_resize(a, 0)
 #define array_get_first(a) array_get(a, 0)
@@ -52,6 +53,7 @@ typedef struct {
 
 typedef struct {
    ArrayElement **pp_ae;
+   int i_used;
    int i_size;
 } Array;
 
@@ -79,6 +81,7 @@ void array_unshift(Array *p_array, void *p_void);
 void array_iterate(Array *p_array, void (*func)(void *));
 void array_iterate2(Array *p_array, void (*func)(void *, void *),
                     void *p_void);
+void array_set_used(Array *p_array, int i_used);
 
 ArrayElement *arrayelement_new(void *p_val);
 void arrayelement_delete(ArrayElement *p_ae);

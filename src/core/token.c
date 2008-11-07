@@ -252,7 +252,10 @@ token_new_string(char *c_val) {
 Token*
 token_new_array(int i_size) {
    Token *p_token = token_new_dummy();
+
    token_set_tt(p_token, TT_ARRAY);
+   p_token->p_array = array_new();
+
    array_resize(p_token->p_array, i_size);
 
    return (p_token);
@@ -415,3 +418,4 @@ token_print_cb(void *p_void) {
    token_print(p_token);
    printf("\n");
 }
+

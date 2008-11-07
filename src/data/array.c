@@ -40,16 +40,15 @@ array_new() {
 
    p_array->i_size = 0;
    p_array->pp_ae = NULL;
+   array_set_used(p_array, 0);
 
    return (p_array);
 }
 
 Array*
 array_new_size(int i_size) {
-   Array *p_array = malloc(sizeof(Array));
+   Array *p_array = array_new();
 
-   p_array->i_size = 0;
-   p_array->pp_ae = NULL;
    array_resize(p_array, i_size);
 
    return (p_array);
@@ -109,7 +108,17 @@ array_set(Array *p_array, int i_index, void *p_val) {
       array_resize(p_array, i_index + 1);
       p_array->pp_ae[i_index]->p_val = p_val;
    }
+
+   if (p_array->i_used < i_index)
+      array_set_used(p_array, i_index);
 }
+
+void
+array_set_used(Array *p_array, int i_used) {
+   //printf("foo %d",i_used);
+   p_array->i_used = i_used;
+}
+
 
 void
 array_insert(Array *p_array, int i_index, void *p_val) {
@@ -127,6 +136,9 @@ array_insert(Array *p_array, int i_index, void *p_val) {
       p_array->pp_ae[i] = p_ae;
       p_ae->p_val = p_val;
    }
+
+   if (p_array->i_used < i_index)
+      array_set_used(p_array, i_index);
 }
 
 void*
@@ -144,7 +156,6 @@ array_remove(Array *p_array, int i_index) {
    p_array->pp_ae[i-1] = p_ae;
 
    array_resize(p_array, p_array->i_size - 1);
-
    return (p_ret);
 }
 
@@ -182,6 +193,9 @@ array_resize(Array *p_array, int i_size) {
          p_array->pp_ae[i] = arrayelement_new(NULL);
 
    p_array->i_size = i_size;
+   //printf("[%d > %d]", p_array->i_used, i_size);
+   if (p_array->i_used > i_size)
+      array_set_used(p_array, i_size);
 }
 
 void*
@@ -223,8 +237,9 @@ array_splice(Array *p_array, int i_index, Array *p_array2) {
 
 void
 array_unshift(Array *p_array, void *p_void) {
-   int i_size = array_get_size(p_array);
-   array_set(p_array, i_size, p_void);
+   int i_used = array_get_used(p_array);
+   array_set(p_array, i_used, p_void);
+   array_set_used(p_array, 1+i_used);
 }
 
 void
@@ -250,7 +265,7 @@ array_iterate(Array *p_array, void (*func)(void *)) {
    if (!p_array)
       return;
 
-   for (int i = 0; i < array_get_size(p_array); ++i)
+   for (int i = 0; i < array_get_used(p_array); ++i)
       (*func) (array_get(p_array, i));
 }
 
@@ -259,7 +274,7 @@ array_iterate2(Array *p_array, void (*func)(void *, void *), void *p_void) {
    if (!p_array)
       return;
 
-   for (int i = 0; i < array_get_size(p_array); ++i)
+   for (int i = 0; i < array_get_used(p_array); ++i)
       (*func) (array_get(p_array, i), p_void);
 }
 
@@ -300,8 +315,9 @@ arrayiterator_delete(ArrayIterator *p_arrayiterator) {
 
 _Bool
 arrayiterator_has_next(ArrayIterator *p_arrayiterator) {
+   //printf("[%d]", p_arrayiterator->p_array->i_used);
    return (p_arrayiterator->i_cur_pos <
-           array_get_size(p_arrayiterator->p_array));
+           array_get_used(p_arrayiterator->p_array));
 }
 
 void*

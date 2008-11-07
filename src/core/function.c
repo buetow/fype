@@ -636,11 +636,26 @@ void
 function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
                          Stack *p_stack_args) {
 
+   Token *p_token = stack_top(p_stack_args);
+
+   if (token_get_tt(p_token) == TT_ARRAY) {
+      ArrayIterator *p_iter = arrayiterator_new(p_token->p_array);
+
+      while (arrayiterator_has_next(p_iter)) {
+         stack_push(p_stack_args, arrayiterator_next(p_iter));
+         function_process_buildin(p_interpret, p_token_ident,
+                                  p_stack_args);
+         stack_pop(p_stack_args);
+      }
+
+      arrayiterator_delete(p_iter);
+
+      return;
+   }
+
    if (strcmp("assert", token_get_val(p_token_ident)) == 0) {
       if (0 == stack_size(p_stack_args))
          _FUNCTION_ERROR("No argument given", p_token_ident);
-
-      Token *p_token = stack_top(p_stack_args);
 
       switch (token_get_tt(p_token)) {
       case TT_INTEGER:
@@ -655,9 +670,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
          if (atoi(token_get_val(p_token)) == 0)
             _FUNCTION_ERROR("Assert failed", p_token);
          break;
-      case TT_ARRAY:
-         ERROR("ARRAY bla yet implemented");
-         break;
          NO_DEFAULT;
       }
 
@@ -665,7 +677,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
       if (0 == stack_size(p_stack_args))
          _FUNCTION_ERROR("No argument given", p_token_ident);
 
-      Token *p_token = stack_top(p_stack_args);
       switch (token_get_tt(p_token)) {
       case TT_INTEGER:
          token_set_ival(p_token, token_get_ival(p_token) - 1);
@@ -676,9 +687,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
       case TT_STRING:
          convert_to_integer(p_token);
          token_set_ival(p_token, token_get_ival(p_token) - 1);
-         break;
-      case TT_ARRAY:
-         ERROR("ARRAY bla yet implemented");
          break;
          NO_DEFAULT;
       }
@@ -707,7 +715,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
       if (0 == stack_size(p_stack_args))
          _FUNCTION_ERROR("No argument given", p_token_ident);
 
-      Token *p_token = stack_top(p_stack_args);
       p_token = token_new_copy(p_token);
       convert_to_integer(p_token);
       exit(token_get_ival(p_token));
@@ -716,7 +723,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
       if (0 == stack_size(p_stack_args))
          _FUNCTION_ERROR("No argument given", p_token_ident);
 
-      Token *p_token = stack_top(p_stack_args);
       switch (token_get_tt(p_token)) {
       case TT_INTEGER:
          token_set_ival(p_token, token_get_ival(p_token) + 1);
@@ -727,9 +733,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
       case TT_STRING:
          convert_to_integer(p_token);
          token_set_ival(p_token, token_get_ival(p_token) + 1);
-         break;
-      case TT_ARRAY:
-         ERROR("ARRAY bla yet implemented");
          break;
          NO_DEFAULT;
       }
@@ -763,9 +766,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
          token_set_ival(p_token, -atoi(token_get_val(p_token)));
          token_set_tt(p_token, TT_INTEGER);
          break;
-      case TT_ARRAY:
-         ERROR("ARRAY bla yet implemented");
-         break;
          NO_DEFAULT;
       }
 
@@ -789,9 +789,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
             token_set_ival(p_token, !atoi(token_get_val(p_token)));
             token_set_tt(p_token, TT_INTEGER);
             break;
-         case TT_ARRAY:
-            ERROR("ARRAY bla yet implemented");
-            break;
             NO_DEFAULT;
          }
       }
@@ -811,9 +808,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
             break;
          case TT_STRING:
             printf("%s", token_get_val(p_token));
-            break;
-         case TT_ARRAY:
-            ERROR("ARRAY bla yet implemented");
             break;
             NO_DEFAULT;
          }
@@ -836,9 +830,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
             break;
          case TT_STRING:
             printf("%s", token_get_val(p_token));
-            break;
-         case TT_ARRAY:
-            ERROR("ARRAY bla yet implemented");
             break;
          }
       }
@@ -885,9 +876,6 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
       case TT_STRING:
          token_set_ival(p_token, !atoi(token_get_val(p_token)));
          token_set_tt(p_token, TT_INTEGER);
-         break;
-      case TT_ARRAY:
-         ERROR("ARRAY bla yet implemented");
          break;
          NO_DEFAULT;
       }

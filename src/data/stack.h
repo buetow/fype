@@ -35,8 +35,6 @@
 #ifndef STACK_H
 #define STACK_H
 
-#define stack_top(s) s->p_first->p_val;
-
 #include <stdlib.h>
 
 typedef struct StackElem_ {
@@ -65,6 +63,7 @@ void stack_iterate_level(Stack *p_stack, void (*func)(void *p_void,
                          int i_level));
 void stack_push(Stack *p_stack, void *p_val);
 void *stack_pop(Stack *p_stack);
+void *stack_top(Stack *p_stack);
 void stack_clear(Stack *p_stack);
 void stack_delete(Stack *p_stack);
 void stack_delete_and_free(Stack *p_stack);

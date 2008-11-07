@@ -50,6 +50,7 @@
 
 #define _CHECK if (p_interpret->p_token == NULL) return (0);
 #define _HAS_NEXT listiterator_has_next(p_interpret->p_iter)
+#define _NEXT_ORG _next(p_interpret);
 #define _NEXT if (!_next(p_interpret)) { return (2); }
 #define _NEXT_TT _next_tt(p_interpret)
 #define _SKIP _next(p_interpret);
@@ -146,6 +147,7 @@ _next(Interpret *p_interpret) {
 
    p_interpret->p_token = NULL;
    p_interpret->tt = TT_NONE;
+   //printf("==>\n");
 
    return (0);
 }
@@ -465,7 +467,8 @@ _expression(Interpret *p_interpret) {
    _CHECK TRACK
 
    if (_expression_(p_interpret)) {
-      if (p_interpret->tt == TT_SEMICOLON) {
+      TokenType tt = p_interpret->tt;
+      if (tt == TT_SEMICOLON || tt == TT_NONE) {
          _NEXT
 
       } else {
@@ -798,13 +801,18 @@ _term(Interpret *p_interpret) {
    _CHECK TRACK
 
    switch (p_interpret->tt) {
+   case TT_STRING:
    case TT_INTEGER:
    case TT_DOUBLE:
-   case TT_STRING:
    case TT_ARRAY:
       stack_push(p_interpret->p_stack, p_interpret->p_token);
-      _NEXT
-      return (1);
+      // Checks if the term is the last element of an array
+      //	say ["element"] # The "element"
+      // or of a function
+      // 	func foo { say 1 } # The 1
+      if (_NEXT_TT != TT_PARANT_AR && _NEXT_TT != TT_PARANT_CR)
+         _NEXT
+         return (1);
 
    case TT_IDENT:
    {
@@ -949,49 +957,29 @@ _term(Interpret *p_interpret) {
    }
    break;
 
-   /*
-   // Reference operator
-   case TT_AAND:
-   {
-      _NEXT
-      if (p_interpret->tt != TT_IDENT)
-         _INTERPRET_ERROR("Expexted identifier for '&'",
-                          p_interpret->p_token);
-
-      char *c_name = token_get_val(p_interpret->p_token);
-      Symbol *p_symbol = scope_get(p_interpret->p_scope, c_name);
-
-     _INTERPRET_ERROR("nyi", p_interpret->p_token);
-
-      _NEXT;
-      return (1);
-   }
-   break;
-
-   // Dereference opeator
-   case TT_MULT:
-   {
-      _NEXT
-      if (p_interpret->tt != TT_IDENT)
-         _INTERPRET_ERROR("Expexted identifier for '*'",
-                          p_interpret->p_token);
-
-
-     _INTERPRET_ERROR("nyi", p_interpret->p_token);
-      _NEXT;
-      return (1);
-   }
-   break;
-   */
-
    case TT_PARANT_AL:
    {
-      Token *p_token = p_interpret->p_token;
-      _NEXT
-
-      _INTERPRET_ERROR("arrays not yet fully implemented", p_token);
       Token *p_token_arr = token_new_array(ARRAY_SIZE);
-      //stack_push(p_interpret->p_stack, p_token_arr);
+      Array *p_array = p_token_arr->p_array;
+
+      _NEXT
+      // Get the array elements
+      while (p_interpret->tt != TT_PARANT_AR) {
+         TokenType tt = tt = p_interpret->tt;
+         if (tt != TT_COMMA && tt != TT_SEMICOLON) {
+            UNLESS (_expression_(p_interpret)) {
+               Token *p_token = p_interpret->p_token;
+               _INTERPRET_ERROR("Expected expression", p_token);
+            }
+
+            array_unshift(p_array, stack_pop(p_interpret->p_stack));
+         }
+
+         _NEXT
+      }
+
+      stack_push(p_interpret->p_stack, p_token_arr);
+      _NEXT
    }
    break;
 

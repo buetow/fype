@@ -66,6 +66,7 @@
 #define true (_Bool)1
 #endif
 
+#define UNLESS(x) if (!x)
 // Makes the compiler always happy (end of switch statements) :)
 #define NO_DEFAULT default: if (0)
 

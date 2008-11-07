@@ -64,6 +64,7 @@ array_push	./src/data/array.c	/^array_push(Array *p_array, void *p_void) {$/
 array_remove	./src/data/array.c	/^array_remove(Array *p_array, int i_index) {$/
 array_resize	./src/data/array.c	/^array_resize(Array *p_array, int i_size) {$/
 array_set	./src/data/array.c	/^array_set(Array *p_array, int i_index, void *p_val/
+array_set_used	./src/data/array.c	/^array_set_used(Array *p_array, int i_used) {$/
 array_splice	./src/data/array.c	/^array_splice(Array *p_array, int i_index, Array *p/
 array_unshift	./src/data/array.c	/^array_unshift(Array *p_array, void *p_void) {$/
 arrayelement_delete	./src/data/array.c	/^arrayelement_delete(ArrayElement *p_ae) {$/
@@ -259,6 +260,7 @@ stack_new	./src/data/stack.c	/^stack_new() {$/
 stack_pop	./src/data/stack.c	/^stack_pop(Stack *p_stack) {$/
 stack_push	./src/data/stack.c	/^stack_push(Stack *p_stack, void *p_val) {$/
 stack_size	./src/data/stack.c	/^stack_size(Stack *p_stack) {$/
+stack_top	./src/data/stack.c	/^stack_top(Stack *p_stack) {$/
 stackelem_new	./src/data/stack.c	/^stackelem_new() {$/
 stackiterator_delete	./src/data/stack.c	/^stackiterator_delete(StackIterator *p_iter) {$/
 stackiterator_has_next	./src/data/stack.c	/^stackiterator_has_next(StackIterator *p_iter) {$/
