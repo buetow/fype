@@ -115,7 +115,6 @@ array_set(Array *p_array, int i_index, void *p_val) {
 
 void
 array_set_used(Array *p_array, int i_used) {
-   //printf("foo %d",i_used);
    p_array->i_used = i_used;
 }
 
@@ -193,7 +192,6 @@ array_resize(Array *p_array, int i_size) {
          p_array->pp_ae[i] = arrayelement_new(NULL);
 
    p_array->i_size = i_size;
-   //printf("[%d > %d]", p_array->i_used, i_size);
    if (p_array->i_used > i_size)
       array_set_used(p_array, i_size);
 }

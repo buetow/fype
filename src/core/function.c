@@ -596,7 +596,13 @@ function_is_buildin(Token *p_token_ident) {
    if (strcmp("incr", token_get_val(p_token_ident)) == 0)
       return (true);
 
+   if (strcmp("ind", token_get_val(p_token_ident)) == 0)
+      return (true);
+
    if (strcmp("integer", token_get_val(p_token_ident)) == 0)
+      return (true);
+
+   if (strcmp("len", token_get_val(p_token_ident)) == 0)
       return (true);
 
    if (strcmp("ln", token_get_val(p_token_ident)) == 0)
@@ -639,6 +645,17 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
    Token *p_token = stack_top(p_stack_args);
 
    if (token_get_tt(p_token) == TT_ARRAY) {
+	  if (strcmp("len", token_get_val(p_token_ident)) == 0) {
+		 stack_pop(p_stack_args);
+         stack_push(p_stack_args,
+			   token_new_integer(array_get_used(p_token->p_array)));
+
+	  } else if (strcmp("ind", token_get_val(p_token_ident)) == 0) {
+		 stack_pop(p_stack_args);
+         stack_push(p_stack_args,
+			   token_new_integer(array_get_ind(p_token->p_array)));
+
+	  } else {
       ArrayIterator *p_iter = arrayiterator_new(p_token->p_array);
 
       while (arrayiterator_has_next(p_iter)) {
@@ -649,6 +666,7 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
       }
 
       arrayiterator_delete(p_iter);
+	  }
 
       return;
    }
@@ -737,12 +755,25 @@ function_process_buildin(Interpret *p_interpret, Token *p_token_ident,
          NO_DEFAULT;
       }
 
+   } else if (strcmp("ind", token_get_val(p_token_ident)) == 0) {
+		 _FUNCTION_ERROR("Expected array", p_token_ident);
+
    } else if (strcmp("integer", token_get_val(p_token_ident)) == 0) {
       if (0 == stack_size(p_stack_args))
          _FUNCTION_ERROR("No argument given", p_token_ident);
 
       Token *p_token = token_new_copy(stack_pop(p_stack_args));
       convert_to_integer(p_token);
+      stack_push(p_stack_args, p_token);
+
+   } else if (strcmp("len", token_get_val(p_token_ident)) == 0) {
+      if (0 == stack_size(p_stack_args))
+         _FUNCTION_ERROR("No argument given", p_token_ident);
+
+      Token *p_token = token_new_copy(stack_pop(p_stack_args));
+      convert_to_string(p_token);
+	  token_set_tt(p_token, TT_INTEGER);
+      token_set_ival(p_token, strlen(token_get_val(p_token)));
       stack_push(p_stack_args, p_token);
 
    } else if (strcmp("ln", token_get_val(p_token_ident)) == 0) {

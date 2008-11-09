@@ -42,6 +42,7 @@
 
 #define array_get_size(a) a->i_size
 #define array_get_used(a) a->i_used
+#define array_get_ind(a) (a->i_used - 1)
 #define array_empty(a) a->i_size == 0
 #define array_clear(a) array_resize(a, 0)
 #define array_get_first(a) array_get(a, 0)

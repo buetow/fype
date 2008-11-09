@@ -1,2 +1,6 @@
 keywords:
 	refs
+
+functions:
+	ind
+	len
