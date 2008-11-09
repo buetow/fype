@@ -2,14 +2,20 @@
  * Examples of how to use arrays
  *#
 
-# Create a function bar, it returns 0 by default
+# Create a function bar, returns 0 by default
 func bar { say "bar" } 
 
-# Create an array foo, print out "bar" 
-my foo = [bar, 6/2, 3*3, "string", ["_A", ["__BA", "__BB"]];
+# Create a multi dimensional array foo
+my foo = [bar, 1, 4/2, double "3", ["A", ["BA", "BB"]]];
 
-# 
+# Run on each element of foo recursive 'say'
 say foo;
+
+# Print the length of the array
+assert 5 == say len foo;
+
+# Print the last index of the array
+assert 4 == say ind foo;
 Token (id=00000, line=00006, pos=0005, type=TT_FUNC, val=func, ival=0, dval=0.000000, refs=1)
 Token (id=00001, line=00006, pos=0009, type=TT_IDENT, val=bar, ival=0, dval=0.000000, refs=1)
 Token (id=00002, line=00006, pos=0011, type=TT_PARANT_CL, val={, ival=0, dval=0.000000, refs=1)
@@ -22,29 +28,54 @@ Token (id=00008, line=00009, pos=0009, type=TT_ASSIGN, val==, ival=0, dval=0.000
 Token (id=00009, line=00009, pos=0011, type=TT_PARANT_AL, val=[, ival=0, dval=0.000000, refs=1)
 Token (id=00010, line=00009, pos=0014, type=TT_IDENT, val=bar, ival=0, dval=0.000000, refs=1)
 Token (id=00011, line=00009, pos=0015, type=TT_COMMA, val=,, ival=0, dval=0.000000, refs=1)
-Token (id=00012, line=00009, pos=0017, type=TT_INTEGER, val=6, ival=6, dval=0.000000, refs=1)
-Token (id=00013, line=00009, pos=0018, type=TT_DIV, val=/, ival=0, dval=0.000000, refs=1)
-Token (id=00014, line=00009, pos=0019, type=TT_INTEGER, val=2, ival=2, dval=0.000000, refs=1)
-Token (id=00015, line=00009, pos=0020, type=TT_COMMA, val=,, ival=0, dval=0.000000, refs=1)
-Token (id=00016, line=00009, pos=0022, type=TT_INTEGER, val=3, ival=3, dval=0.000000, refs=1)
-Token (id=00017, line=00009, pos=0023, type=TT_MULT, val=*, ival=0, dval=0.000000, refs=1)
-Token (id=00018, line=00009, pos=0024, type=TT_INTEGER, val=3, ival=3, dval=0.000000, refs=1)
-Token (id=00019, line=00009, pos=0025, type=TT_COMMA, val=,, ival=0, dval=0.000000, refs=1)
-Token (id=00020, line=00009, pos=0026, type=TT_STRING, val=string, ival=0, dval=0.000000, refs=1)
-Token (id=00021, line=00009, pos=0028, type=TT_COMMA, val=,, ival=0, dval=0.000000, refs=1)
-Token (id=00022, line=00009, pos=0030, type=TT_PARANT_AL, val=[, ival=0, dval=0.000000, refs=1)
-Token (id=00023, line=00009, pos=0030, type=TT_STRING, val=_A, ival=0, dval=0.000000, refs=1)
-Token (id=00024, line=00009, pos=0032, type=TT_COMMA, val=,, ival=0, dval=0.000000, refs=1)
-Token (id=00025, line=00009, pos=0034, type=TT_PARANT_AL, val=[, ival=0, dval=0.000000, refs=1)
-Token (id=00026, line=00009, pos=0034, type=TT_STRING, val=__BA, ival=0, dval=0.000000, refs=1)
-Token (id=00027, line=00009, pos=0036, type=TT_COMMA, val=,, ival=0, dval=0.000000, refs=1)
-Token (id=00028, line=00009, pos=0037, type=TT_STRING, val=__BB, ival=0, dval=0.000000, refs=1)
-Token (id=00029, line=00009, pos=0039, type=TT_PARANT_AR, val=], ival=0, dval=0.000000, refs=1)
-Token (id=00030, line=00009, pos=0039, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
-Token (id=00031, line=00009, pos=0040, type=TT_PARANT_AR, val=], ival=0, dval=0.000000, refs=1)
-Token (id=00032, line=00009, pos=0041, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
-Token (id=00033, line=00012, pos=0004, type=TT_IDENT, val=say, ival=0, dval=0.000000, refs=1)
-Token (id=00034, line=00012, pos=0008, type=TT_IDENT, val=foo, ival=0, dval=0.000000, refs=1)
-Token (id=00035, line=00012, pos=0009, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00012, line=00009, pos=0017, type=TT_INTEGER, val=1, ival=1, dval=0.000000, refs=1)
+Token (id=00013, line=00009, pos=0018, type=TT_COMMA, val=,, ival=0, dval=0.000000, refs=1)
+Token (id=00014, line=00009, pos=0020, type=TT_INTEGER, val=4, ival=4, dval=0.000000, refs=1)
+Token (id=00015, line=00009, pos=0021, type=TT_DIV, val=/, ival=0, dval=0.000000, refs=1)
+Token (id=00016, line=00009, pos=0022, type=TT_INTEGER, val=2, ival=2, dval=0.000000, refs=1)
+Token (id=00017, line=00009, pos=0023, type=TT_COMMA, val=,, ival=0, dval=0.000000, refs=1)
+Token (id=00018, line=00009, pos=0030, type=TT_IDENT, val=double, ival=0, dval=0.000000, refs=1)
+Token (id=00019, line=00009, pos=0031, type=TT_STRING, val=3, ival=0, dval=0.000000, refs=1)
+Token (id=00020, line=00009, pos=0033, type=TT_COMMA, val=,, ival=0, dval=0.000000, refs=1)
+Token (id=00021, line=00009, pos=0035, type=TT_PARANT_AL, val=[, ival=0, dval=0.000000, refs=1)
+Token (id=00022, line=00009, pos=0035, type=TT_STRING, val=A, ival=0, dval=0.000000, refs=1)
+Token (id=00023, line=00009, pos=0037, type=TT_COMMA, val=,, ival=0, dval=0.000000, refs=1)
+Token (id=00024, line=00009, pos=0039, type=TT_PARANT_AL, val=[, ival=0, dval=0.000000, refs=1)
+Token (id=00025, line=00009, pos=0039, type=TT_STRING, val=BA, ival=0, dval=0.000000, refs=1)
+Token (id=00026, line=00009, pos=0041, type=TT_COMMA, val=,, ival=0, dval=0.000000, refs=1)
+Token (id=00027, line=00009, pos=0042, type=TT_STRING, val=BB, ival=0, dval=0.000000, refs=1)
+Token (id=00028, line=00009, pos=0044, type=TT_PARANT_AR, val=], ival=0, dval=0.000000, refs=1)
+Token (id=00029, line=00009, pos=0044, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00030, line=00009, pos=0045, type=TT_PARANT_AR, val=], ival=0, dval=0.000000, refs=1)
+Token (id=00031, line=00009, pos=0045, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00032, line=00009, pos=0046, type=TT_PARANT_AR, val=], ival=0, dval=0.000000, refs=1)
+Token (id=00033, line=00009, pos=0047, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00034, line=00012, pos=0004, type=TT_IDENT, val=say, ival=0, dval=0.000000, refs=1)
+Token (id=00035, line=00012, pos=0008, type=TT_IDENT, val=foo, ival=0, dval=0.000000, refs=1)
+Token (id=00036, line=00012, pos=0009, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00037, line=00015, pos=0007, type=TT_IDENT, val=assert, ival=0, dval=0.000000, refs=1)
+Token (id=00038, line=00015, pos=0009, type=TT_INTEGER, val=5, ival=5, dval=0.000000, refs=1)
+Token (id=00039, line=00015, pos=0011, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00040, line=00015, pos=0012, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00041, line=00015, pos=0016, type=TT_IDENT, val=say, ival=0, dval=0.000000, refs=1)
+Token (id=00042, line=00015, pos=0020, type=TT_IDENT, val=len, ival=0, dval=0.000000, refs=1)
+Token (id=00043, line=00015, pos=0024, type=TT_IDENT, val=foo, ival=0, dval=0.000000, refs=1)
+Token (id=00044, line=00015, pos=0025, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
+Token (id=00045, line=00018, pos=0007, type=TT_IDENT, val=assert, ival=0, dval=0.000000, refs=1)
+Token (id=00046, line=00018, pos=0009, type=TT_INTEGER, val=4, ival=4, dval=0.000000, refs=1)
+Token (id=00047, line=00018, pos=0011, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00048, line=00018, pos=0012, type=TT_ASSIGN, val==, ival=0, dval=0.000000, refs=1)
+Token (id=00049, line=00018, pos=0016, type=TT_IDENT, val=say, ival=0, dval=0.000000, refs=1)
+Token (id=00050, line=00018, pos=0020, type=TT_IDENT, val=ind, ival=0, dval=0.000000, refs=1)
+Token (id=00051, line=00018, pos=0024, type=TT_IDENT, val=foo, ival=0, dval=0.000000, refs=1)
+Token (id=00052, line=00018, pos=0025, type=TT_SEMICOLON, val=;, ival=0, dval=0.000000, refs=1)
 bar
-No such symbol: Interpret error in ./test.fy line 12 pos 8 near 'foo' (Fype @ ./src/core/interpret.c line 874)
+0
+1
+2
+3.000000
+A
+BA
+BB
+5
+4

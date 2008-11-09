@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/core/function.c
+ *: File: ./src/core/function.h
  *: A simple interpreter
  *:
  *: WWW		: http://fype.buetow.org
@@ -32,19 +32,32 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#include "../defines.h"
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
 
-#include "function.h"
+#include "token.h"
 
-Function*
-function_new() {
-   Function *p_function = malloc(sizeof(Function));
+#include "interpret.h"
+#include "../data/stack.h"
+#include "../data/hash.h"
 
-   return (p_function);
-}
+typedef struct {
+   Hash *p_hash_functions;
+} Functions;
 
-void
-function_delete(Function *p_function) {
-   free(p_function);
-}
+Functions* functions_new();
+void functions_delete(Functions *p_functions);
+void functions_init(Functions *p_functions);
 
+void function_process(Interpret *p_interp, Token *p_token_op,
+                      Token *p_token_op2, Stack *p_stack_args, 
+					  int i_args);
+_Bool function_is_buildin(Token *p_token_ident);
+void function_process_buildin(Interpret *p_interpret,
+                              Token *p_token_ident,
+                              Stack *p_stack_args);
+_Bool function_is_self_defined(Interpret *p_interpret);
+void function_process_self_defined(Interpret *p_interpret,
+                                   Token *p_token_ident);
+
+#endif /* FUNCTIONS_H */

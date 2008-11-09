@@ -36,7 +36,7 @@
 
 #include "../defines.h"
 #include "convert.h"
-#include "function.h"
+#include "functions.h"
 #include "symbol.h"
 
 #define _INTERPRET_ERROR(m,t) \
@@ -467,7 +467,7 @@ _expression(Interpret *p_interpret) {
    _CHECK TRACK
 
    if (_expression_(p_interpret)) {
-	  TokenType tt = p_interpret->tt;
+      TokenType tt = p_interpret->tt;
       if (tt == TT_SEMICOLON || tt == TT_NONE) {
          _NEXT
 
@@ -806,13 +806,13 @@ _term(Interpret *p_interpret) {
    case TT_DOUBLE:
    case TT_ARRAY:
       stack_push(p_interpret->p_stack, p_interpret->p_token);
-	  // Checks if the term is the last element of an array 
-	  //	say ["element"] # The "element"
-	  // or of a function
-	  // 	func foo { say 1 } # The 1
-	  if (_NEXT_TT != TT_PARANT_AR && _NEXT_TT != TT_PARANT_CR) 
-		 _NEXT
-      return (1);
+      // Checks if the term is the last element of an array
+      //	say ["element"] # The "element"
+      // or of a function
+      // 	func foo { say 1 } # The 1
+      if (_NEXT_TT != TT_PARANT_AR && _NEXT_TT != TT_PARANT_CR)
+         _NEXT
+         return (1);
 
    case TT_IDENT:
    {
@@ -975,7 +975,7 @@ _term(Interpret *p_interpret) {
 
             array_unshift(p_array, stack_pop(p_interpret->p_stack));
          }
-		 
+
          _NEXT
       }
 

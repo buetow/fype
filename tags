@@ -1,7 +1,7 @@
 CASE	./src/core/token.c	/^#define CASE(t,r) case t: return r;$/
 CHECK	./src/core/token.c	/^#define CHECK(...) if (!strcmp(c_token, __VA_ARGS_/
 Mmain	./src/main.c	/^main(int i_argc, char **pc_argv) {$/
-_FUNCTION_ERROR	./src/core/function.c	/^#define _FUNCTION_ERROR(m,t) \\$/
+_FUNCTIONS_ERROR	./src/core/functions.c	/^#define _FUNCTIONS_ERROR(m,t) \\$/
 _GARBAGE_ERROR	./src/core/garbage.c	/^#define _GARBAGE_ERROR(m) \\$/
 _Garbage	./src/core/garbage.c	/^} _Garbage;$/
 _INTERPRET_ERROR	./src/core/interpret.c	/^#define _INTERPRET_ERROR(m,t) \\$/
@@ -21,7 +21,7 @@ _next	./src/core/interpret.c	/^_next(Interpret *p_interpret) {$/
 _next_tt	./src/core/interpret.c	/^_next_tt(Interpret *p_interpret) {$/
 _print_lookahead	./src/core/interpret.c	/^_print_lookahead(Interpret *p_interpret) {$/
 _proc_decl	./src/core/interpret.c	/^_proc_decl(Interpret *p_interpret) {$/
-_process	./src/core/function.c	/^_process(Interpret *p_interpret, Token *p_token_st/
+_process	./src/core/functions.c	/^_process(Interpret *p_interpret, Token *p_token_st/
 _product	./src/core/interpret.c	/^_product(Interpret *p_interpret) {$/
 _product2	./src/core/interpret.c	/^_product2(Interpret *p_interpret) {$/
 _program	./src/core/interpret.c	/^_program(Interpret *p_interpret) {$/
@@ -108,11 +108,16 @@ datiter_new	./src/data/dat.c	/^datiter_new(Dat *p_dat) {$/
 datiter_next	./src/data/dat.c	/^datiter_next(DatIter *p_iter) {$/
 datiter_next_t	./src/data/dat.c	/^datiter_next_t(DatIter *p_iter, TYPE *p_type) {$/
 datiter_skip	./src/data/dat.c	/^datiter_skip(DatIter *p_iter, unsigned i_num) {$/
-function_is_buildin	./src/core/function.c	/^function_is_buildin(Token *p_token_ident) {$/
-function_is_self_defined	./src/core/function.c	/^function_is_self_defined(Interpret *p_interpret) {/
-function_process	./src/core/function.c	/^function_process(Interpret *p_interpret, Token *p_/
-function_process_buildin	./src/core/function.c	/^function_process_buildin(Interpret *p_interpret, T/
-function_process_self_defined	./src/core/function.c	/^function_process_self_defined(Interpret *p_interpr/
+function_delete	./src/core/function.c	/^function_delete(Function *p_function) {$/
+function_is_buildin	./src/core/functions.c	/^function_is_buildin(Token *p_token_ident) {$/
+function_is_self_defined	./src/core/functions.c	/^function_is_self_defined(Interpret *p_interpret) {/
+function_new	./src/core/function.c	/^function_new() {$/
+function_process	./src/core/functions.c	/^function_process(Interpret *p_interpret, Token *p_/
+function_process_buildin	./src/core/functions.c	/^function_process_buildin(Interpret *p_interpret, T/
+function_process_self_defined	./src/core/functions.c	/^function_process_self_defined(Interpret *p_interpr/
+functions_delete	./src/core/functions.c	/^functions_delete(Functions *p_functions) {$/
+functions_init	./src/core/functions.c	/^functions_init(Functions *p_functions) {$/
+functions_new	./src/core/functions.c	/^functions_new() {$/
 fype_delete	./src/fype.c	/^fype_delete(Fype *p_fype) {$/
 fype_new	./src/fype.c	/^fype_new() {$/
 fype_run	./src/fype.c	/^fype_run(int i_argc, char **pc_argv) {$/
