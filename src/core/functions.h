@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/core/function.h
+ *: File: ./src/core/functions.h
  *: A simple interpreter
  *:
  *: WWW		: http://fype.buetow.org
@@ -50,8 +50,8 @@ void functions_delete(Functions *p_functions);
 void functions_init(Functions *p_functions);
 
 void function_process(Interpret *p_interp, Token *p_token_op,
-                      Token *p_token_op2, Stack *p_stack_args, 
-					  int i_args);
+                      Token *p_token_op2, Stack *p_stack_args,
+                      int i_args);
 _Bool function_is_buildin(Token *p_token_ident);
 void function_process_buildin(Interpret *p_interpret,
                               Token *p_token_ident,

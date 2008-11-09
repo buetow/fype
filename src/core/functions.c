@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/core/function.c
+ *: File: ./src/core/functions.c
  *: A simple interpreter
  *:
  *: WWW		: http://fype.buetow.org
@@ -152,7 +152,7 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
 
          if (tt_assign != TT_IDENT) {
             _FUNCTIONS_ERROR("Can only assign to symbols",
-                            p_token_store);
+                             p_token_store);
          }
 
          Symbol *p_symbol = scope_get(p_interpret->p_scope,
@@ -160,7 +160,7 @@ _process(Interpret *p_interpret, Token *p_token_store, Token *p_token_op,
 
          if (p_symbol == NULL) {
             _FUNCTIONS_ERROR("No such symbol",
-                            p_token_assign);
+                             p_token_assign);
          }
 
          symbol_set_val(p_symbol, p_token_store);
