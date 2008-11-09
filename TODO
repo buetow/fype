@@ -1,6 +1,7 @@
 Todo's (not in any specific order)
 
-Arrays
+Functions should be handled via hash and ptrs not if/else (in progress)
+Arrays (in progress)
 Closures
 Function arguments and return values
 Interactive shell
