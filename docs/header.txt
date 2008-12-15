@@ -5,7 +5,7 @@ WWW		: http://fype.buetow.org
 AUTHOR	: http://paul.buetow.org
 E-Mail	: fype at dev.buetow.org
 
-Copyright (c) 2005 2006 2007 2008, Paul C. Buetow 
+Copyright (c) 2005 - 2008, Paul Buetow 
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modi-
