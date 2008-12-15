@@ -16,3 +16,6 @@ assert 5 == say len foo;
 
 # Print the last index of the array
 assert 4 == say ind foo;
+
+# Print the 3rd element of the array
+say foo[3];

@@ -30,7 +30,7 @@ clean:
 	find ./ -name '*.bin' -exec rm -f {} \;
 	find . -name '*.core' -exec rm -f {} \;
 	if [ -f $(BIN) ]; then rm -f $(BIN); fi
-build:	ctags
+build: ctags
 	@awk '{ \
 		if ($$2 == "BUILDNR") print $$1,$$2,$$3+1; \
 		else if ($$2 ~ /OS_/) printf("%s OS_%s\n", $$1, \
