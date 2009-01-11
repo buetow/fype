@@ -19,3 +19,5 @@ assert 4 == say ind foo;
 
 # Print the 3rd element of the array
 say foo[3];
+
+#say "bla";
