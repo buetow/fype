@@ -83,10 +83,12 @@ Interpret*
 interpret_new(List *p_list_token, Hash *p_hash_syms) {
    Interpret *p_interpret = malloc(sizeof(Interpret));
 
+   /* No subprocess */
    if (p_hash_syms != NULL) {
       p_interpret->p_scope = scope_new(p_hash_syms);
       p_interpret->b_scope_delete = true;
 
+   /* Subprocess */
    } else {
       p_interpret->p_scope = NULL;
       p_interpret->b_scope_delete = false;
