@@ -1,0 +1,2 @@
+line numbers: :se nu :se
+buffers: :ls :bd <NUM> :bd <FILENAME>
