@@ -6,7 +6,7 @@
  *: AUTHOR	: http://paul.buetow.org
  *: E-Mail	: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inforn. (FH) Paul C. Buetow 
+ *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
  *: All rights reserved.
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
