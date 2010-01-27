@@ -50,12 +50,12 @@
 #define HASH_MAXOCC 5
 #define HASH_MKEYLEN 32
 #define HASH_SCALE 10
-#define NAME "Fype"
+#define NAME "Fype0"
 #define ASSEMBLER "yasm"
 #define LINKER "cc"
 #define SCANNER_BUFSIZE 512
-#define URL "<http://fype.buetow.org>"
-#define VERSION "Superalpha Build"
+#define URL "<http://fype0.buetow.org>"
+#define VERSION "Alpha Build"
 
 
 
