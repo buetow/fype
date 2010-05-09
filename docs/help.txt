@@ -1,4 +1,4 @@
-Fype2 Alpha Build 10387
+Fype2 Alpha Build 10390
 (c) Paul C. Buetow (2005 - 2010) <fype@dev.buetow.org>
 	-e	Executes given code string (see synopses)
 	-h	Prints this help
