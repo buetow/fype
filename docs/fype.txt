@@ -2,8 +2,8 @@ Lambda Rules
 
 (1) x ϵ V => x ϵ Λ
 (2) M,N ϵ Λ => (M N) ϵ Λ (Application)
-(3) M ϵ Λ and x ϵ V => (λ M) ϵ Λ (Abstraction)
-(4) No further Terms in Lambda existent
+(3) M ϵ Λ and x ϵ V => (λx.M) ϵ Λ (Abstraction)
+(4) No further Terms in Λ existent
 
 (λx.(λy.x)) ≡ λx.λy.x ≡ λxy.x ≡ False
 (λx.(λy.y)) ≡ λx.λy.y ≡ λxy.y ≡ True
