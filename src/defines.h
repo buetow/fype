@@ -42,14 +42,14 @@
 
 #include "build.h"
 
-#define COPYRIGHT "(c) Paul C. Buetow (2005 - 2010) <fype@dev.buetow.org>"
+#define COPYRIGHT "(c) Paul Buetow (2005 - 2010) <fype@dev.buetow.org>"
 #define FYPE
 #define GRAMMAR_MAP_SIZES 128
 #define ARRAY_SIZE 16
 #define HASH_MAXOCC 5
 #define HASH_MKEYLEN 32
 #define HASH_SCALE 10
-#define NAME "Fype2"
+#define NAME "LambdaFype"
 #define LINKER "cc"
 #define SCANNER_BUFSIZE 512
 #define URL "<http://fype.buetow.org>"
