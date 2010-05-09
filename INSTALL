@@ -1,0 +1,11 @@
+How to install fype:
+
+	make
+	sudo make install
+	make clean
+
+How to read the docu:
+
+	man pbsc
+
+Examples can be found in the ./examples directory.

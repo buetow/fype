@@ -1,0 +1,4 @@
+Synopsis:
+./fype [-[hsvTV]] file.fy
+./fype -e "code string;"
+	(Hint: Try -h for details)

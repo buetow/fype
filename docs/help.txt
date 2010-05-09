@@ -1,0 +1,8 @@
+Fype2 Alpha Build 10387
+(c) Paul C. Buetow (2005 - 2010) <fype@dev.buetow.org>
+	-e	Executes given code string (see synopses)
+	-h	Prints this help
+	-s	Prints the synopsis
+	-v	Prints the current version
+	-T	Prints token list after scanning
+	-V	Verbose mode: Print all possible output
