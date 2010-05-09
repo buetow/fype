@@ -98,7 +98,7 @@ _scanner_get_next_char(Scanner *p_scanner) {
 }
 
 void
-scanner_run(PBSc *p_fype) {
+scanner_run(Fype *p_fype) {
    Scanner *p_scanner = scanner_new(p_fype->p_list_token,
                                     p_fype->p_tupel_argv);
 

@@ -48,10 +48,10 @@ typedef struct {
    List *p_list_token; // Initial list of tokens
    Hash *p_hash_syms; // Symbol table
    char *c_basename;
-} PBSc;
+} Fype;
 
-PBSc *fype_new();
-void fype_delete(PBSc *p_fype);
+Fype *fype_new();
+void fype_delete(Fype *p_fype);
 int fype_run(int i_argc, char **pc_argv);
 
 #endif /* FYPE_H */

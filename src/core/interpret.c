@@ -77,7 +77,7 @@ interpret_delete(Interpret *p_inter) {
 }
 
 void
-interpret_run(PBSc *p_fype) {
+interpret_run(Fype *p_fype) {
    Interpret *p_inter =
       interpret_new(p_fype->p_list_token);
 

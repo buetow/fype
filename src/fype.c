@@ -39,9 +39,9 @@
 #include "core/token.h"
 #include "core/interpret.h"
 
-PBSc*
+Fype*
 fype_new() {
-   PBSc *p_fype = malloc(sizeof(PBSc));
+   Fype *p_fype = malloc(sizeof(Fype));
 
    p_fype->p_hash_syms = hash_new(512);
    p_fype->p_list_token = list_new();
@@ -52,7 +52,7 @@ fype_new() {
 }
 
 void
-fype_delete(PBSc *p_fype) {
+fype_delete(Fype *p_fype) {
    argv_tupel_delete(p_fype->p_tupel_argv);
 
    hash_delete(p_fype->p_hash_syms);
@@ -66,7 +66,7 @@ fype_delete(PBSc *p_fype) {
 
 int
 fype_run(int i_argc, char **pc_argv) {
-   PBSc *p_fype = fype_new();
+   Fype *p_fype = fype_new();
 
    // argv: Maintains command line options
    argv_run(p_fype, i_argc, pc_argv);

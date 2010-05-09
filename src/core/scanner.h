@@ -58,7 +58,7 @@ typedef struct {
    TokenType tt_last;
 } Scanner;
 
-void scanner_run(PBSc *p_fype);
+void scanner_run(Fype *p_fype);
 Scanner *scanner_new(List *p_list_token, Tupel *p_tupel_argv);
 void scanner_delete(Scanner *p_scanner);
 void scanner_add_token(Scanner *p_scanner, char **cc_token, int *p_token_len,

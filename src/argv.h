@@ -38,7 +38,7 @@
 #include "data/tupel.h"
 #include "fype.h"
 
-void argv_run(PBSc *p_fype, int i_argc, char **pc_argv);
+void argv_run(Fype *p_fype, int i_argc, char **pc_argv);
 void argv_switch(char c_arg, Tupel *p_tupel_argv, unsigned i_argc_left);
 void argv_synopsis(Tupel *p_tupel_argv);
 void argv_help();

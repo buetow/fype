@@ -53,6 +53,6 @@ typedef struct _Interpret {
 Interpret* interpret_new(List *p_list_token);
 Interpret* interpret_new_lambda(Interpret *p_inter, Lambda *p_lambda);
 void interpret_delete(Interpret *p_inter);
-void interpret_run(PBSc *p_fype);
+void interpret_run(Fype *p_fype);
 
 #endif /* INTERPRET_H */

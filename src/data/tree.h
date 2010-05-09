@@ -39,7 +39,7 @@
 #include "array.h"
 #include "stack.h"
 
-#ifdef PBSC
+#ifdef FYPE
 #include "../core/token.h"
 #endif
 

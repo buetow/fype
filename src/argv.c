@@ -46,7 +46,7 @@
 char *BINARY;
 
 void
-argv_run(PBSc *p_fype, int i_argc, char **pc_argv) {
+argv_run(Fype *p_fype, int i_argc, char **pc_argv) {
    Dat *p_dat_string = dat_new();
 
    BINARY = pc_argv[0];
