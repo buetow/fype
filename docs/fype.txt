@@ -1,43 +1,11 @@
-Global Frame
+Lambda Rules
 
-v?: Variables
-p?: Parameters
-b?: Boolean expression (Returns #t or #f)
-t?: Term
-f: Function
-l?: List
+(1) x ϵ V => x ϵ Λ
+(2) M,N ϵ Λ => (M N) ϵ Λ (Application)
+(3) M ϵ Λ and x ϵ V => (λ M) ϵ Λ (Abstraction)
+(4) No further Terms in Lambda existent
 
-(f p1 p2 ...)
+(λx.(λy.x)) ≡ λx.λy.x ≡ λxy.x ≡ False
+(λx.(λy.y)) ≡ λx.λy.y ≡ λxy.y ≡ True
+λx.λy.((x y) False) ≡ λxy.((x y) False) ≡ "And"
 
-(define v1 t1)
-
-(lambda (v1 v2 ...) t1)
-
-(define foo (lambda (v1 v2 ...) t1))
-(define (foo (v1 v2 ...) t1))
-
-(if b1 t1 t2)
-(unless b1 t1 t2)
-(eq? t1 t2)
-(neq? t1 t2)
-(and b1 b2)
-(or b1 b2)
-(xor b1 b2)
-(not b1)
-
-(cond ((b1 t1)
-       (b2 t2)
-       ...
-       (else tn)))
-
-(let ((v1 t1)
-      (v2 t2)
-      ...)
-	t3)
-
-(cons t1 l1)
-(car l1)
-(cdr l1)
-(set-car l1 t1)
-(set-cdr l1 t1) 
-(list p1 p2 ...)
