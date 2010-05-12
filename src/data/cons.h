@@ -1,13 +1,12 @@
 /*:*
- *: File: ./src/core/convert.h
- *: A simple interpreter
+ *: File: ./src/data/cons.h
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -33,23 +32,24 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef CONVERT_H
-#define CONVERT_H
+#ifndef CONS_H
+#define CONS_H
+
+#include <stdlib.h>
 
 #include "../defines.h"
 
-#include "../data/stack.h"
+typedef struct Cons_ {
+   void *p_val;
+   struct Cons_ *p_succ;
+} Cons;
 
-#include "token.h"
-
-int convert_to_integer_get(Token *p_token);
-void convert_to_integer(Token *p_token);
-void convert_to_double(Token *p_token);
-void convert_to_string(Token *p_token);
-void convert_to_array(Token *p_token);
-void convert_to_tt(Token *p_token, TokenType tt);
-TokenType convert_to_highest(Token *p_token1, Token *p_token2);
-TokenType convert_function_arg_types_to_highest(Stack *p_stack_args, int
-      i_args);
+Cons *cons_new(void *p_val);
+void cons_delete(Cons *p_cons);
+void cons_delete_cb(void *p_cons);
+void cons_iterate(Cons *p_cons, void (*func)(void *));
+void *cons_car(Cons *p_cons);
+Cons *cons_cdr(Cons *p_cons);
+Cons *cons_cons(Cons *p_cons, void *p_val);
 
 #endif

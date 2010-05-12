@@ -1,13 +1,12 @@
 /*:*
- *: File: ./src/core/symbol.h
- *: A simple interpreter
+ *: File: ./src/core/tools.h
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -33,39 +32,11 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef SYMBOL_H
-#define SYMBOL_H
+#ifndef TOOLS_H
+#define TOOLS_H
 
-#include "../defines.h"
+#include "../fype.h"
 
-#define symbol_set_val(s,v) s->p_val = v
-#define symbol_set_sym(s,st) s->sym = st
-#define symbol_get_val(s) s->p_val
-#define symbol_get_sym(s) s->sym
-#define symbol_ref_up(s) ++s->i_refs
-#define IS_A_FUNCTION(s) (s == SYM_INLINEFUNCTION || s == SYM_FUNCTION)
-#define IS_NOT_A_FUNCTION(s) !IS_A_FUNCTION(s)
+void tool_skip_block(ListIterator *p_iter, int i_offset);
 
-typedef enum {
-   SYM_BUILDIN,
-   SYM_CONSTANT,
-   SYM_FUNCTION,
-   SYM_PROCEDURE,
-   SYM_ARRAY,
-   SYM_VARIABLE,
-} SymbolType;
-
-typedef struct {
-   SymbolType sym;
-   void *p_val;
-   unsigned i_refs;
-} Symbol;
-
-Symbol* symbol_new(SymbolType sym, void *p_val);
-void symbol_delete(Symbol *p_symbol);
-void symbol_cleanup_hash_syms_cb(void *p_void);
-void symbol_print(Symbol *p_symbol, char *c_key);
-void symbol_print_cb(void *p_void, char *c_key);
-char* sym_get_name(SymbolType sym);
-
-#endif
+#endif /* TOOLS_H */

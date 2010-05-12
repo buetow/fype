@@ -1,13 +1,12 @@
 /*:*
  *: File: ./src/core/interpret.h
- *: A simple interpreter
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -36,41 +35,24 @@
 #ifndef INTERPRET_H
 #define INTERPRET_H
 
+#include "frame.h"
+#include "token.h"
+#include "lambda.h"
 #include "../data/list.h"
-#include "../data/stack.h"
-#include "../data/hash.h"
-
 #include "../fype.h"
 
-#include "garbage.h"
-#include "scope.h"
-#include "token.h"
-
-typedef enum {
-   CONTROL_NONE,
-   CONTROL_NEXT,
-   CONTROL_BREAK,
-} ControlType;
-
-typedef struct {
+typedef struct _Interpret {
    List *p_list_token;
-   Scope *p_scope;
-   _Bool b_scope_delete;
-   Stack *p_stack;
-   ControlType ct;
-
-   ListIterator *p_iter;
+   Frame *p_frame;
    Token *p_token;
-   TokenType tt;
-   Token *p_token_prev;
-   TokenType tt_prev;
-   Token *p_token_temp;
+   int i_pcount;
+   _Bool b_is_lambda_interpretation;
+   Lambda *p_lambda;
 } Interpret;
 
-Interpret* interpret_new(List *p_list_token, Hash *p_hash_syms);
-void interpret_delete(Interpret *p_interpret);
-void interpret_run(Fype *p_type);
-int interpret_process(Interpret *p_interpret);
-int interpret_subprocess(Interpret *p_interpret, List *p_list_token);
+Interpret* interpret_new(List *p_list_token);
+Interpret* interpret_new_lambda(Interpret *p_inter, Lambda *p_lambda);
+void interpret_delete(Interpret *p_inter);
+void interpret_run(Fype *p_fype);
 
 #endif /* INTERPRET_H */

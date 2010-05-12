@@ -1,13 +1,12 @@
 /*:*
  *: File: ./src/defines.h
- *: A simple interpreter
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -43,21 +42,18 @@
 
 #include "build.h"
 
-#define COPYRIGHT "(c) Paul C. Buetow (2005 - 2008) <fype@dev.buetow.org>"
+#define COPYRIGHT "(c) Paul Buetow (2005 - 2010) <fype@dev.buetow.org>"
 #define FYPE
 #define GRAMMAR_MAP_SIZES 128
 #define ARRAY_SIZE 16
 #define HASH_MAXOCC 5
 #define HASH_MKEYLEN 32
 #define HASH_SCALE 10
-#define NAME "Fype0"
-#define ASSEMBLER "yasm"
+#define NAME "LambdaFype"
 #define LINKER "cc"
 #define SCANNER_BUFSIZE 512
-#define URL "<http://fype0.buetow.org>"
+#define URL "<http://fype.buetow.org>"
 #define VERSION "Alpha Build"
-
-
 
 #ifndef false
 #define false (_Bool)0
@@ -97,5 +93,16 @@
 #define STR_NEW(len) (char *) calloc(len, sizeof(char))
 #define STR_RESIZE(str, len) (char *) realloc(str, len *sizeof(char))
 #define STRLST(str) str[strlen(str)-1]
+
+#define ERROR_INTERPRET(m,t) \
+         ERROR(\
+                "%s: Interpret error in %s line %d pos %d near '%s'", m, \
+                t->c_filename, \
+                t->i_line_nr, \
+                t->i_pos_nr, \
+                t->c_val \
+                )
+#define ERROR_EOB ERROR_INTERPRET("Unexpected end of block", p_token)
+
 
 #endif

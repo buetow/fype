@@ -1,13 +1,12 @@
 /*:*
- *: File: ./src/core/functions.h
- *: A simple interpreter
+ *: File: ./src/core/promise.h
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -33,32 +32,18 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef FUNCTIONS_H
-#define FUNCTIONS_H
+#ifndef PROMISE_H
+#define PROMISE_H
 
+#include "../data/list.h"
 #include "token.h"
 
-#include "interpret.h"
-#include "../data/stack.h"
-#include "../data/hash.h"
-
 typedef struct {
-   Hash *p_hash_functions;
-} Functions;
+   ListElem *p_elem_start;
+   Token *p_token_lambda;
+} Promise;
 
-Functions* functions_new();
-void functions_delete(Functions *p_functions);
-void functions_init(Functions *p_functions);
+Promise* promise_new(Token *p_token_lambda, ListElem *p_elem_start);
+void promise_delete(Promise *p_promise);
 
-void function_process(Interpret *p_interp, Token *p_token_op,
-                      Token *p_token_op2, Stack *p_stack_args,
-                      int i_args);
-_Bool function_is_buildin(Token *p_token_ident);
-void function_process_buildin(Interpret *p_interpret,
-                              Token *p_token_ident,
-                              Stack *p_stack_args);
-_Bool function_is_self_defined(Interpret *p_interpret);
-void function_process_self_defined(Interpret *p_interpret,
-                                   Token *p_token_ident);
-
-#endif /* FUNCTIONS_H */
+#endif /* PROMISE_H */

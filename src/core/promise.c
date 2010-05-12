@@ -1,13 +1,12 @@
 /*:*
- *: File: ./src/core/garbage.h
- *: A simple interpreter
+ *: File: ./src/core/promise.c
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -33,28 +32,29 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef GARBAGE_H
-#define GARBAGE_H
+#include "promise.h"
 
-#include "../defines.h"
-#include "../data/list.h"
-#include "token.h"
+#define _ERROR(m,t) \
+         ERROR(\
+                "%s: Promise error in %s line %d pos %d near '%s'", m, \
+                t->c_filename, \
+                t->i_line_nr, \
+                t->i_pos_nr, \
+                t->c_val \
+                )
 
-typedef enum {
-   GC_TOKEN,
-} GarbageType;
+Promise*
+promise_new(Token *p_token_lambda, ListElem *p_elem_start) {
+   Promise *p_promise = malloc(sizeof(Promise));
 
-void garbage_init();
-void garbage_destroy();
-int garbage_collect();
-void garbage_add(void *p, GarbageType type);
-void garbage_add2(void *p, void (*p_func)(void*),
-                  int *p_ref_count,
-                  GarbageType type);
-void garbage_add3(void *p, void (*p_func)(void*),
-                  void (*p_print)(void*),
-                  int *p_ref_count,
-                  GarbageType type);
-void garbage_add_token(Token *p_token);
+   p_promise->p_token_lambda = p_token_lambda;
+   p_promise->p_elem_start = p_elem_start;
 
-#endif
+   return (p_promise);
+}
+
+void
+promise_delete(Promise *p_promise) {
+   free(p_promise);
+}
+

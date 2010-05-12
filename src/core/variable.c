@@ -1,13 +1,12 @@
 /*:*
- *: File: ./src/core/reference.c
- *: A simple interpreter
+ *: File: ./src/core/variable.c
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -33,25 +32,28 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#include "reference.h"
+#include "variable.h"
+#include "token.h"
 
-Reference*
-reference_new(Symbol *p_symbol) {
-   Reference *p_reference = malloc(sizeof(Reference));
+Variable*
+variable_new(char *c_name, Token *p_token,Frame *p_frame) {
+   Variable *p_variable = malloc(sizeof(Variable));
 
-   symbol_ref_up(p_symbol);
-   p_reference->p_symbol = p_symbol;
+   p_variable->c_name = c_name;
+   p_variable->p_token = p_token;
+   p_variable->p_frame = p_frame;
 
-   return (p_reference);
+   return (p_variable);
 }
 
 void
-reference_delete_cb(void *p_void) {
-   reference_delete(p_void);
+variable_delete(Variable *p_variable) {
+   free(p_variable);
 }
 
 void
-reference_delete(Reference *p_reference) {
-   symbol_delete(p_reference->p_symbol);
-   free(p_reference);
+variable_print(Variable *p_variable) {
+   printf("+ST_VARIABLE(name=%s,value=%s)\n",
+          p_variable->c_name,
+          p_variable->p_token->c_val);
 }

@@ -1,13 +1,12 @@
 /*:*
- *: File: ./src/core/function.h
- *: A simple interpreter
+ *: File: ./src/core/variable.h
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -33,14 +32,21 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef FUNCTION_H
-#define FUNCTION_H
+#ifndef VARIABLE_H
+#define VARIABLE_H
 
-typedef struct {
+#include "../defines.h"
+#include "frame.h"
+#include "token.h"
+
+typedef struct _Variable {
    char *c_name;
-} Function;
+   Token *p_token;
+   Frame *p_frame;
+} Variable;
 
-Function* function_new();
-void function_delete(Function *p_function);
+Variable* variable_new(char *c_name, Token *p_token,Frame *p_frame);
+void variable_delete(Variable *p_variable);
+void variable_print(Variable *p_variable);
 
-#endif /* FUNCTION_H */
+#endif

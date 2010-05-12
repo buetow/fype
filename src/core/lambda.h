@@ -1,13 +1,12 @@
 /*:*
- *: File: ./src/core/reference.h
- *: A simple interpreter
+ *: File: ./src/core/lambda.h
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -33,20 +32,24 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef REFERENCE_H
-#define REFERENCE_H
+#ifndef LAMBDA_H
+#define LAMBDA_H
 
 #include "../defines.h"
-#include "symbol.h"
+#include "../data/list.h"
+#include "frame.h"
 
-#define reference_get_sym(r) (r->p_symbol)
+typedef struct _Lambda {
+   char *c_name;
+   List *p_list_args;
+   ListElem *p_listelem; // Body code starts here
+   ListElem *p_listelem_end; // Body code ends here
+   Frame *p_frame;
+} Lambda;
 
-typedef struct {
-   Symbol *p_symbol;
-} Reference;
+Lambda* lambda_new(char *c_name, List *p_list_args, ListElem *p_listelem, ListElem *p_listelem_end, Frame *p_frame);
+void lambda_delete(Lambda *p_lambda);
+void lambda_print(Lambda *p_lambda);
+//void lambda_eval(Lambda *p_pambda, ListIterator *p_iter);
 
-Reference* reference_new(Symbol *p_symbol);
-void reference_delete_cb(void *p_void);
-void reference_delete(Reference *p_reference);
-
-#endif /* REFERENCE_H */
+#endif

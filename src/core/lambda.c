@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/fype.c
+ *: File: ./src/core/lambda.c
  *: A simple Fype interpreter
  *: 
  *: WWW: http://fype.buetow.org
@@ -32,52 +32,67 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#include "fype.h"
+#include "lambda.h"
+#include "token.h"
 
-#include "argv.h"
-#include "core/scanner.h"
-#include "core/token.h"
-#include "core/interpret.h"
+Lambda*
+lambda_new(char *c_name, List *p_list_args, ListElem *p_listelem, ListElem *p_listelem_end, Frame *p_frame) {
+   Lambda *p_lambda = malloc(sizeof(Lambda));
 
-Fype*
-fype_new() {
-   Fype *p_fype = malloc(sizeof(Fype));
+   p_lambda->c_name = c_name;
+   p_lambda->p_list_args = p_list_args;
+   p_lambda->p_listelem = p_listelem;
+   p_lambda->p_listelem_end = p_listelem_end;;
+   p_lambda->p_frame = p_frame;
 
-   p_fype->p_hash_syms = hash_new(512);
-   p_fype->p_list_token = list_new();
-   p_fype->p_tupel_argv = tupel_new();
-   p_fype->c_basename = NULL;
-
-   return (p_fype);
+   return (p_lambda);
 }
 
 void
-fype_delete(Fype *p_fype) {
-   argv_tupel_delete(p_fype->p_tupel_argv);
-
-   hash_delete(p_fype->p_hash_syms);
-
-   list_iterate(p_fype->p_list_token, token_delete_cb);
-   list_delete(p_fype->p_list_token);
-
-   if (p_fype->c_basename)
-      free(p_fype->c_basename);
+lambda_delete(Lambda *p_lambda) {
+   if (p_lambda->p_list_args)
+      list_delete(p_lambda->p_list_args);
+   free(p_lambda);
 }
 
-int
-fype_run(int i_argc, char **pc_argv) {
-   Fype *p_fype = fype_new();
+void
+lambda_print(Lambda *p_lambda) {
+   printf("+ST_LAMBDA(name=%s;args=", p_lambda->c_name);
 
-   // argv: Maintains command line options
-   argv_run(p_fype, i_argc, pc_argv);
+   if (p_lambda->p_list_args) {
+      unsigned i_count = p_lambda->p_list_args->i_size;
+      ListIterator *p_iter = listiterator_new(p_lambda->p_list_args);
 
-   // scanner: Fills the list of tokens
-   scanner_run(p_fype);
+      while (listiterator_has_next(p_iter)) {
+         char *c_name = listiterator_next(p_iter);
+         if (--i_count == 0)
+            printf("%s", c_name);
+         else
+            printf("%s ", c_name);
+      }
 
-   // interpret: Interprets the list of tokens
-   interpret_run(p_fype);
+      listiterator_delete(p_iter);
+   }
+   printf(")\n( ");
 
-   fype_delete(p_fype);
+   ListIterator *p_iter = listiterator_new_from_elem(p_lambda->p_listelem);
+   Token *p_token = listiterator_current(p_iter);
+   ListElem *p_listelem_end = p_lambda->p_listelem_end;
 
-   return (0);
+
+   while (listiterator_has_next(p_iter)) {
+      p_token = listiterator_next(p_iter);
+      printf("%s ", p_token->c_val);
+
+      if (listiterator_current_elem_equals(p_iter, p_listelem_end))
+         goto LAMBDA_PRINT_END;
+   }
+
+   ERROR_EOB;
+
+LAMBDA_PRINT_END:
+
+   printf("\n");
+   listiterator_delete(p_iter);
 }
+

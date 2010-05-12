@@ -1,13 +1,12 @@
 /*:*
- *: File: ./src/core/function.c
- *: A simple interpreter
+ *: File: ./src/data/cons.c
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -33,19 +32,57 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#include "../defines.h"
+#include "cons.h"
 
-#include "function.h"
+Cons*
+cons_new(void *p_val) {
+   Cons *p_cons = malloc(sizeof(Cons));
 
-Function*
-function_new() {
-   Function *p_function = malloc(sizeof(Function));
+   p_cons->p_val = p_val;
+   p_cons->p_succ = NULL;
 
-   return (p_function);
+   return (p_cons);
 }
 
 void
-function_delete(Function *p_function) {
-   free(p_function);
+cons_delete(Cons *p_cons) {
+   free(p_cons);
 }
 
+void
+cons_delete_cb(void *p_cons) {
+   cons_delete(p_cons);
+}
+
+void
+cons_iterate(Cons *p_cons, void (*func)(void *)) {
+   if (p_cons != NULL && p_cons->p_val != NULL) {
+      (*func) (p_cons->p_val);
+      cons_iterate(p_cons->p_succ, func);
+   }
+}
+
+void*
+cons_car(Cons *p_cons) {
+   return (p_cons->p_val);
+}
+
+Cons*
+cons_cdr(Cons *p_cons) {
+   return (p_cons->p_succ);
+}
+
+Cons*
+cons_cons(Cons *p_cons, void *p_val) {
+   if (p_cons->p_val == NULL) {
+      p_cons->p_val = p_val;
+      return (p_cons);
+
+   } else if (p_val == NULL) {
+      return (p_cons);
+   }
+
+   Cons *p_new = cons_new(p_val);
+   p_new->p_succ = p_cons;
+   return (p_new);
+}

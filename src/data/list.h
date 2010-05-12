@@ -1,13 +1,12 @@
 /*:*
  *: File: ./src/data/list.h
- *: A simple interpreter
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -97,14 +96,19 @@ void list_iterate3(List *p_list,
 void list_iterate3_ptr(List *p_list,
                        void (*func)(void *, void *, void *),
                        void *p_void1, void *p_void2);
-ListIterator *listiterator_new(List *p_list);
-ListIterator *listiterator_new_reverse(List *p_list);
+ListIterator* listiterator_new(List *p_list);
+ListIterator* listiterator_new_from_elem(ListElem *p_listelem);
+ListIterator* listiterator_new_from_elem_reverse(ListElem *p_listelem);
+ListIterator* listiterator_new_reverse(List *p_list);
 void listiterator_delete(ListIterator *p_iter);
-void *listiterator_next(ListIterator *p_iter);
-void *listiterator_prev(ListIterator *p_iter);
-void *listiterator_current(ListIterator *p_iter);
-void *listiterator_end(ListIterator *p_iter);
+void* listiterator_next(ListIterator *p_iter);
+void* listiterator_prev(ListIterator *p_iter);
+void* listiterator_current(ListIterator *p_iter);
+ListElem* listiterator_current_elem(ListIterator *p_iter);
+ListElem* listiterator_prev_elem(ListIterator *p_iter);
+void* listiterator_end(ListIterator *p_iter);
 _Bool listiterator_has_next(ListIterator *p_iter);
+_Bool listiterator_current_elem_equals(ListIterator *p_iter, ListElem *p_listelem);
 ListElem* listiterator_next_elem(ListIterator *p_iter);
 void list_remove_elem(List *p_list, ListElem *p_elem_remove);
 ListIteratorState* listiterator_get_state(ListIterator *p_iter);

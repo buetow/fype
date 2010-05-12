@@ -1,13 +1,12 @@
 /*:*
  *: File: ./src/core/scanner.h
- *: A simple interpreter
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -59,10 +58,9 @@ typedef struct {
    TokenType tt_last;
 } Scanner;
 
-Scanner *scanner_new(List *p_list_token, Tupel *p_tupel_argv);
-void scanner_post_task(Scanner *p_scanner);
-void scanner_delete(Scanner *p_scanner);
 void scanner_run(Fype *p_fype);
+Scanner *scanner_new(List *p_list_token, Tupel *p_tupel_argv);
+void scanner_delete(Scanner *p_scanner);
 void scanner_add_token(Scanner *p_scanner, char **cc_token, int *p_token_len,
                        TokenType tt_cur);
 TokenType scanner_get_tt_cur(char *c_token);

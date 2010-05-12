@@ -1,0 +1,13 @@
+Lambda Rules:
+
+(1) x ϵ V => x ϵ Λ
+(2) M,N ϵ Λ => (M N) ϵ Λ (Application)
+(3) M ϵ Λ and x ϵ V => (λx.M) ϵ Λ (Abstraction)
+(4) No further Terms in Λ existent
+
+Examples:
+
+(λx.(λy.x)) ≡ λx.λy.x ≡ λx y.x ≡ false
+(λx.(λy.y)) ≡ λx.λy.y ≡ λx y.y ≡ true
+λx.λy.((x y) false) ≡ λx y.((x y) false) ≡ and
+

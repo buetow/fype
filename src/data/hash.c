@@ -1,13 +1,12 @@
 /*:*
  *: File: ./src/data/hash.c
- *: A simple interpreter
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -296,4 +295,12 @@ hash_iterate_key(Hash *p_hash, void (*func)(void *, char *)) {
    for (int i = 0; i < p_hash->i_size; ++i)
       if (p_hash->p_elems[i].flag == 'o')
          (*func) (p_hash->p_elems[i].p_val, p_hash->p_elems[i].c_key);
+}
+
+_Bool
+hash_key_exists(Hash *p_hash, char *c_key) {
+   if (hash_get(p_hash, c_key))
+      return (true);
+
+   return (false);
 }

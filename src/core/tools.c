@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/fype.c
+ *: File: ./src/core/tools.c
  *: A simple Fype interpreter
  *: 
  *: WWW: http://fype.buetow.org
@@ -32,52 +32,33 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#include "fype.h"
-
-#include "argv.h"
-#include "core/scanner.h"
-#include "core/token.h"
-#include "core/interpret.h"
-
-Fype*
-fype_new() {
-   Fype *p_fype = malloc(sizeof(Fype));
-
-   p_fype->p_hash_syms = hash_new(512);
-   p_fype->p_list_token = list_new();
-   p_fype->p_tupel_argv = tupel_new();
-   p_fype->c_basename = NULL;
-
-   return (p_fype);
-}
+#include "tools.h"
+#include "token.h"
+#include "../defines.h"
 
 void
-fype_delete(Fype *p_fype) {
-   argv_tupel_delete(p_fype->p_tupel_argv);
+tool_skip_block(ListIterator *p_iter, int i_offset) {
+   Token *p_token = listiterator_current(p_iter);
 
-   hash_delete(p_fype->p_hash_syms);
+   do {
+      if (p_token->tt_cur == TT_PARANT_R && --i_offset == 0) {
+         //printf("::DoneSkip<%d>: %s\n", i_offset, p_token->c_val);
+         return;
 
-   list_iterate(p_fype->p_list_token, token_delete_cb);
-   list_delete(p_fype->p_list_token);
+      } else if (p_token->tt_cur == TT_PARANT_L) {
+         ++i_offset;
 
-   if (p_fype->c_basename)
-      free(p_fype->c_basename);
+      } else if (i_offset < 0) {
+         ERROR_INTERPRET("Fatal Error", p_token);
+      }
+
+      //printf("::Skipping<%d>: %s\n", i_offset, p_token->c_val);
+      p_token = listiterator_next(p_iter);
+   } while (listiterator_has_next(p_iter));
+
+   if (p_token->tt_cur == TT_PARANT_R)
+      return;
+
+   ERROR_EOB;
 }
 
-int
-fype_run(int i_argc, char **pc_argv) {
-   Fype *p_fype = fype_new();
-
-   // argv: Maintains command line options
-   argv_run(p_fype, i_argc, pc_argv);
-
-   // scanner: Fills the list of tokens
-   scanner_run(p_fype);
-
-   // interpret: Interprets the list of tokens
-   interpret_run(p_fype);
-
-   fype_delete(p_fype);
-
-   return (0);
-}

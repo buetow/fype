@@ -1,13 +1,12 @@
 /*:*
- *: File: ./src/core/scope.h
- *: A simple interpreter
+ *: File: ./src/core/frame.h
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -33,28 +32,37 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef SCOPE_H
-#define SCOPE_H
+#ifndef FRAME_H
+#define FRAME_H
 
-#include "../data/hash.h"
-#include "../data/stack.h"
 #include "../defines.h"
-#include "symbol.h"
+#include "../data/hash.h"
+
+typedef enum {
+   ST_LAMBDA,
+   ST_VARIABLE,
+} SymbolType;
 
 typedef struct {
-   Hash *p_hash_global;
-   Stack *p_stack_scopes;
-} Scope;
+   SymbolType st;
+   void *p_val;
+} Symbol;
 
-Scope* scope_new(Hash *p_hash_syms);
-void scope_delete(Scope *p_scope);
-Symbol *scope_get(Scope *p_scope, char *c_key);
-Symbol *scope_remove(Scope *p_scope, char *c_key);
-_Bool scope_exists(Scope *p_scope, char *c_key);
-_Bool scope_newset(Scope *p_scope, char *c_key, Symbol *p_symbol);
-_Bool scope_reset(Scope *p_scope, char *c_key, Symbol *p_symbol);
-void scope_down(Scope *p_scope);
-void scope_up(Scope *p_scope);
-void scope_print(Scope *p_scope);
+typedef struct _Frame {
+   struct _Frame *p_parent_frame;
+   Hash *p_hash_symbols;
+   unsigned i_frame_id;
+} Frame;
 
-#endif /* SCOPE_H */
+Symbol* symbol_new(SymbolType st, void *p_val);
+void symbol_delete(Symbol *p_symbol);
+void symbol_delete_cb(void *p_symbol);
+char* symbol_get_type_name(Symbol *p_symbol);
+
+Frame* frame_new(Frame *p_parent_frame);
+void frame_delete(Frame *p_frame);
+_Bool frame_add_symbol(Frame *p_frame, char *c_name, SymbolType st, void *p_val);
+Symbol *frame_get_symbol(Frame *p_frame, char *c_name);
+void frame_print(Frame *p_frame);
+
+#endif

@@ -13,7 +13,6 @@ OSYSTEM!=uname
 PREFIX=/usr/local
 all: build $(OBJS) newline stats-tofile	
 	@$(CC) -lm -o $(BIN) $(OBJS) $(LDADD) 	
-	@if test -z '$(DEBUG)'; then strip $(BIN) ; fi	
 	@awk '$$2 == "BUILDNR" { printf("===> Fype build number % 13s :% 6s%d\n", \
 		"", "", $$3); exit(0); }' src/build.h
 	@echo "===> Fype binary size			:     `du -hs $(BIN)`"	
@@ -41,7 +40,7 @@ printbuild:
 	@awk '$$2 == "BUILDNR" { printf("%d\n", \
 		$$3); exit(0); }' src/build.h
 ctags:
-	@# Generating Source-Tags for Vim 
+	# Generating Source-Tags for Vim 
 	ctags `find . -name '*.c'`
 style: astyle check
 astyle:
@@ -59,30 +58,31 @@ stats:
 		grep -E \"\\.(c|h)$$\" | wc -l`"; \
 		echo "===> Num of C source lines		: `echo \"$$wc\" | \
 		tail -n 1 | sed s/total//`"'
-	@sh -c 'wc=`find ./examples -name "*.fy" | xargs wc -l`; \
+	@sh -c 'wc=`find ./examples -name "*.fype" | xargs wc -l`; \
 		echo "===> Num of Fype source examples	: `echo \"$$wc\" | \
-		grep -E \"\\.fy$$\" | wc -l`"; \
+		grep -E \"\\.fype$$\" | wc -l`"; \
 		echo "===> Num of Fype source lines		: `echo \"$$wc\" | \
 		tail -n 1 | sed s/total//`"'
 stats-tofile:
 	make stats | tee ./docs/stats.txt
 testrun:
-	cat ./test.fy > ./test.out
-	./$(BIN) -V ./test.fy | tee -a ./test.out
+	cat ./test.fype > ./test.out
+	./$(BIN) -V ./test.fype | tee -a ./test.out
 tr: testrun
 test: all testrun
 t: test
 run:
-	./$(BIN) ./test.fy
+	./$(BIN) ./test.fype
 core:
-	gdb $(BIN) $(BIN).core
+   #gdb $(BIN) $(BIN).core
+	gdb $(BIN) core
 gdb:
-	gdb --args $(BIN) .//test.fy
+	gdb --args $(BIN) .//
 newline:
 	@echo 
 examples: all
 	echo > ./examples/all-examples.txt
-	for i in ./examples/*.fy; do \
+	for i in ./examples/*.fype; do \
 		echo "===> Running $$i"; \
 		./$(BIN) $$i; \
 		cat $$i >> ./examples/all-examples.txt; \
@@ -94,6 +94,10 @@ replace:
 headers:
 	@find ./src -name '*.[ch]' -exec sh -c 'export FILE={}; \
 		make header' \;
+	@sh -c '> ./COPYING;export FILE=./COPYING; make header'
+	@# BSD sed does not support the -i (inplace) switch
+	@sed -n '1d;$$d;s/....//; w .tmp' ./COPYING && mv .tmp ./COPYING
+		
 header:
 	@echo "===> Processing $(FILE)"
 	@sed -n '/*:/d; w .tmp' $(FILE) 

@@ -1,13 +1,12 @@
 /*:*
  *: File: ./src/data/list.c
- *: A simple interpreter
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -343,6 +342,32 @@ listiterator_new(List *p_list) {
 }
 
 ListIterator*
+listiterator_new_from_elem(ListElem *p_listelem) {
+   if (!p_listelem)
+      return (NULL);
+
+   ListIterator *p_iter = malloc(sizeof(ListIterator));
+
+   p_iter->p_cur = p_listelem;
+   p_iter->b_reverse = false;
+   p_iter->func = NULL;
+
+   return (p_iter);
+}
+
+ListIterator*
+listiterator_new_from_elem_reverse(ListElem *p_listelem) {
+   ListIterator *p_iter = listiterator_new_from_elem(p_listelem);
+
+   if (!p_iter)
+      return (NULL);
+
+   p_iter->b_reverse = true;
+
+   return (p_iter);
+}
+
+ListIterator*
 listiterator_new_reverse(List *p_list) {
    if (!p_list)
       return (NULL);
@@ -411,6 +436,27 @@ listiterator_current(ListIterator *p_iter) {
    return (NULL);
 }
 
+ListElem*
+listiterator_current_elem(ListIterator *p_iter) {
+   if (p_iter->p_cur)
+      return (p_iter->p_cur);
+
+   return (NULL);
+}
+
+ListElem*
+listiterator_prev_elem(ListIterator *p_iter) {
+   if (p_iter->p_cur) {
+      if (!p_iter->b_reverse)
+         return (p_iter->p_cur->p_prev);
+
+      else
+         return (p_iter->p_cur->p_next);
+   }
+
+   return (NULL);
+}
+
 void*
 listiterator_end(ListIterator *p_iter) {
    void *p_ret = NULL;
@@ -419,6 +465,28 @@ listiterator_end(ListIterator *p_iter) {
       p_ret = listiterator_next(p_iter);
 
    return (p_ret);
+}
+
+_Bool
+listiterator_current_elem_equals(ListIterator *p_iter, ListElem *p_listelem) {
+   if (!p_iter || !p_listelem)
+      return (false);
+
+   ListElem *p_listelem_current = listiterator_current_elem(p_iter);
+
+   if (!p_listelem_current)
+      return (false);
+
+   else if (p_listelem_current->p_next != p_listelem->p_next)
+      return (false);
+
+   else if (p_listelem_current->p_prev != p_listelem->p_prev)
+      return (false);
+
+   else if (p_listelem_current->p_val != p_listelem->p_val)
+      return (false);
+
+   return (true);
 }
 
 ListElem*

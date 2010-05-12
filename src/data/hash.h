@@ -1,13 +1,12 @@
 /*:*
  *: File: ./src/data/hash.h
- *: A simple interpreter
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -61,10 +60,10 @@ Hash*hash_new(unsigned i_size);
 void hash_delete(Hash *p_hash);
 RETCODE hash_insert(Hash *p_hash, char *c_key, void *p_val);
 RETCODE hash_insert_ht(Hash *p_hash, char *c_key, void *p_val, TYPE type);
-void*hash_get(Hash *p_hash, char *c_key);
-void*hash_get_ht(Hash *p_hash, char *c_key, TYPE *p_type);
-void*hash_get_ht_addr(Hash *p_hash, char *c_key, TYPE *p_type, int *p_addr);
-void*hash_remove(Hash *p_hash, char *c_key);
+void* hash_get(Hash *p_hash, char *c_key);
+void* hash_get_ht(Hash *p_hash, char *c_key, TYPE *p_type);
+void* hash_get_ht_addr(Hash *p_hash, char *c_key, TYPE *p_type, int *p_addr);
+void* hash_remove(Hash *p_hash, char *c_key);
 void hash_print(Hash *p_hash);
 void hash_print_addrval(Hash *p_hash, int i_addr);
 RETCODE hash_size(Hash *p_hash, int i_size);
@@ -77,6 +76,7 @@ int hash_nextaddr(Hash *p_hash, int i_max_tries,
                   HASH_OP OP);
 void hash_iterate(Hash *p_hash, void (*func)(void *));
 void hash_iterate_key(Hash *p_hash, void (*func)(void *, char *));
+_Bool hash_key_exists(Hash *p_hash, char *c_key);
 
 #define hash_get_cur_size(hash) hash->i_cur_size
 #define hash_get_size(hash) hash->i_size

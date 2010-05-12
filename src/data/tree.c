@@ -1,13 +1,12 @@
 /*:*
  *: File: ./src/data/tree.c
- *: A simple interpreter
+ *: A simple Fype interpreter
  *: 
- *: WWW	: http://fype.buetow.org
- *: AUTHOR	: http://paul.buetow.org
- *: E-Mail	: fype at dev.buetow.org
+ *: WWW: http://fype.buetow.org
+ *: AUTHOR: http://paul.buetow.org
+ *: E-Mail: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
- *: All rights reserved.
+ *: The Fype Language; (c) 2005 - 2010 Paul Buetow 
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -76,56 +75,19 @@ _tree_print_cb(void *p_void, void *p_indent) {
    TreeNode *ptn = p_void;
    _indent((int) p_indent);
 
-#ifdef FYPE
-   TokenType tt = (TokenType) treenode_get_val(ptn);
-
-   if (IS_NOT_TERMINAL(tt))
-      goto no_token_val;
-
-   Token *p_token = treenode_get_val2(ptn);
-
-   if (!p_token)
-      goto no_token_val;
-
-   char *c_token_val = token_get_val(p_token);
-   TokenType tt_token = token_get_tt(p_token);
-
-   if (!c_token_val)
-      c_token_val = "";
-
-   printf(" %s=%s", tt_get_name(tt_token), c_token_val);
-   return;
-
-no_token_val:
-   printf(" %s", tt_get_name(tt));
-
-#else
    printf(" %d", (int) treenode_get_val(ptn));
-#endif
 }
 
 void
 _tree_print(TreeNode *p_treenode, int i_indent) {
-   TokenType tt = (TokenType)treenode_get_val(p_treenode);
+   //TokenType tt = (TokenType)treenode_get_val(p_treenode);
 
-#ifdef FYPE
-   _Bool b_print_nl = false;
-   if (IS_NOT_TERMINAL(tt)) {
-      _indent(i_indent);
-      printf("%s:", tt_get_name(tt));
-      b_print_nl = true;
-   }
-#else
-   _indent(i_indent);
-   printf("%s:", tt_get_name(tt));
-#endif
+   //_indent(i_indent);
+   //printf("%s:", tt_get_name(tt));
 
    array_iterate2(p_treenode->p_array_childs, _tree_print_cb, (void*) 0);
 
-#ifdef FYPE
-   if (b_print_nl)
-#endif
-      printf("\nTree ");
+   printf("\nTree ");
 
    array_iterate2(p_treenode->p_array_childs,
                   _tree_print_cb2,
