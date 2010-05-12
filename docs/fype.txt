@@ -11,3 +11,21 @@ Examples:
 (λx.(λy.y)) ≡ λx.λy.y ≡ λx y.y ≡ true
 λx.λy.((x y) false) ≡ λx y.((x y) false) ≡ and
 
+Syntax:
+
+(λx . (λy.x)) ≡ λx.λy.x ≡ λx y . x ≡ false
+true: x y = x;
+
+(λx.(λy.y)) ≡ λx.λy.y ≡ λx y . y ≡ true
+false: x y = y;
+
+λx.λy.((x y) false) ≡ λx y.((x y) false) ≡ and
+and: x y = (x y) false;
+
+id: x = x;
+
+greet: x = say (~ "Hello " x);
+
+
+
+
