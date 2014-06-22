@@ -47,7 +47,7 @@ REQUIREMENTS
     You will need:
 
             GNU GCC C Compiler (gcc.gnu.org)
-            NetBSD Make aka pmake (GNU Make will not work) 
+            NetBSD Make aka pmake (GNU Make will not work)
 
     NetBSD Make is included in any *BSD and can be run with just make.
 
@@ -235,7 +235,7 @@ SYNONYMS
             undef baz;
 
             # bay still has a reference of the original procedure baz
-            bay; # this prints aut "I am baz" 
+            bay; # this prints aut "I am baz"
 
     The syms keyword gives you the total number of synonyms pointing to a
     specific value:
@@ -308,7 +308,7 @@ BUILT IN FUNCTIONS
         This function always returns 1. The parameter is optional.
 
                 # Prints out 1, because foo is not defined
-                if yes { say no defined foo; } 
+                if yes { say no defined foo; }
 
   System
     (*void*) end

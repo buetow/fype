@@ -112,3 +112,4 @@ deinstall:
 uninstall: deinstall
 pod:
 	@cd ./docs/pod; make clean all
+	@cp ./docs/pod/fype.pod README.pod
