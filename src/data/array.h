@@ -1,12 +1,12 @@
 /*:*
  *: File: ./src/data/array.h
- *: A simple Fype interpreter
+ *: A simple interpreter
  *:
- *: WWW: http://fype.buetow.org
- *: AUTHOR: http://paul.buetow.org
- *: E-Mail: fype at dev.buetow.org
+ *: WWW		: http://fype.buetow.org
+ *: E-Mail	: fype@dev.buetow.org
  *:
- *: The Fype Language; (c) 2005 - 2010 - Dipl.-Inform. (FH) Paul C. Buetow
+ *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow
+ *: All rights reserved.
  *:
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -15,14 +15,14 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of buetow.org nor the names of its contributors may
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may
  *:    be used to endorse or promote products derived from this software
  *:    without specific prior written permission.
  *:
- *: THIS SOFTWARE IS PROVIDED BY PAUL C. BUETOW AS IS'' AND ANY EXPRESS OR
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
  *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL PAUL C. BUETOW BE LIABLE FOR ANY DIRECT,
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
  *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -41,8 +41,6 @@
 #include "../defines.h"
 
 #define array_get_size(a) a->i_size
-#define array_get_used(a) a->i_used
-#define array_get_ind(a) (a->i_used - 1)
 #define array_empty(a) a->i_size == 0
 #define array_clear(a) array_resize(a, 0)
 #define array_get_first(a) array_get(a, 0)
@@ -54,7 +52,6 @@ typedef struct {
 
 typedef struct {
    ArrayElement **pp_ae;
-   int i_used;
    int i_size;
 } Array;
 
@@ -64,10 +61,7 @@ typedef struct {
 } ArrayIterator;
 
 Array *array_new();
-Array *array_new_size(int i_size);
-Array *array_new_copy(Array *p_array);
 void array_delete(Array *p_array);
-void array_delete_iterate(Array *p_array, void (*func)(void*));
 void array_set(Array *p_array, int i_index, void *p_val);
 void array_insert(Array *p_array, int i_index, void *p_val);
 void *array_remove(Array *p_array, int i_index);
@@ -77,12 +71,10 @@ _Bool array_defined(Array *p_array, int i_index);
 void array_print_int(Array *p_array);
 void array_splice(Array *p_array, int i_index, Array *p_array2);
 void array_push(Array *p_array, void *p_void);
-void array_append(Array *p_array, Array *p_array_append);
 void array_unshift(Array *p_array, void *p_void);
 void array_iterate(Array *p_array, void (*func)(void *));
 void array_iterate2(Array *p_array, void (*func)(void *, void *),
                     void *p_void);
-void array_set_used(Array *p_array, int i_used);
 
 ArrayElement *arrayelement_new(void *p_val);
 void arrayelement_delete(ArrayElement *p_ae);

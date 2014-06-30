@@ -1,12 +1,12 @@
 /*:*
  *: File: ./src/data/tree.c
- *: A simple Fype interpreter
+ *: A simple interpreter
  *:
- *: WWW: http://fype.buetow.org
- *: AUTHOR: http://paul.buetow.org
- *: E-Mail: fype at dev.buetow.org
+ *: WWW		: http://fype.buetow.org
+ *: E-Mail	: fype@dev.buetow.org
  *:
- *: The Fype Language; (c) 2005 - 2010 - Dipl.-Inform. (FH) Paul C. Buetow
+ *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow
+ *: All rights reserved.
  *:
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -15,14 +15,14 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of buetow.org nor the names of its contributors may
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may
  *:    be used to endorse or promote products derived from this software
  *:    without specific prior written permission.
  *:
- *: THIS SOFTWARE IS PROVIDED BY PAUL C. BUETOW AS IS'' AND ANY EXPRESS OR
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
  *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL PAUL C. BUETOW BE LIABLE FOR ANY DIRECT,
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
  *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -75,23 +75,58 @@ _tree_print_cb(void *p_void, void *p_indent) {
    TreeNode *ptn = p_void;
    _indent((int) p_indent);
 
+#ifdef FYPE
+   TokenType tt = (TokenType) treenode_get_val(ptn);
+
+   if (IS_NOT_TERMINAL(tt))
+      goto no_token_val;
+
+   Token *p_token = treenode_get_val2(ptn);
+
+   if (!p_token)
+      goto no_token_val;
+
+   char *c_token_val = token_get_val(p_token);
+   TokenType tt_token = token_get_tt(p_token);
+
+   if (!c_token_val)
+      c_token_val = "";
+
+   printf(" %s=%s", tt_get_name(tt_token), c_token_val);
+   return;
+
+no_token_val:
+   printf(" %s", tt_get_name(tt));
+
+#else
    printf(" %d", (int) treenode_get_val(ptn));
+#endif
 }
 
 void
 _tree_print(TreeNode *p_treenode, int i_indent) {
-   //TokenType tt = (TokenType)treenode_get_val(p_treenode);
+   TokenType tt = (TokenType)treenode_get_val(p_treenode);
 
-   //_indent(i_indent);
-   //printf("%s:", tt_get_name(tt));
+#ifdef FYPE
+   _Bool b_print_nl = false;
+   if (IS_NOT_TERMINAL(tt)) {
+      _indent(i_indent);
+      printf("%s:", tt_get_name(tt));
+      b_print_nl = true;
+   }
+#else
+   _indent(i_indent);
+   printf("%s:", tt_get_name(tt));
+#endif
 
    array_iterate2(p_treenode->p_array_childs, _tree_print_cb, (void*) 0);
 
-   printf("\nTree ");
+#ifdef FYPE
+   if (b_print_nl)
+#endif
+      printf("\nTree ");
 
-   array_iterate2(p_treenode->p_array_childs,
-                  _tree_print_cb2,
-                  (void*) (i_indent + TREE_PRINT_INDENT));
+   array_iterate2(p_treenode->p_array_childs, _tree_print_cb2, (void*) (i_indent + TREE_PRINT_INDENT));
 }
 
 void

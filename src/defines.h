@@ -1,12 +1,12 @@
 /*:*
  *: File: ./src/defines.h
- *: A simple Fype interpreter
+ *: A simple interpreter
  *:
- *: WWW: http://fype.buetow.org
- *: AUTHOR: http://paul.buetow.org
- *: E-Mail: fype at dev.buetow.org
+ *: WWW		: http://fype.buetow.org
+ *: E-Mail	: fype@dev.buetow.org
  *:
- *: The Fype Language; (c) 2005 - 2010 - Dipl.-Inform. (FH) Paul C. Buetow
+ *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow
+ *: All rights reserved.
  *:
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -15,14 +15,14 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of buetow.org nor the names of its contributors may
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may
  *:    be used to endorse or promote products derived from this software
  *:    without specific prior written permission.
  *:
- *: THIS SOFTWARE IS PROVIDED BY PAUL C. BUETOW AS IS'' AND ANY EXPRESS OR
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
  *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL PAUL C. BUETOW BE LIABLE FOR ANY DIRECT,
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
  *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -42,18 +42,19 @@
 
 #include "build.h"
 
-#define COPYRIGHT "(c) Paul C. Buetow (2005 - 2010) <fype@dev.buetow.org>"
+#define COPYRIGHT "Copyright by Paul C. Buetow (2005 - 2008) <fype@dev.buetow.org>"
 #define FYPE
 #define GRAMMAR_MAP_SIZES 128
 #define ARRAY_SIZE 16
 #define HASH_MAXOCC 5
 #define HASH_MKEYLEN 32
 #define HASH_SCALE 10
-#define NAME "Fype2"
+#define NAME "Fype"
+#define ASSEMBLER "yasm"
 #define LINKER "cc"
 #define SCANNER_BUFSIZE 512
 #define URL "<http://fype.buetow.org>"
-#define VERSION "Alpha Build"
+#define VERSION "v0.1 Build"
 
 #ifndef false
 #define false (_Bool)0
@@ -63,7 +64,6 @@
 #define true (_Bool)1
 #endif
 
-#define UNLESS(x) if (!x)
 // Makes the compiler always happy (end of switch statements) :)
 #define NO_DEFAULT default: if (0)
 
@@ -73,7 +73,6 @@
 	exit(1); }
 #define DPRINTF(...) printf("DEBUG("); printf(__VA_ARGS__); printf(")\n");
 
-//#define DEBUG_GC
 //#define DEBUG_TOKEN_REFCOUNT
 //#define DEBUG_FUNCTION_PROCESS
 //#define DEBUG_TRACK
@@ -93,16 +92,5 @@
 #define STR_NEW(len) (char *) calloc(len, sizeof(char))
 #define STR_RESIZE(str, len) (char *) realloc(str, len *sizeof(char))
 #define STRLST(str) str[strlen(str)-1]
-
-#define ERROR_INTERPRET(m,t) \
-         ERROR(\
-                "%s: Interpret error in %s line %d pos %d near '%s'", m, \
-                t->c_filename, \
-                t->i_line_nr, \
-                t->i_pos_nr, \
-                t->c_val \
-                )
-#define ERROR_EOB ERROR_INTERPRET("Unexpected end of block", p_token)
-
 
 #endif

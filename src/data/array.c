@@ -1,12 +1,12 @@
 /*:*
  *: File: ./src/data/array.c
- *: A simple Fype interpreter
+ *: A simple interpreter
  *:
- *: WWW: http://fype.buetow.org
- *: AUTHOR: http://paul.buetow.org
- *: E-Mail: fype at dev.buetow.org
+ *: WWW		: http://fype.buetow.org
+ *: E-Mail	: fype@dev.buetow.org
  *:
- *: The Fype Language; (c) 2005 - 2010 - Dipl.-Inform. (FH) Paul C. Buetow
+ *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow
+ *: All rights reserved.
  *:
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -15,14 +15,14 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of buetow.org nor the names of its contributors may
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may
  *:    be used to endorse or promote products derived from this software
  *:    without specific prior written permission.
  *:
- *: THIS SOFTWARE IS PROVIDED BY PAUL C. BUETOW AS IS'' AND ANY EXPRESS OR
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
  *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL PAUL C. BUETOW BE LIABLE FOR ANY DIRECT,
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
  *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -40,54 +40,15 @@ array_new() {
 
    p_array->i_size = 0;
    p_array->pp_ae = NULL;
-   array_set_used(p_array, 0);
 
-   return (p_array);
+   return p_array;
 }
 
-Array*
-array_new_size(int i_size) {
-   Array *p_array = array_new();
-
-   array_resize(p_array, i_size);
-
-   return (p_array);
-}
-
-void
-_unshift_cb(void *p_array, void *p_void) {
-   array_unshift(p_array, p_void);
-}
-
-Array*
-array_new_copy(Array *p_array) {
-   Array *p_array_cpy = array_new_size(array_get_size(p_array));
-   array_iterate2(p_array, _unshift_cb, p_array_cpy);
-
-   return (p_array_cpy);
-}
 
 void
 array_delete(Array *p_array) {
    if (!p_array)
       return;
-
-   if (p_array->i_size)
-      for (int i = p_array->i_size - 1; i >= 0; --i)
-         arrayelement_delete(p_array->pp_ae[i]);
-
-   if (p_array->pp_ae)
-      free(p_array->pp_ae);
-
-   free(p_array);
-}
-
-void
-array_delete_iterate(Array *p_array, void (*func)(void *)) {
-   if (!p_array)
-      return;
-
-   array_iterate(p_array, func);
 
    if (p_array->i_size)
       for (int i = p_array->i_size - 1; i >= 0; --i)
@@ -108,16 +69,7 @@ array_set(Array *p_array, int i_index, void *p_val) {
       array_resize(p_array, i_index + 1);
       p_array->pp_ae[i_index]->p_val = p_val;
    }
-
-   if (p_array->i_used < i_index)
-      array_set_used(p_array, i_index);
 }
-
-void
-array_set_used(Array *p_array, int i_used) {
-   p_array->i_used = i_used;
-}
-
 
 void
 array_insert(Array *p_array, int i_index, void *p_val) {
@@ -135,15 +87,12 @@ array_insert(Array *p_array, int i_index, void *p_val) {
       p_array->pp_ae[i] = p_ae;
       p_ae->p_val = p_val;
    }
-
-   if (p_array->i_used < i_index)
-      array_set_used(p_array, i_index);
 }
 
 void*
 array_remove(Array *p_array, int i_index) {
    if (p_array->i_size <= i_index)
-      return (NULL);
+      return NULL;
 
    ArrayElement *p_ae = p_array->pp_ae[i_index];
    void *p_ret = p_ae->p_val;
@@ -155,7 +104,8 @@ array_remove(Array *p_array, int i_index) {
    p_array->pp_ae[i-1] = p_ae;
 
    array_resize(p_array, p_array->i_size - 1);
-   return (p_ret);
+
+   return p_ret;
 }
 
 void
@@ -192,24 +142,22 @@ array_resize(Array *p_array, int i_size) {
          p_array->pp_ae[i] = arrayelement_new(NULL);
 
    p_array->i_size = i_size;
-   if (p_array->i_used > i_size)
-      array_set_used(p_array, i_size);
 }
 
 void*
 array_get(Array *p_array, int i_index) {
    if (p_array->i_size > i_index)
-      return (p_array->pp_ae[i_index]->p_val);
+      return p_array->pp_ae[i_index]->p_val;
 
-   return (NULL);
+   return NULL;
 }
 
 _Bool
 array_defined(Array *p_array, int i_index) {
    if (i_index >= p_array->i_size)
-      return (false);
+      return false;
 
-   return (p_array->pp_ae[i_index]->p_val != NULL);
+   return p_array->pp_ae[i_index]->p_val != NULL;
 }
 
 void
@@ -235,9 +183,8 @@ array_splice(Array *p_array, int i_index, Array *p_array2) {
 
 void
 array_unshift(Array *p_array, void *p_void) {
-   int i_used = array_get_used(p_array);
-   array_set(p_array, i_used, p_void);
-   array_set_used(p_array, 1+i_used);
+   int i_size = array_get_size(p_array);
+   array_set(p_array, i_size, p_void);
 }
 
 void
@@ -252,18 +199,11 @@ array_push(Array *p_array, void *p_void) {
 }
 
 void
-array_append(Array *p_array, Array *p_array_append) {
-   int i_size = array_get_size(p_array) + array_get_size(p_array_append);
-   array_resize(p_array, i_size);
-   array_iterate2(p_array_append, _unshift_cb, p_array);
-}
-
-void
 array_iterate(Array *p_array, void (*func)(void *)) {
    if (!p_array)
       return;
 
-   for (int i = 0; i < array_get_used(p_array); ++i)
+   for (int i = 0; i < array_get_size(p_array); ++i)
       (*func) (array_get(p_array, i));
 }
 
@@ -272,7 +212,7 @@ array_iterate2(Array *p_array, void (*func)(void *, void *), void *p_void) {
    if (!p_array)
       return;
 
-   for (int i = 0; i < array_get_used(p_array); ++i)
+   for (int i = 0; i < array_get_size(p_array); ++i)
       (*func) (array_get(p_array, i), p_void);
 }
 
@@ -282,7 +222,7 @@ arrayelement_new(void *p_val) {
 
    p_ae->p_val = p_val;
 
-   return (p_ae);
+   return p_ae;
 }
 
 void
@@ -296,13 +236,13 @@ arrayelement_delete(ArrayElement *p_ae) {
 ArrayIterator*
 arrayiterator_new(Array *p_array) {
    if (!p_array)
-      return (NULL);
+      return NULL;
 
    ArrayIterator *p_arrayiterator = malloc(sizeof(ArrayIterator));
    p_arrayiterator->p_array = p_array;
    p_arrayiterator->i_cur_pos = 0;
 
-   return (p_arrayiterator);
+   return p_arrayiterator;
 }
 
 void
@@ -313,15 +253,14 @@ arrayiterator_delete(ArrayIterator *p_arrayiterator) {
 
 _Bool
 arrayiterator_has_next(ArrayIterator *p_arrayiterator) {
-   //printf("[%d]", p_arrayiterator->p_array->i_used);
-   return (p_arrayiterator->i_cur_pos <
-           array_get_used(p_arrayiterator->p_array));
+   return p_arrayiterator->i_cur_pos <
+          array_get_size(p_arrayiterator->p_array);
 }
 
 void*
 arrayiterator_next(ArrayIterator *p_arrayiterator) {
    if (!arrayiterator_has_next(p_arrayiterator))
-      return (NULL);
+      return NULL;
 
-   return (array_get(p_arrayiterator->p_array, p_arrayiterator->i_cur_pos++));
+   return array_get(p_arrayiterator->p_array, p_arrayiterator->i_cur_pos++);
 }

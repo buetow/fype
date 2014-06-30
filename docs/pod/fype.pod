@@ -1,10 +1,10 @@
 =head1 NAME
 
-B<Fype> is B<F>or B<Y>our B<P>rogram B<E>xecution
+B<Fype> is B<f>or B<y>our B<p>rogram B<e>xecution
 
-B<Fype> is B<F>ree B<Y>ak B<P>rogramed for B<E>LF
+B<Fype> is B<f>ree B<y>ack B<p>rogramed for B<E>LF
 
-It's not a hype - it's B<Fype>!
+It's not a hype - it's Fype!
 
 =head1 SYNOPSES
 
@@ -35,26 +35,16 @@ The Fype syntax is very simple and is using a maximum look ahead of 1 and a very
 
 =head1 REQUIREMENTS
 
-Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows support is not planned. But may work using Cygwin or SFU. Linux users have to install pmake before compiling Fype!
+Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows support is not planned. But may work using Cygwin or SFU.
 
-You will need:
+You will also need:
 
 	GNU GCC C Compiler (gcc.gnu.org)
-	NetBSD Make aka pmake (GNU Make will not work) 
-
-NetBSD Make is included in any *BSD and can be run with just B<make>.
+	NetBSD Make aka pmake (GNU Make will not work) (it's included in any *BSD)
 
 =head1 GETTING STARTED
 
-On Linux: Extract, compile and install Fype:
-
-	tar xvjf fype.tar.bz2
-	cd fype
-	pmake
-	sudo pmake install 
-	pmake clean
-
-On FreeBSD: Extract, compile and install Fype:
+Extract, compile and install Fype:
 
 	tar xvjf fype.tar.bz2
 	cd fype
@@ -144,7 +134,7 @@ All paranthesis of function calls are optional. They help to make the code bette
 
 =head2 Scopeing
 
-A new scope starts with an { and ends with an }. An exception is a procedure, which does not use its own scope (see later in this manual). Control statements and functions support scopeings.  The B<scope> function will print out all available symbols at the current position. Here is a small example of how to use scopes: 
+A new scope starts with an { and ends with an }. An exception is a procedure, which does not use its own scope (see later in this manual). Control statements and functions support scopeings. Here is a small example how to use scopes:
 
 	my foo = 1;
 
@@ -156,10 +146,6 @@ A new scope starts with an { and ends with an }. An exception is a procedure, wh
 
 			# Prints out 1
 			put defined bar;
-
-			# Prints out all available symbols at this
-			# point to stdout. Those are: bar and foo
-			scope;
 		}
 
 		# Prints out 0
@@ -222,43 +208,6 @@ not.
 		put "foo is defined and has the value ";
 		say foo;
 	}
-
-=head1 SYNONYMS 
-
-Each variable can have as many synonyms as wished. A synonym is another name to access the content of a specific variable. Here is an example of how to use synomyms:
-
-	my foo = "foo";
-	my bar = \foo;
-	foo = "bar";
-
-	# The synonym variable should now also set to "bar"
-	assert "bar" == bar;
-
-Synonyms can be used for all kind of identifiers. It's not limited to normal variables but can be also used for function and procedure names etc.
-
-	# Create a new procedure baz
-	proc baz { say "I am baz"; }
-
-	# Make a synonym baz, and undefine baz
-	my bay = \baz;
-
-	undef baz;
-
-	# bay still has a reference of the original procedure baz
-	bay; # this prints aut "I am baz" 
-
-The B<syms> keyword gives you the total number of synonyms pointing to a specific value:
-
-	my foo = 1;
-	say syms foo; # Prints 1
-
-	my baz = \foo; 
-	say syms foo; # Prints 2
-	say syms baz; # Prints 2
-
-	undef baz;
-	say syms foo; # Prints 1
-
 
 =head1 BUILT IN FUNCTIONS
 

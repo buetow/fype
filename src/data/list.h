@@ -1,12 +1,12 @@
 /*:*
  *: File: ./src/data/list.h
- *: A simple Fype interpreter
+ *: A simple interpreter
  *:
- *: WWW: http://fype.buetow.org
- *: AUTHOR: http://paul.buetow.org
- *: E-Mail: fype at dev.buetow.org
+ *: WWW		: http://fype.buetow.org
+ *: E-Mail	: fype@dev.buetow.org
  *:
- *: The Fype Language; (c) 2005 - 2010 - Dipl.-Inform. (FH) Paul C. Buetow
+ *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow
+ *: All rights reserved.
  *:
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -15,14 +15,14 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of buetow.org nor the names of its contributors may
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may
  *:    be used to endorse or promote products derived from this software
  *:    without specific prior written permission.
  *:
- *: THIS SOFTWARE IS PROVIDED BY PAUL C. BUETOW AS IS'' AND ANY EXPRESS OR
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
  *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL PAUL C. BUETOW BE LIABLE FOR ANY DIRECT,
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
  *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -84,31 +84,18 @@ void list_delete_cb(void *p_list);
 void list_delete_and_free_vals(List *p_list);
 unsigned list_size(List *p_list);
 void list_iterate(List *p_list, void (*func)(void *));
-void list_iterate2_ptr(List *p_list,
-                       void (*func)(void *, void *),
-                       void *p_void);
-void list_iterate2(List *p_list,
-                   void (*func)(void *, void *),
-                   void *p_void);
-void list_iterate3(List *p_list,
-                   void (*func)(void *, void *, void *),
-                   void *p_void1, void *p_void2);
-void list_iterate3_ptr(List *p_list,
-                       void (*func)(void *, void *, void *),
-                       void *p_void1, void *p_void2);
-ListIterator* listiterator_new(List *p_list);
-ListIterator* listiterator_new_from_elem(ListElem *p_listelem);
-ListIterator* listiterator_new_from_elem_reverse(ListElem *p_listelem);
-ListIterator* listiterator_new_reverse(List *p_list);
+void list_iterate2_ptr(List *p_list, void (*func)(void *, void *), void *p_void);
+void list_iterate2(List *p_list, void (*func)(void *, void *), void *p_void);
+void list_iterate3(List *p_list, void (*func)(void *, void *, void *), void *p_void1, void *p_void2);
+void list_iterate3_ptr(List *p_list, void (*func)(void *, void *, void *), void *p_void1, void *p_void2);
+ListIterator *listiterator_new(List *p_list);
+ListIterator *listiterator_new_reverse(List *p_list);
 void listiterator_delete(ListIterator *p_iter);
-void* listiterator_next(ListIterator *p_iter);
-void* listiterator_prev(ListIterator *p_iter);
-void* listiterator_current(ListIterator *p_iter);
-ListElem* listiterator_current_elem(ListIterator *p_iter);
-ListElem* listiterator_prev_elem(ListIterator *p_iter);
-void* listiterator_end(ListIterator *p_iter);
+void *listiterator_next(ListIterator *p_iter);
+void *listiterator_prev(ListIterator *p_iter);
+void *listiterator_current(ListIterator *p_iter);
+void *listiterator_end(ListIterator *p_iter);
 _Bool listiterator_has_next(ListIterator *p_iter);
-_Bool listiterator_current_elem_equals(ListIterator *p_iter, ListElem *p_listelem);
 ListElem* listiterator_next_elem(ListIterator *p_iter);
 void list_remove_elem(List *p_list, ListElem *p_elem_remove);
 ListIteratorState* listiterator_get_state(ListIterator *p_iter);

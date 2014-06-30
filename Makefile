@@ -1,11 +1,37 @@
-# THIS MAKEFILE ONLY WORKS WITH (NET)BSD MAKE AKA PMAKE!
+# File: ./Makefile
+#
+# Copyright (c) 2005 2006 2007, Paul Buetow (http://www.pblabs.net)
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without modi-
+# fication, are permitted provided that the following conditions are met:
+#  * Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#  * Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#  * Neither the name of P. B. Labs nor the names of its contributors may
+#    be used to endorse or promote products derived from this software
+#    without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
+# INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+#  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+# STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+# IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
 
 BIN=fype
 SRCS!=find ./src -name '*.c'
 OBJS=$(SRCS:.c=.o)
 CC?=cc
 #CC=mingw32-gcc
-DEBUG=-g3 -ggdb3
+#DEBUG=-g3 -ggdb3
 CFLAGS+=-c -Wall -std=c99 -pedantic $(DEBUG)
 LDADD+=
 HEADER?=docs/header.txt
@@ -13,6 +39,7 @@ OSYSTEM!=uname
 PREFIX=/usr/local
 all: build $(OBJS) newline stats-tofile	
 	@$(CC) -lm -o $(BIN) $(OBJS) $(LDADD) 	
+	@if test -z '$(DEBUG)'; then strip $(BIN) ; fi	
 	@awk '$$2 == "BUILDNR" { printf("===> Fype build number % 13s :% 6s%d\n", \
 		"", "", $$3); exit(0); }' src/build.h
 	@echo "===> Fype binary size			:     `du -hs $(BIN)`"	
@@ -29,7 +56,7 @@ clean:
 	find ./ -name '*.bin' -exec rm -f {} \;
 	find . -name '*.core' -exec rm -f {} \;
 	if [ -f $(BIN) ]; then rm -f $(BIN); fi
-build: ctags
+build:	#ctags
 	@awk '{ \
 		if ($$2 == "BUILDNR") print $$1,$$2,$$3+1; \
 		else if ($$2 ~ /OS_/) printf("%s OS_%s\n", $$1, \
@@ -40,7 +67,7 @@ printbuild:
 	@awk '$$2 == "BUILDNR" { printf("%d\n", \
 		$$3); exit(0); }' src/build.h
 ctags:
-	# Generating Source-Tags for Vim 
+	@# Generating Source-Tags for Vim 
 	ctags `find . -name '*.c'`
 style: astyle check
 astyle:
@@ -58,31 +85,25 @@ stats:
 		grep -E \"\\.(c|h)$$\" | wc -l`"; \
 		echo "===> Num of C source lines		: `echo \"$$wc\" | \
 		tail -n 1 | sed s/total//`"'
-	@sh -c 'wc=`find ./examples -name "*.fype" | xargs wc -l`; \
+	@sh -c 'wc=`find ./examples -name "*.fy" | xargs wc -l`; \
 		echo "===> Num of Fype source examples	: `echo \"$$wc\" | \
-		grep -E \"\\.fype$$\" | wc -l`"; \
+		grep -E \"\\.fy$$\" | wc -l`"; \
 		echo "===> Num of Fype source lines		: `echo \"$$wc\" | \
 		tail -n 1 | sed s/total//`"'
 stats-tofile:
 	make stats | tee ./docs/stats.txt
-testrun:
-	cat ./test.fype > ./test.out
-	./$(BIN) -V ./test.fype | tee -a ./test.out
-tr: testrun
-test: all testrun
-t: test
+test: all
+	cat ./tmp/test.fy > ./tmp/test.out
+	./$(BIN) -V ./tmp/test.fy | tee -a ./tmp/test.out
 run:
-	./$(BIN) ./test.fype
+	./$(BIN) ./tmp/test.fy
 core:
-   #gdb $(BIN) $(BIN).core
-	gdb $(BIN) core
-gdb:
-	gdb --args $(BIN) .//
+	gdb $(BIN) $(BIN).core
 newline:
 	@echo 
 examples: all
 	echo > ./examples/all-examples.txt
-	for i in ./examples/*.fype; do \
+	for i in ./examples/*.fy; do \
 		echo "===> Running $$i"; \
 		./$(BIN) $$i; \
 		cat $$i >> ./examples/all-examples.txt; \
@@ -94,10 +115,6 @@ replace:
 headers:
 	@find ./src -name '*.[ch]' -exec sh -c 'export FILE={}; \
 		make header' \;
-	@sh -c '> ./COPYING;export FILE=./COPYING; make header'
-	@# BSD sed does not support the -i (inplace) switch
-	@sed -n '1d;$$d;s/....//; w .tmp' ./COPYING && mv .tmp ./COPYING
-		
 header:
 	@echo "===> Processing $(FILE)"
 	@sed -n '/*:/d; w .tmp' $(FILE) 
@@ -116,3 +133,4 @@ deinstall:
 uninstall: deinstall
 pod:
 	@cd ./docs/pod; make clean all
+

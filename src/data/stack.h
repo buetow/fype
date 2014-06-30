@@ -1,12 +1,12 @@
 /*:*
  *: File: ./src/data/stack.h
- *: A simple Fype interpreter
+ *: A simple interpreter
  *:
- *: WWW: http://fype.buetow.org
- *: AUTHOR: http://paul.buetow.org
- *: E-Mail: fype at dev.buetow.org
+ *: WWW		: http://fype.buetow.org
+ *: E-Mail	: fype@dev.buetow.org
  *:
- *: The Fype Language; (c) 2005 - 2010 - Dipl.-Inform. (FH) Paul C. Buetow
+ *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow
+ *: All rights reserved.
  *:
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -15,14 +15,14 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of buetow.org nor the names of its contributors may
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may
  *:    be used to endorse or promote products derived from this software
  *:    without specific prior written permission.
  *:
- *: THIS SOFTWARE IS PROVIDED BY PAUL C. BUETOW AS IS'' AND ANY EXPRESS OR
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
  *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL PAUL C. BUETOW BE LIABLE FOR ANY DIRECT,
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
  *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -34,6 +34,8 @@
 
 #ifndef STACK_H
 #define STACK_H
+
+#define stack_top(s) s->p_first->p_val;
 
 #include <stdlib.h>
 
@@ -57,13 +59,8 @@ Stack *stack_new();
 StackElem *stackelem_new();
 _Bool stack_empty(Stack *p_stack);
 void stack_iterate(Stack *p_stack, void (*func)(void *p_void));
-void stack_iterate2(Stack *p_stack, void (*func)(void *p_void, void *p_void2),
-                    void *p_void_arg);
-void stack_iterate_level(Stack *p_stack, void (*func)(void *p_void,
-                         int i_level));
 void stack_push(Stack *p_stack, void *p_val);
 void *stack_pop(Stack *p_stack);
-void *stack_top(Stack *p_stack);
 void stack_clear(Stack *p_stack);
 void stack_delete(Stack *p_stack);
 void stack_delete_and_free(Stack *p_stack);

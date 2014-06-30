@@ -1,12 +1,12 @@
 /*:*
  *: File: ./src/data/list.c
- *: A simple Fype interpreter
+ *: A simple interpreter
  *:
- *: WWW: http://fype.buetow.org
- *: AUTHOR: http://paul.buetow.org
- *: E-Mail: fype at dev.buetow.org
+ *: WWW		: http://fype.buetow.org
+ *: E-Mail	: fype@dev.buetow.org
  *:
- *: The Fype Language; (c) 2005 - 2010 - Dipl.-Inform. (FH) Paul C. Buetow
+ *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow
+ *: All rights reserved.
  *:
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -15,14 +15,14 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of buetow.org nor the names of its contributors may
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may
  *:    be used to endorse or promote products derived from this software
  *:    without specific prior written permission.
  *:
- *: THIS SOFTWARE IS PROVIDED BY PAUL C. BUETOW AS IS'' AND ANY EXPRESS OR
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
  *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL PAUL C. BUETOW BE LIABLE FOR ANY DIRECT,
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
  *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -42,7 +42,7 @@ list_new() {
    p_list->p_last = NULL;
    p_list->i_size = 0;
 
-   return (p_list);
+   return p_list;
 }
 
 void
@@ -78,13 +78,12 @@ listelem_new() {
    p_elem->p_next = NULL;
    p_elem->p_prev = NULL;
    p_elem->p_val = NULL;
-
-   return (p_elem);
+   return p_elem;
 }
 
 _Bool
 list_empty(List *p_list) {
-   return (p_list->i_size == 0);
+   return p_list->i_size == 0;
 }
 
 void
@@ -173,7 +172,7 @@ list_add_back(List *p_list, void *p_val) {
 void*
 list_remove_front(List *p_list) {
    if (list_empty(p_list))
-      return (NULL);
+      return NULL;
 
    ListElem *p_elem = p_list->p_first;
    p_list->p_first = p_elem->p_next;
@@ -186,13 +185,13 @@ list_remove_front(List *p_list) {
 
    --p_list->i_size;
 
-   return (p_val);
+   return p_val;
 }
 
 void*
 list_remove_back(List *p_list) {
    if (list_empty(p_list))
-      return (NULL);
+      return NULL;
 
    ListElem *p_elem = p_list->p_last;
    p_list->p_last = p_elem->p_prev;
@@ -203,7 +202,7 @@ list_remove_back(List *p_list) {
 
    --p_list->i_size;
 
-   return (p_val);
+   return p_val;
 }
 
 void
@@ -238,7 +237,7 @@ list_delete_and_free_vals(List *p_list) {
 
 unsigned
 list_size(List *p_list) {
-   return (p_list->i_size);
+   return p_list->i_size;
 }
 
 void
@@ -272,9 +271,7 @@ list_iterate2_ptr(List *p_list, void (*func)(void *, void *), void *p_void) {
 }
 
 void
-list_iterate3(List *p_list,
-              void (*func)(void *, void *, void *),
-              void *p_void1, void *p_void2) {
+list_iterate3(List *p_list, void (*func)(void *, void *, void *), void *p_void1, void *p_void2) {
    ListElem *p_elem = p_list->p_first;
 
    while (p_elem) {
@@ -284,8 +281,7 @@ list_iterate3(List *p_list,
 }
 
 void
-list_iterate3_ptr(List *p_list,
-                  void (*func)(void *, void *, void *),
+list_iterate3_ptr(List *p_list, void (*func)(void *, void *, void *),
                   void *p_void1, void *p_void2) {
    ListElem *p_elem = p_list->p_first;
 
@@ -330,7 +326,7 @@ list_remove_elem(List *p_list, ListElem *p_elem_remove) {
 ListIterator*
 listiterator_new(List *p_list) {
    if (!p_list)
-      return (NULL);
+      return NULL;
 
    ListIterator *p_iter = malloc(sizeof(ListIterator));
 
@@ -338,46 +334,20 @@ listiterator_new(List *p_list) {
    p_iter->b_reverse = false;
    p_iter->func = NULL;
 
-   return (p_iter);
-}
-
-ListIterator*
-listiterator_new_from_elem(ListElem *p_listelem) {
-   if (!p_listelem)
-      return (NULL);
-
-   ListIterator *p_iter = malloc(sizeof(ListIterator));
-
-   p_iter->p_cur = p_listelem;
-   p_iter->b_reverse = false;
-   p_iter->func = NULL;
-
-   return (p_iter);
-}
-
-ListIterator*
-listiterator_new_from_elem_reverse(ListElem *p_listelem) {
-   ListIterator *p_iter = listiterator_new_from_elem(p_listelem);
-
-   if (!p_iter)
-      return (NULL);
-
-   p_iter->b_reverse = true;
-
-   return (p_iter);
+   return p_iter;
 }
 
 ListIterator*
 listiterator_new_reverse(List *p_list) {
    if (!p_list)
-      return (NULL);
+      return NULL;
 
    ListIterator *p_iter = listiterator_new(p_list);
 
    p_iter->p_cur = p_list->p_last;
    p_iter->b_reverse = true;
 
-   return (p_iter);
+   return p_iter;
 }
 
 void
@@ -436,27 +406,6 @@ listiterator_current(ListIterator *p_iter) {
    return (NULL);
 }
 
-ListElem*
-listiterator_current_elem(ListIterator *p_iter) {
-   if (p_iter->p_cur)
-      return (p_iter->p_cur);
-
-   return (NULL);
-}
-
-ListElem*
-listiterator_prev_elem(ListIterator *p_iter) {
-   if (p_iter->p_cur) {
-      if (!p_iter->b_reverse)
-         return (p_iter->p_cur->p_prev);
-
-      else
-         return (p_iter->p_cur->p_next);
-   }
-
-   return (NULL);
-}
-
 void*
 listiterator_end(ListIterator *p_iter) {
    void *p_ret = NULL;
@@ -465,28 +414,6 @@ listiterator_end(ListIterator *p_iter) {
       p_ret = listiterator_next(p_iter);
 
    return (p_ret);
-}
-
-_Bool
-listiterator_current_elem_equals(ListIterator *p_iter, ListElem *p_listelem) {
-   if (!p_iter || !p_listelem)
-      return (false);
-
-   ListElem *p_listelem_current = listiterator_current_elem(p_iter);
-
-   if (!p_listelem_current)
-      return (false);
-
-   else if (p_listelem_current->p_next != p_listelem->p_next)
-      return (false);
-
-   else if (p_listelem_current->p_prev != p_listelem->p_prev)
-      return (false);
-
-   else if (p_listelem_current->p_val != p_listelem->p_val)
-      return (false);
-
-   return (true);
 }
 
 ListElem*

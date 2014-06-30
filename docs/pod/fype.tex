@@ -1,15 +1,15 @@
 \section{NAME\label{NAME}\index{NAME}}
 
 
-\textbf{Fype} is \textbf{F}or \textbf{Y}our \textbf{P}rogram \textbf{E}xecution
+\textbf{Fype} is \textbf{f}or \textbf{y}our \textbf{p}rogram \textbf{e}xecution
 
 
 
-\textbf{Fype} is \textbf{F}ree \textbf{Y}ak \textbf{P}rogramed for \textbf{E}LF
+\textbf{Fype} is \textbf{f}ree \textbf{y}ack \textbf{p}rogramed for \textbf{E}LF
 
 
 
-It's not a hype - it's \textbf{Fype}!
+It's not a hype - it's Fype!
 
 \section{SYNOPSES\label{SYNOPSES}\index{SYNOPSES}}
 \begin{description}
@@ -46,35 +46,20 @@ The Fype syntax is very simple and is using a maximum look ahead of 1 and a very
 \section{REQUIREMENTS\label{REQUIREMENTS}\index{REQUIREMENTS}}
 
 
-Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows support is not planned. But may work using Cygwin or SFU. Linux users have to install pmake before compiling Fype!
+Fype only has been tested on FreeBSD 7.0. Linux may work too. Windows support is not planned. But may work using Cygwin or SFU.
 
 
 
-You will need:
+You will also need:
 
 \begin{verbatim}
         GNU GCC C Compiler (gcc.gnu.org)
-        NetBSD Make aka pmake (GNU Make will not work)
+        NetBSD Make aka pmake (GNU Make will not work) (it's included in any *BSD)
 \end{verbatim}
-
-
-NetBSD Make is included in any *BSD and can be run with just \textbf{make}.
-
 \section{GETTING STARTED\label{GETTING_STARTED}\index{GETTING STARTED}}
 
 
-On Linux: Extract, compile and install Fype:
-
-\begin{verbatim}
-        tar xvjf fype.tar.bz2
-        cd fype
-        pmake
-        sudo pmake install 
-        pmake clean
-\end{verbatim}
-
-
-On FreeBSD: Extract, compile and install Fype:
+Extract, compile and install Fype:
 
 \begin{verbatim}
         tar xvjf fype.tar.bz2
@@ -179,7 +164,7 @@ All paranthesis of function calls are optional. They help to make the code bette
 \subsection*{Scopeing\label{Scopeing}\index{Scopeing}}
 
 
-A new scope starts with an \{ and ends with an \}. An exception is a procedure, which does not use its own scope (see later in this manual). Control statements and functions support scopeings.  The \textbf{scope} function will print out all available symbols at the current position. Here is a small example of how to use scopes:
+A new scope starts with an \{ and ends with an \}. An exception is a procedure, which does not use its own scope (see later in this manual). Control statements and functions support scopeings. Here is a small example how to use scopes:
 
 \begin{verbatim}
         my foo = 1;
@@ -194,11 +179,6 @@ A new scope starts with an \{ and ends with an \}. An exception is a procedure, 
 \begin{verbatim}
                         # Prints out 1
                         put defined bar;
-\end{verbatim}
-\begin{verbatim}
-                        # Prints out all available symbols at this
-                        # point to stdout. Those are: bar and foo
-                        scope;
                 }
 \end{verbatim}
 \begin{verbatim}
@@ -276,56 +256,6 @@ not.
                 put "foo is defined and has the value ";
                 say foo;
         }
-\end{verbatim}
-\section{SYNONYMS\label{SYNONYMS}\index{SYNONYMS}}
-
-
-Each variable can have as many synonyms as wished. A synonym is another name to access the content of a specific variable. Here is an example of how to use synomyms:
-
-\begin{verbatim}
-        my foo = "foo";
-        my bar = \foo;
-        foo = "bar";
-\end{verbatim}
-\begin{verbatim}
-        # The synonym variable should now also set to "bar"
-        assert "bar" == bar;
-\end{verbatim}
-
-
-Synonyms can be used for all kind of identifiers. It's not limited to normal variables but can be also used for function and procedure names etc.
-
-\begin{verbatim}
-        # Create a new procedure baz
-        proc baz { say "I am baz"; }
-\end{verbatim}
-\begin{verbatim}
-        # Make a synonym baz, and undefine baz
-        my bay = \baz;
-\end{verbatim}
-\begin{verbatim}
-        undef baz;
-\end{verbatim}
-\begin{verbatim}
-        # bay still has a reference of the original procedure baz
-        bay; # this prints aut "I am baz"
-\end{verbatim}
-
-
-The \textbf{syms} keyword gives you the total number of synonyms pointing to a specific value:
-
-\begin{verbatim}
-        my foo = 1;
-        say syms foo; # Prints 1
-\end{verbatim}
-\begin{verbatim}
-        my baz = \foo; 
-        say syms foo; # Prints 2
-        say syms baz; # Prints 2
-\end{verbatim}
-\begin{verbatim}
-        undef baz;
-        say syms foo; # Prints 1
 \end{verbatim}
 \section{BUILT IN FUNCTIONS\label{BUILT_IN_FUNCTIONS}\index{BUILT IN FUNCTIONS}}
 

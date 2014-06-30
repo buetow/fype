@@ -1,4 +1,4 @@
-===> Num of C source files		: 44
-===> Num of C source lines		:   5740 
-===> Num of Fype source examples	: 2
-===> Num of Fype source lines		:  18 
+===> Num of C source files		:       42
+===> Num of C source lines		:     7460 
+===> Num of Fype source examples	:       13
+===> Num of Fype source lines		:      321 

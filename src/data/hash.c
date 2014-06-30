@@ -1,12 +1,12 @@
 /*:*
  *: File: ./src/data/hash.c
- *: A simple Fype interpreter
+ *: A simple interpreter
  *:
- *: WWW: http://fype.buetow.org
- *: AUTHOR: http://paul.buetow.org
- *: E-Mail: fype at dev.buetow.org
+ *: WWW		: http://fype.buetow.org
+ *: E-Mail	: fype@dev.buetow.org
  *:
- *: The Fype Language; (c) 2005 - 2010 - Dipl.-Inform. (FH) Paul C. Buetow
+ *: Copyright (c) 2005 2006 2007 2008, Dipl.-Inf. (FH) Paul C. Buetow
+ *: All rights reserved.
  *:
  *: Redistribution and use in source and binary forms, with or without modi-
  *: fication, are permitted provided that the following conditions are met:
@@ -15,14 +15,14 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of buetow.org nor the names of its contributors may
+ *:  * Neither the name of P. B. Labs nor the names of its contributors may
  *:    be used to endorse or promote products derived from this software
  *:    without specific prior written permission.
  *:
- *: THIS SOFTWARE IS PROVIDED BY PAUL C. BUETOW AS IS'' AND ANY EXPRESS OR
+ *: THIS SOFTWARE IS PROVIDED BY Paul Buetow AS IS'' AND ANY EXPRESS OR
  *: IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *: WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *: DISCLAIMED. IN NO EVENT SHALL PAUL C. BUETOW BE LIABLE FOR ANY DIRECT,
+ *: DISCLAIMED. IN NO EVENT SHALL Paul Buetow BE LIABLE FOR ANY DIRECT,
  *: INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *: (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  *:  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -50,7 +50,7 @@ hash_new(unsigned i_size) {
    for (int i = 0; i < i_size; ++i)
       p_hash->p_elems[i].flag = 'f';
 
-   return (p_hash);
+   return p_hash;
 }
 
 void
@@ -68,10 +68,10 @@ hash_insert_ht(Hash *p_hash, char *c_key, void *p_val, TYPE type) {
    if (p_hash->i_cur_size == p_hash->i_size)
       hash_size(p_hash, p_hash->i_size *2);
 
-   int i_addr = hash_getaddr(p_hash, c_key, FREE_ADDR);
+   int i_addr = hash_getaddr(p_hash, c_key, free_ADDR);
 
    if (i_addr == RET_ERROR )
-      return (RET_NO_SPACE);
+      return RET_NO_SPACE;
 
    strncpy(p_hash->p_elems[i_addr].c_key, c_key, HASH_MKEYLEN);
 
@@ -80,12 +80,12 @@ hash_insert_ht(Hash *p_hash, char *c_key, void *p_val, TYPE type) {
    p_hash->p_elems[i_addr].p_val = p_val;
    p_hash->i_cur_size++;
 
-   return (RET_OK);
+   return RET_OK;
 }
 
 RETCODE
 hash_insert(Hash *p_hash, char *c_key, void *p_val) {
-   return (hash_insert_ht(p_hash, c_key, p_val, TYPE_VOIDP));
+   return hash_insert_ht(p_hash, c_key, p_val, TYPE_VOIDP);
 }
 
 void*
@@ -96,20 +96,20 @@ hash_remove(Hash *p_hash, char *c_key) {
    int i_addr = hash_getaddr(p_hash, c_key, OCC_ADDR);
 
    if (i_addr == -1 )
-      return (NULL);
+      return 0;
 
    void *p_val = p_hash->p_elems[i_addr].p_val;
    p_hash->p_elems[i_addr].flag = 'm';
    p_hash->p_elems[i_addr].p_val = 0;
    --p_hash->i_cur_size;
 
-   return (p_val);
+   return p_val;
 }
 
 void*
 hash_get_ht(Hash *p_hash, char *c_key, TYPE *p_type) {
    int i_addr;
-   return (hash_get_ht_addr(p_hash, c_key, p_type, &i_addr));
+   return hash_get_ht_addr(p_hash, c_key, p_type, &i_addr);
 }
 
 void*
@@ -117,16 +117,16 @@ hash_get_ht_addr(Hash *p_hash, char *c_key, TYPE *p_type, int *p_addr) {
    int i_addr = *p_addr = hash_getaddr(p_hash, c_key, OCC_ADDR);
 
    if (i_addr == -1 )
-      return (NULL);
+      return 0;
 
    *p_type = p_hash->p_elems[i_addr].type;
-   return (p_hash->p_elems[i_addr].p_val);
+   return p_hash->p_elems[i_addr].p_val;
 }
 
 void*
 hash_get(Hash *p_hash, char *c_key) {
    TYPE type;
-   return (hash_get_ht(p_hash, c_key, &type));
+   return hash_get_ht(p_hash, c_key, &type);
 }
 
 int
@@ -144,68 +144,67 @@ hash_getaddr(Hash *p_hash, char *c_key, HASH_OP OP) {
       i_addr = (i_addr *p_hash->i_size + (int) c_key[i]) % p_hash->i_size;
 
    switch (OP) {
-   case FREE_ADDR:
+   case free_ADDR:
       if (!hash_addrisfree(p_hash,i_addr))
-         return (i_addr);
+         return i_addr;
       break;
 
    case OCC_ADDR:
       if (!hash_addrisocc(p_hash,i_addr, c_key))
-         return (i_addr);
+         return i_addr;
       break;
 
    default:
-      return (RET_ERROR);
+      return RET_ERROR;
    }
 
-   return (hash_nextaddr(p_hash, p_hash->i_size, c_key, i_addr, OP));
+   return hash_nextaddr(p_hash, p_hash->i_size, c_key, i_addr, OP);
 }
 
 RETCODE
 hash_addrisfree(Hash *p_hash, int i_addr) {
    if (p_hash->p_elems[i_addr].flag == 'f' ||
          p_hash->p_elems[i_addr].flag == 'm')
-      return (RET_OK);
+      return RET_OK;
 
-   return (RET_ERROR);
+   return RET_ERROR;
 }
 
 RETCODE
 hash_addrisocc(Hash *p_hash, int i_addr, char *c_key) {
    if (p_hash->p_elems[i_addr].flag == 'o' &&
          !strcmp(p_hash->p_elems[i_addr].c_key, c_key))
-      return (RET_OK);
+      return RET_OK;
 
-   return (RET_ERROR);
+   return RET_ERROR;
 }
 
 int
 hash_nextaddr(Hash *p_hash, int i_max_tries, char *c_key, int i_addr,
               HASH_OP OP) {
    if ( --i_max_tries < 0 )
-      return (RET_ERROR);
+      return RET_ERROR;
 
    i_addr = (i_addr + 1) % p_hash->i_size;
 
    switch (OP) {
-   case FREE_ADDR:
+   case free_ADDR:
       if (!hash_addrisfree(p_hash,i_addr))
-         return (i_addr);
+         return i_addr;
       break;
 
    case OCC_ADDR:
       if (!hash_addrisocc(p_hash,i_addr, c_key))
-         return (i_addr);
+         return i_addr;
       break;
    }
 
-   return (hash_nextaddr(p_hash, i_max_tries, c_key, i_addr, OP));
+   return hash_nextaddr(p_hash, i_max_tries, c_key, i_addr, OP);
 }
 
 void
 hash_print(Hash *p_hash) {
-   printf("hash_print [size:%d,cur:%d] syntax "
-          " (flag[,key][=TYPE[<val>]]):\n -> ",
+   printf("hash_print [size:%d,cur:%d] syntax (flag[,key][=TYPE[<val>]]):\n -> ",
           p_hash->i_size,p_hash->i_cur_size);
 
    for (int i = 0; i < p_hash->i_size; ++i) {
@@ -280,7 +279,7 @@ hash_size(Hash *p_hash, int i_size) {
                         p_old_elems[i].p_val, p_old_elems[i].type);
 
    free(p_old_elems);
-   return (RET_OK);
+   return RET_OK;
 }
 
 void
@@ -288,19 +287,4 @@ hash_iterate(Hash *p_hash, void (*func)(void *)) {
    for (int i = 0; i < p_hash->i_size; ++i)
       if (p_hash->p_elems[i].flag == 'o')
          (*func) (p_hash->p_elems[i].p_val);
-}
-
-void
-hash_iterate_key(Hash *p_hash, void (*func)(void *, char *)) {
-   for (int i = 0; i < p_hash->i_size; ++i)
-      if (p_hash->p_elems[i].flag == 'o')
-         (*func) (p_hash->p_elems[i].p_val, p_hash->p_elems[i].c_key);
-}
-
-_Bool
-hash_key_exists(Hash *p_hash, char *c_key) {
-   if (hash_get(p_hash, c_key))
-      return (true);
-
-   return (false);
 }
