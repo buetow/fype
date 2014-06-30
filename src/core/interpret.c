@@ -2,11 +2,11 @@
  *: File: ./src/core/interpret.c
  *: A simple interpreter
  *: 
- *: WWW		: http://fype.buetow.org
+ *: WWW	: http://fype.buetow.org
  *: AUTHOR	: http://paul.buetow.org
  *: E-Mail	: fype at dev.buetow.org
  *: 
- *: Copyright (c) 2005 - 2008, Paul Buetow 
+ *: Copyright (c) 2005 - 2009, Dipl.-Inform. (FH) Paul C. Buetow 
  *: All rights reserved.
  *: 
  *: Redistribution and use in source and binary forms, with or without modi-
@@ -16,7 +16,7 @@
  *:  * Redistributions in binary form must reproduce the above copyright
  *:    notice, this list of conditions and the following disclaimer in the
  *:    documentation and/or other materials provided with the distribution.
- *:  * Neither the name of P. B. Labs nor the names of its contributors may 
+ *:  * Neither the name of buetow.org nor the names of its contributors may 
  *:    be used to endorse or promote products derived from this software 
  *:    without specific prior written permission.
  *: 
@@ -83,10 +83,12 @@ Interpret*
 interpret_new(List *p_list_token, Hash *p_hash_syms) {
    Interpret *p_interpret = malloc(sizeof(Interpret));
 
+   /* No subprocess */
    if (p_hash_syms != NULL) {
       p_interpret->p_scope = scope_new(p_hash_syms);
       p_interpret->b_scope_delete = true;
 
+   /* Subprocess */
    } else {
       p_interpret->p_scope = NULL;
       p_interpret->b_scope_delete = false;
