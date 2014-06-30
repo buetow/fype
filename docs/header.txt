@@ -5,7 +5,7 @@ WWW: http://fype.buetow.org
 AUTHOR: http://paul.buetow.org
 E-Mail: fype at dev.buetow.org
 
-The Fype Language; (c) 2005 - 2010 - Dipl.-Inform. (FH) Paul C. Buetow 
+The Fype Language; (c) 2005 - 2010 Paul Buetow 
 
 Redistribution and use in source and binary forms, with or without modi-
 fication, are permitted provided that the following conditions are met:

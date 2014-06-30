@@ -35,7 +35,7 @@ argv_check_argc	./src/argv.c	/^argv_check_argc(int i_required, unsigned i_argc_l
 argv_checkopt	./src/argv.c	/^argv_checkopt(char c_opt, Tupel *p_tupel_argv) {$/;"	f
 argv_checkopts	./src/argv.c	/^argv_checkopts(char *c_opts, Tupel *p_tupel_argv) {$/;"	f
 argv_help	./src/argv.c	/^argv_help() {$/;"	f
-argv_run	./src/argv.c	/^argv_run(PBSc *p_fype, int i_argc, char **pc_argv) {$/;"	f
+argv_run	./src/argv.c	/^argv_run(Fype *p_fype, int i_argc, char **pc_argv) {$/;"	f
 argv_switch	./src/argv.c	/^argv_switch(char c_arg, Tupel *p_tupel_argv, unsigned i_argc_left) {$/;"	f
 argv_synopsis	./src/argv.c	/^argv_synopsis(Tupel *p_tupel_argv) {$/;"	f
 argv_tupel_delete	./src/argv.c	/^argv_tupel_delete(Tupel *p_tupel_argv) {$/;"	f
@@ -103,7 +103,7 @@ frame_delete	./src/core/frame.c	/^frame_delete(Frame *p_frame) {$/;"	f
 frame_get_symbol	./src/core/frame.c	/^frame_get_symbol(Frame *p_frame, char *c_name) {$/;"	f
 frame_new	./src/core/frame.c	/^frame_new(Frame *p_parent_frame) {$/;"	f
 frame_print	./src/core/frame.c	/^frame_print(Frame *p_frame) {$/;"	f
-fype_delete	./src/fype.c	/^fype_delete(PBSc *p_fype) {$/;"	f
+fype_delete	./src/fype.c	/^fype_delete(Fype *p_fype) {$/;"	f
 fype_new	./src/fype.c	/^fype_new() {$/;"	f
 fype_run	./src/fype.c	/^fype_run(int i_argc, char **pc_argv) {$/;"	f
 get_tt	./src/core/token.c	/^get_tt(char *c_token) {$/;"	f
@@ -128,7 +128,7 @@ hash_size	./src/data/hash.c	/^hash_size(Hash *p_hash, int i_size) {$/;"	f
 interpret_delete	./src/core/interpret.c	/^interpret_delete(Interpret *p_inter) {$/;"	f
 interpret_new	./src/core/interpret.c	/^interpret_new(List *p_list_token) {$/;"	f
 interpret_new_lambda	./src/core/interpret.c	/^interpret_new_lambda(Interpret *p_inter, Lambda *p_lambda) {$/;"	f
-interpret_run	./src/core/interpret.c	/^interpret_run(PBSc *p_fype) {$/;"	f
+interpret_run	./src/core/interpret.c	/^interpret_run(Fype *p_fype) {$/;"	f
 lambda_delete	./src/core/lambda.c	/^lambda_delete(Lambda *p_lambda) {$/;"	f
 lambda_new	./src/core/lambda.c	/^lambda_new(char *c_name, List *p_list_args, ListElem *p_listelem, ListElem *p_listelem_end, Frame *p_frame) {$/;"	f
 lambda_print	./src/core/lambda.c	/^lambda_print(Lambda *p_lambda) {$/;"	f
@@ -226,7 +226,7 @@ scanner_cleanup_list_token_cb	./src/core/scanner.c	/^scanner_cleanup_list_token_
 scanner_delete	./src/core/scanner.c	/^scanner_delete(Scanner *p_scanner) {$/;"	f
 scanner_get_tt_cur	./src/core/scanner.c	/^scanner_get_tt_cur(char *c_token) {$/;"	f
 scanner_new	./src/core/scanner.c	/^scanner_new(List *p_list_token, Tupel *p_tupel_argv) {$/;"	f
-scanner_run	./src/core/scanner.c	/^scanner_run(PBSc *p_fype) {$/;"	f
+scanner_run	./src/core/scanner.c	/^scanner_run(Fype *p_fype) {$/;"	f
 stack_clear	./src/data/stack.c	/^stack_clear(Stack *p_stack) {$/;"	f
 stack_concat	./src/data/stack.c	/^stack_concat(Stack *p_stack, Stack *p_stack_concat) {$/;"	f
 stack_delete	./src/data/stack.c	/^stack_delete(Stack *p_stack) {$/;"	f

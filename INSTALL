@@ -6,6 +6,6 @@ How to install fype:
 
 How to read the docu:
 
-	man pbsc
+	man fype
 
 Examples can be found in the ./examples directory.

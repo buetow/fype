@@ -1,7 +1,0 @@
-(def (reverse x)
-	(def (my-reverse x y)
-		(if (null? x)
-		    	y
-		    	(my-reverse (cdr x) (cons (car x) y))))
-	(my-reverse x '()))
-(reverse (list 1 2 3))
