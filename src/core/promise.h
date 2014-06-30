@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/build.h
+ *: File: ./src/core/promise.h
  *: A simple Fype interpreter
  *:
  *: WWW: http://fype.buetow.org
@@ -32,10 +32,18 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef BUILD_H
-#define BUILD_H
+#ifndef PROMISE_H
+#define PROMISE_H
 
-#define BUILDNR 10388
-#define OS_LINUX
+#include "../data/list.h"
+#include "token.h"
 
-#endif
+typedef struct {
+   ListElem *p_elem_start;
+   Token *p_token_lambda;
+} Promise;
+
+Promise* promise_new(Token *p_token_lambda, ListElem *p_elem_start);
+void promise_delete(Promise *p_promise);
+
+#endif /* PROMISE_H */

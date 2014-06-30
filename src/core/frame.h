@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/build.h
+ *: File: ./src/core/frame.h
  *: A simple Fype interpreter
  *:
  *: WWW: http://fype.buetow.org
@@ -32,10 +32,37 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef BUILD_H
-#define BUILD_H
+#ifndef FRAME_H
+#define FRAME_H
 
-#define BUILDNR 10388
-#define OS_LINUX
+#include "../defines.h"
+#include "../data/hash.h"
+
+typedef enum {
+   ST_LAMBDA,
+   ST_VARIABLE,
+} SymbolType;
+
+typedef struct {
+   SymbolType st;
+   void *p_val;
+} Symbol;
+
+typedef struct _Frame {
+   struct _Frame *p_parent_frame;
+   Hash *p_hash_symbols;
+   unsigned i_frame_id;
+} Frame;
+
+Symbol* symbol_new(SymbolType st, void *p_val);
+void symbol_delete(Symbol *p_symbol);
+void symbol_delete_cb(void *p_symbol);
+char* symbol_get_type_name(Symbol *p_symbol);
+
+Frame* frame_new(Frame *p_parent_frame);
+void frame_delete(Frame *p_frame);
+_Bool frame_add_symbol(Frame *p_frame, char *c_name, SymbolType st, void *p_val);
+Symbol *frame_get_symbol(Frame *p_frame, char *c_name);
+void frame_print(Frame *p_frame);
 
 #endif

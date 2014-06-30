@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/build.h
+ *: File: ./src/core/variable.c
  *: A simple Fype interpreter
  *:
  *: WWW: http://fype.buetow.org
@@ -32,10 +32,28 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef BUILD_H
-#define BUILD_H
+#include "variable.h"
+#include "token.h"
 
-#define BUILDNR 10388
-#define OS_LINUX
+Variable*
+variable_new(char *c_name, Token *p_token,Frame *p_frame) {
+   Variable *p_variable = malloc(sizeof(Variable));
 
-#endif
+   p_variable->c_name = c_name;
+   p_variable->p_token = p_token;
+   p_variable->p_frame = p_frame;
+
+   return (p_variable);
+}
+
+void
+variable_delete(Variable *p_variable) {
+   free(p_variable);
+}
+
+void
+variable_print(Variable *p_variable) {
+   printf("+ST_VARIABLE(name=%s,value=%s)\n",
+          p_variable->c_name,
+          p_variable->p_token->c_val);
+}

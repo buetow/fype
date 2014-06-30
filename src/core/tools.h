@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/build.h
+ *: File: ./src/core/tools.h
  *: A simple Fype interpreter
  *:
  *: WWW: http://fype.buetow.org
@@ -32,10 +32,11 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef BUILD_H
-#define BUILD_H
+#ifndef TOOLS_H
+#define TOOLS_H
 
-#define BUILDNR 10388
-#define OS_LINUX
+#include "../fype.h"
 
-#endif
+void tool_skip_block(ListIterator *p_iter, int i_offset);
+
+#endif /* TOOLS_H */

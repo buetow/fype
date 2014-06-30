@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/build.h
+ *: File: ./src/core/lambda.c
  *: A simple Fype interpreter
  *:
  *: WWW: http://fype.buetow.org
@@ -32,10 +32,67 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef BUILD_H
-#define BUILD_H
+#include "lambda.h"
+#include "token.h"
 
-#define BUILDNR 10388
-#define OS_LINUX
+Lambda*
+lambda_new(char *c_name, List *p_list_args, ListElem *p_listelem, ListElem *p_listelem_end, Frame *p_frame) {
+   Lambda *p_lambda = malloc(sizeof(Lambda));
 
-#endif
+   p_lambda->c_name = c_name;
+   p_lambda->p_list_args = p_list_args;
+   p_lambda->p_listelem = p_listelem;
+   p_lambda->p_listelem_end = p_listelem_end;;
+   p_lambda->p_frame = p_frame;
+
+   return (p_lambda);
+}
+
+void
+lambda_delete(Lambda *p_lambda) {
+   if (p_lambda->p_list_args)
+      list_delete(p_lambda->p_list_args);
+   free(p_lambda);
+}
+
+void
+lambda_print(Lambda *p_lambda) {
+   printf("+ST_LAMBDA(name=%s;args=", p_lambda->c_name);
+
+   if (p_lambda->p_list_args) {
+      unsigned i_count = p_lambda->p_list_args->i_size;
+      ListIterator *p_iter = listiterator_new(p_lambda->p_list_args);
+
+      while (listiterator_has_next(p_iter)) {
+         char *c_name = listiterator_next(p_iter);
+         if (--i_count == 0)
+            printf("%s", c_name);
+         else
+            printf("%s ", c_name);
+      }
+
+      listiterator_delete(p_iter);
+   }
+   printf(")\n( ");
+
+   ListIterator *p_iter = listiterator_new_from_elem(p_lambda->p_listelem);
+   Token *p_token = listiterator_current(p_iter);
+   ListElem *p_listelem_end = p_lambda->p_listelem_end;
+
+
+   while (listiterator_has_next(p_iter)) {
+      p_token = listiterator_next(p_iter);
+      printf("%s ", p_token->c_val);
+
+      if (listiterator_current_elem_equals(p_iter, p_listelem_end))
+         goto LAMBDA_PRINT_END;
+   }
+
+   ERROR_EOB;
+
+LAMBDA_PRINT_END:
+
+   printf("\n");
+   listiterator_delete(p_iter);
+}
+

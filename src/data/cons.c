@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/build.h
+ *: File: ./src/data/cons.c
  *: A simple Fype interpreter
  *:
  *: WWW: http://fype.buetow.org
@@ -32,10 +32,57 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef BUILD_H
-#define BUILD_H
+#include "cons.h"
 
-#define BUILDNR 10388
-#define OS_LINUX
+Cons*
+cons_new(void *p_val) {
+   Cons *p_cons = malloc(sizeof(Cons));
 
-#endif
+   p_cons->p_val = p_val;
+   p_cons->p_succ = NULL;
+
+   return (p_cons);
+}
+
+void
+cons_delete(Cons *p_cons) {
+   free(p_cons);
+}
+
+void
+cons_delete_cb(void *p_cons) {
+   cons_delete(p_cons);
+}
+
+void
+cons_iterate(Cons *p_cons, void (*func)(void *)) {
+   if (p_cons != NULL && p_cons->p_val != NULL) {
+      (*func) (p_cons->p_val);
+      cons_iterate(p_cons->p_succ, func);
+   }
+}
+
+void*
+cons_car(Cons *p_cons) {
+   return (p_cons->p_val);
+}
+
+Cons*
+cons_cdr(Cons *p_cons) {
+   return (p_cons->p_succ);
+}
+
+Cons*
+cons_cons(Cons *p_cons, void *p_val) {
+   if (p_cons->p_val == NULL) {
+      p_cons->p_val = p_val;
+      return (p_cons);
+
+   } else if (p_val == NULL) {
+      return (p_cons);
+   }
+
+   Cons *p_new = cons_new(p_val);
+   p_new->p_succ = p_cons;
+   return (p_new);
+}

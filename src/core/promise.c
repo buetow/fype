@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/build.h
+ *: File: ./src/core/promise.c
  *: A simple Fype interpreter
  *:
  *: WWW: http://fype.buetow.org
@@ -32,10 +32,29 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef BUILD_H
-#define BUILD_H
+#include "promise.h"
 
-#define BUILDNR 10388
-#define OS_LINUX
+#define _ERROR(m,t) \
+         ERROR(\
+                "%s: Promise error in %s line %d pos %d near '%s'", m, \
+                t->c_filename, \
+                t->i_line_nr, \
+                t->i_pos_nr, \
+                t->c_val \
+                )
 
-#endif
+Promise*
+promise_new(Token *p_token_lambda, ListElem *p_elem_start) {
+   Promise *p_promise = malloc(sizeof(Promise));
+
+   p_promise->p_token_lambda = p_token_lambda;
+   p_promise->p_elem_start = p_elem_start;
+
+   return (p_promise);
+}
+
+void
+promise_delete(Promise *p_promise) {
+   free(p_promise);
+}
+

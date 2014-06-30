@@ -1,5 +1,5 @@
-Fype0 Alpha Build 9669
-(c) Paul C. Buetow (2005 - 2008) <fype@dev.buetow.org>
+Fype2 Alpha Build 10387
+(c) Paul C. Buetow (2005 - 2010) <fype@dev.buetow.org>
 	-e	Executes given code string (see synopses)
 	-h	Prints this help
 	-s	Prints the synopsis

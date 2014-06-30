@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/build.h
+ *: File: ./src/core/tools.c
  *: A simple Fype interpreter
  *:
  *: WWW: http://fype.buetow.org
@@ -32,10 +32,33 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef BUILD_H
-#define BUILD_H
+#include "tools.h"
+#include "token.h"
+#include "../defines.h"
 
-#define BUILDNR 10388
-#define OS_LINUX
+void
+tool_skip_block(ListIterator *p_iter, int i_offset) {
+   Token *p_token = listiterator_current(p_iter);
 
-#endif
+   do {
+      if (p_token->tt_cur == TT_PARANT_R && --i_offset == 0) {
+         //printf("::DoneSkip<%d>: %s\n", i_offset, p_token->c_val);
+         return;
+
+      } else if (p_token->tt_cur == TT_PARANT_L) {
+         ++i_offset;
+
+      } else if (i_offset < 0) {
+         ERROR_INTERPRET("Fatal Error", p_token);
+      }
+
+      //printf("::Skipping<%d>: %s\n", i_offset, p_token->c_val);
+      p_token = listiterator_next(p_iter);
+   } while (listiterator_has_next(p_iter));
+
+   if (p_token->tt_cur == TT_PARANT_R)
+      return;
+
+   ERROR_EOB;
+}
+

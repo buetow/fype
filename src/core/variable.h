@@ -1,5 +1,5 @@
 /*:*
- *: File: ./src/build.h
+ *: File: ./src/core/variable.h
  *: A simple Fype interpreter
  *:
  *: WWW: http://fype.buetow.org
@@ -32,10 +32,21 @@
  *: POSSIBILITY OF SUCH DAMAGE.
  *:*/
 
-#ifndef BUILD_H
-#define BUILD_H
+#ifndef VARIABLE_H
+#define VARIABLE_H
 
-#define BUILDNR 10388
-#define OS_LINUX
+#include "../defines.h"
+#include "frame.h"
+#include "token.h"
+
+typedef struct _Variable {
+   char *c_name;
+   Token *p_token;
+   Frame *p_frame;
+} Variable;
+
+Variable* variable_new(char *c_name, Token *p_token,Frame *p_frame);
+void variable_delete(Variable *p_variable);
+void variable_print(Variable *p_variable);
 
 #endif
